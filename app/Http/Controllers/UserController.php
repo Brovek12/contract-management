@@ -74,6 +74,7 @@ class UserController extends Controller
                 'username' => 'required|string',
                 'email' => 'required|string|email',
                 'phone' => 'required|string',
+                'employee_number' => 'required|string|unique:users,employee_number',
                 'name' => 'required|string',
                 'password' => 'required|string|min:6',
                 'role' => 'required|string',
@@ -95,6 +96,7 @@ class UserController extends Controller
                 'name' => $request->name,
                 'email' => $request->email,
                 'phone' => $request->phone,
+                'employee_number' => $request->employee_number,
                 'password' => bcrypt($request->password),
             ];
 

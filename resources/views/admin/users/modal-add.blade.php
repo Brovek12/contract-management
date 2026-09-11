@@ -53,6 +53,14 @@
                         <input type="text" class="form-control" id="name" name="name">
                         <div class="mt-1 text-danger d-none" id="nameError"></div>
                     </div>
+                    <div class="mb-3">
+                        <label for="employee_number" class="form-label">
+                            Employee Number
+                            <span class="text-danger">*</span>
+                        </label>
+                        <input type="text" class="form-control" id="employee_number" name="employee_number">
+                        <div class="mt-1 text-danger d-none" id="employee_numberError"></div>
+                    </div>
 
                     <!-- Photo -->
                     <div class="mb-3">

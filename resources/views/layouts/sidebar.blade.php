@@ -62,8 +62,8 @@
 
                         <!--begin::Description-->
                         <span class="mb-1 text-gray-600 fw-semibold d-block fs-8">
-                            Superadmin
-                        </span>
+    {{ auth()->user()->getRoleNames()->first() }}
+</span>
                         <!--end::Description-->
 
                     </div>

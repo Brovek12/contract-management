@@ -2000,7 +2000,7 @@
 ========================================================= --}}
 
 @if (
-    auth()->user()->hasRole('employee') &&
+    auth()->user()->hasRole('Employee') &&
     in_array($contract->status, ['sent', 'viewed'])
 )
     <button type="button"
