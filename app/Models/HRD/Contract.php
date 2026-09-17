@@ -18,6 +18,7 @@ class Contract extends Model
         'contract_number',
         'contract_date',
         'title',
+        'type',
 
         // =====================================================
         // RELATION

@@ -25,9 +25,9 @@
 
                 <div>
 
-                    <h1 class="page-heading text-gray-900 fw-bold fs-3 m-0">
-                        Tambah Contract
-                    </h1>
+                   <h1 class="page-heading text-gray-900 fw-bold fs-3 m-0">
+    Tambah Contract {{ strtoupper($type) }}
+</h1>
 
                     <span class="text-gray-500 fs-7">
                         Buat contract kerja baru berdasarkan data employee
@@ -596,6 +596,71 @@
                             </div>
 
                         </div>
+                        @if ($type === 'phm')
+
+    <div class="card mb-5">
+
+        <div class="card-header">
+            <div class="card-title">
+                <h2 class="fw-bold text-gray-900">
+                    Tunjangan PHM
+                </h2>
+            </div>
+        </div>
+
+        <div class="card-body">
+
+            <div class="row g-5">
+
+                <div class="col-md-6">
+                    <label class="form-label fw-semibold">
+                        Tunjangan Kendaraan
+                    </label>
+
+                    <div class="input-group">
+                        <span class="input-group-text">Rp</span>
+
+                        <input
+                            type="number"
+                            name="vehicle_allowance"
+                            class="form-control"
+                            value="{{ old('vehicle_allowance', 0) }}"
+                            min="0">
+
+                        <span class="input-group-text">
+                            / Bulan
+                        </span>
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                    <label class="form-label fw-semibold">
+                        Tunjangan Kesehatan
+                    </label>
+
+                    <div class="input-group">
+                        <span class="input-group-text">Rp</span>
+
+                        <input
+                            type="number"
+                            name="health_allowance"
+                            class="form-control"
+                            value="{{ old('health_allowance', 0) }}"
+                            min="0">
+
+                        <span class="input-group-text">
+                            / Bulan
+                        </span>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+@endif
 
                     </div>
 

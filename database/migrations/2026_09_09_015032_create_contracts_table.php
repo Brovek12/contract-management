@@ -51,6 +51,7 @@ return new class extends Migration
             // =====================================================
 
             $table->string('employee_name');
+            $table->string('type')->nullable();
 
             $table->string('department')->nullable();
 

@@ -55,14 +55,40 @@
 
                             <!--begin::Add-->
                             @can('create-contracts')
-                                <a href="{{ route('contracts.create') }}"
-   class="btn btn-sm btn-primary btn-active-light-primary me-6">
+                                <div class="dropdown">
+    <button
+        class="btn btn-sm btn-primary btn-active-light-primary me-6 dropdown-toggle"
+        type="button"
+        data-bs-toggle="dropdown"
+        aria-expanded="false"
+    >
+        <i class="ki-duotone ki-plus fs-3"></i>
+        Tambah
+    </button>
 
-    <i class="ki-duotone ki-plus fs-3"></i>
+    <ul class="dropdown-menu">
+        <li>
+            <a class="dropdown-item" href="{{ route('contracts.create', ['type' => 'phm']) }}">
+                <i class="ki-duotone ki-document fs-3 me-2"></i>
+                Contract PHM
+            </a>
+        </li>
 
-    Tambah
+        <li>
+            <a class="dropdown-item" href="{{ route('contracts.create', ['type' => 'phss']) }}">
+                <i class="ki-duotone ki-document fs-3 me-2"></i>
+                Contract PHSS
+            </a>
+        </li>
 
-</a>
+        <li>
+            <a class="dropdown-item" href="{{ route('contracts.create', ['type' => 'phkt']) }}">
+                <i class="ki-duotone ki-document fs-3 me-2"></i>
+                Contract PHKT
+            </a>
+        </li>
+    </ul>
+</div>
                             @endcan
                             <!--end::Add-->
 

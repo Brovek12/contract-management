@@ -22,20 +22,19 @@
 
     /* =========================================================
        A4 PAGE
+       ⚠️ Padding & height diatur oleh layout parent
     ========================================================= */
 
     .document-page {
         width: 210mm !important;
+        height: 297mm !important;
         min-height: 297mm !important;
 
         margin: 0 auto 20px !important;
 
-        padding: 15mm 20mm 15mm 20mm !important;
-
         background: #ffffff;
 
-        display: flex;
-        flex-direction: column;
+        display: block;
 
         position: relative;
 
@@ -44,51 +43,6 @@
         line-height: 1.25;
 
         color: #000;
-    }
-
-    /* =========================================================
-       KOP SURAT
-    ========================================================= */
-
-    .document-header {
-        width: 100%;
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        padding-bottom: 8px;
-        border-bottom: 1px solid #000;
-        margin-bottom: 18px;
-    }
-
-    .document-header-logo {
-        width: 42%;
-        display: flex;
-        align-items: center;
-    }
-
-    .document-header-logo img {
-        width: 150px;
-        height: auto;
-        display: block;
-    }
-
-    .document-header-info {
-        width: 58%;
-        text-align: right;
-        font-family: "Arial Narrow", Arial, sans-serif;
-        line-height: 1.2;
-    }
-
-    .document-header-company {
-        font-size: 14pt;
-        font-weight: bold;
-        color: #1685c7;
-        margin-bottom: 2px;
-    }
-
-    .document-header-text {
-        font-size: 9pt;
-        color: #222;
     }
 
     /* =========================================================
@@ -115,6 +69,11 @@
         line-height: 1.2;
         text-align: center;
         font-weight: bold;
+    }
+
+    .document-page h3 {
+        font-size: 12pt;
+        margin: 8px 0 4px 0;
     }
 
     /* =========================================================
@@ -156,16 +115,16 @@
     ========================================================= */
 
     .indent {
-    margin-left: 0 !important;
-    padding-left: 8mm !important;
-    text-indent: -8mm !important;  /* tarik baris pertama ke kiri */
-}
+        margin-left: 0 !important;
+        padding-left: 8mm !important;
+        text-indent: -8mm !important;
+    }
 
-.indent-2 {
-    margin-left: 0 !important;
-    padding-left: 16mm !important;
-    text-indent: -16mm !important;
-}
+    .indent-2 {
+        margin-left: 0 !important;
+        padding-left: 16mm !important;
+        text-indent: -16mm !important;
+    }
 
     /* =========================================================
        FORMULA
@@ -193,140 +152,172 @@
        SIGNATURE
     ========================================================= */
 
-    /* =========================================================
-   SIGNATURE
-========================================================= */
+    .signature-wrapper {
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        margin-top: 15mm;
+        text-align: center;
+    }
 
-.signature-wrapper {
-    width: 100%;
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
-    margin-top: 15mm;
-    text-align: center;
-}
+    .signature-column {
+        width: 45%;
+        font-size: 12pt;
+        line-height: 1.3;
 
-.signature-column {
-    width: 45%;
-    font-size: 12pt;
-    line-height: 1.3;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
 
-    /* ✅ Flex column biar tinggi konsisten */
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
+    .signature-space {
+        height: 10mm;
+        width: 100%;
+    }
 
-/* Area kosong di bawah "Pekerja"/"PT Bukaka" — fixed */
-.signature-space {
-    height: 10mm;
-    width: 100%;
-}
-
-/* Wrapper gambar tanda tangan — fixed height */
-.signature-image-wrapper {
+    .signature-image-wrapper-2 {
     height: 10mm;
     width: 100%;
     display: flex;
     align-items: center;
     justify-content: center;
     margin-bottom: 2mm;
+
+    position: relative;      /* ✅ untuk anchor absolute */
+    overflow: visible;       /* ✅ biar gambar bisa keluar */
 }
 
-.signature-image {
+.signature-image-2 {
     display: block;
     max-width: 42mm;
     max-height: 20mm;
     object-fit: contain;
+
+    transform: scale(2);     /* ✅ perbesar 2x lipat */
+    transform-origin: center center;
+    position: relative;      /* ✅ di atas elemen lain */
+    z-index: 5;
 }
 
-/* Nama */
-.signature-name {
-    margin-top: 2px;
-    margin-bottom: 2px;
-    font-weight: bold;
-    text-decoration: underline;
+    .signature-name {
+        margin-top: 2px;
+        margin-bottom: 2px;
+        font-weight: bold;
+        text-decoration: underline;
 
-    /* ✅ min-height biar tinggi konsisten walau nama panjang/pendek */
-    min-height: 1.2em;
-}
+        min-height: 1.2em;
+    }
 
-/* Jabatan / keterangan */
-.signature-title {
-    min-height: 1.2em;
-    font-style: italic;
-}
+    .signature-title {
+        min-height: 1.2em;
+        font-style: italic;
+    }
 
     /* =========================================================
        PARAF TABLE
     ========================================================= */
 
-   .paraf-table {
-   margin-top: 8mm;     /* ganti dari auto ke jarak tetap */
-    margin-left: auto;
-    margin-right: 0;
-    margin-bottom: 6mm;
+    .paraf-table {
+        margin-top: 8mm;
+        margin-left: auto;
+        margin-right: 0;
+        margin-bottom: 6mm;
 
-    width: 45mm;
+        width: 45mm;
 
-    /* ✅ WAJIB: bikin layout fixed, tidak auto-size */
-    table-layout: fixed;
+        table-layout: fixed;
 
-    /* ✅ biar tinggi kolom dikunci */
-    height: 18mm;   /* 6mm title + 12mm box */
+        height: 18mm;
 
-    border-collapse: collapse;
-    font-family: "Arial Narrow", Arial, sans-serif;
-    font-size: 10pt;
-    line-height: 1.2;
+        border-collapse: collapse;
+        font-family: "Arial Narrow", Arial, sans-serif;
+        font-size: 10pt;
+        line-height: 1.2;
 
-    page-break-inside: avoid;
-}
+        page-break-inside: avoid;
+    }
 
-.paraf-table td {
-    border: 1px solid #000;
-    text-align: center;
-    vertical-align: middle;
+    .paraf-table td {
+        border: 1px solid #000;
+        text-align: center;
+        vertical-align: middle;
 
-    padding: 1mm;
+        padding: 1mm;
 
-    /* ✅ overflow di-hidden biar gambar besar tidak melebar */
-    overflow: hidden;
-}
+        overflow: hidden;
+    }
 
-/* Row title — fixed */
-.paraf-table tr:first-child td {
-    height: 6mm;
-}
+    .paraf-table tr:first-child td {
+        height: 6mm;
+    }
 
-/* Row box — fixed */
-.paraf-table tr:last-child td {
-    height: 12mm;
-    width: 50%;
-}
+    .paraf-table tr:last-child td {
+        height: 12mm;
+        width: 50%;
+    }
 
-.paraf-table .paraf-title {
-    font-weight: bold;
-    height: 6mm;
-}
+    .paraf-table .paraf-title {
+        font-weight: bold;
+        height: 6mm;
+    }
 
-.paraf-table .paraf-box {
-    height: 12mm;
-    width: 50%;
-    vertical-align: middle;
-    text-align: center;
-}
+    .paraf-table .paraf-box {
+        height: 12mm;
+        width: 50%;
+        vertical-align: middle;
+        text-align: center;
+    }
 
-/* ✅ Gambar tanda tangan di dalam paraf — auto fit */
-.paraf-table .paraf-box img {
+ .paraf-table .paraf-box img {
     display: block;
     margin: 0 auto;
-    max-width: 100%;
-    max-height: 100%;
+    margin-left:-3mm;
+    max-width: 140%;        /* ✅ bisa lebih lebar dari kolom */
+    max-height: 140%;       /* ✅ bisa lebih tinggi dari box */
     width: auto;
     height: auto;
     object-fit: contain;
+    transform: scale(1.4);  /* ✅ perbesar 30% */
+    transform-origin: center center;
 }
+
+    /* =========================================================
+       DATA TABLE (identitas)
+    ========================================================= */
+
+    .data-table {
+        width: 100%;
+        border-collapse: collapse;
+        margin: 6px 0 10px 0;
+    }
+
+    .data-table td {
+        vertical-align: top;
+        padding: 1px 0;
+        font-family: "Arial Narrow", Arial, sans-serif;
+        font-size: 12pt;
+        line-height: 1.25;
+    }
+
+    .data-table .data-label {
+        width: 32mm;
+        white-space: nowrap;
+        font-weight: bold;
+        padding-right: 2mm;
+        vertical-align: top;
+    }
+
+    .data-table .data-sep {
+        width: 4mm;
+        text-align: center;
+        vertical-align: top;
+    }
+
+    .data-table .data-value {
+        vertical-align: top;
+    }
+
     /* =========================================================
        FLOATING SIGN BUTTON
     ========================================================= */
@@ -406,167 +397,49 @@
     }
 
     /* =========================================================
-   MODAL SIGN — BASE
-========================================================= */
-
-#kt_modal_sign .modal-dialog {
-    max-width: 600px;
-    width: calc(100% - 32px);
-    margin: 1.75rem auto;
-}
-
-#kt_modal_sign .modal-content {
-    border-radius: 12px;
-    border: none;
-    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
-    overflow: hidden;
-}
-
-#kt_modal_sign .modal-header {
-    padding: 16px 20px;
-    border-bottom: 1px solid #e4e6ef;
-    background: #f8f9fa;
-    flex-shrink: 0;
-}
-
-#kt_modal_sign .modal-title {
-    font-family: "Arial Narrow", Arial, sans-serif;
-    font-size: 16px;
-    font-weight: 700;
-    color: #181c32;
-}
-
-#kt_modal_sign .modal-body {
-    padding: 20px;
-    font-family: "Arial Narrow", Arial, sans-serif;
-    overflow-y: auto;   /* ✅ penting untuk landscape */
-}
-
-#kt_modal_sign .modal-footer {
-    padding: 14px 20px;
-    border-top: 1px solid #e4e6ef;
-    background: #f8f9fa;
-    gap: 8px;
-    flex-shrink: 0;
-}
-
-
-/* =========================================================
-   MODAL SIGN — TABLET & MOBILE PORTRAIT
-========================================================= */
-
-@media (max-width: 768px) {
+       MODAL SIGN
+    ========================================================= */
 
     #kt_modal_sign .modal-dialog {
-        max-width: calc(100% - 24px);
-        width: calc(100% - 24px);
-        margin: 12px auto;
+        max-width: 600px;
+        width: calc(100% - 32px);
+        margin: 1.75rem auto;
+    }
+
+    #kt_modal_sign .modal-content {
+        border-radius: 12px;
+        border: none;
+        box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
+        overflow: hidden;
     }
 
     #kt_modal_sign .modal-header {
-        padding: 12px 16px;
-    }
-
-    #kt_modal_sign .modal-title {
-        font-size: 15px;
-    }
-
-    #kt_modal_sign .modal-body {
-        padding: 16px;
-    }
-
-    #kt_modal_sign .modal-footer {
-        padding: 12px 16px;
-    }
-
-    .signature-pad-canvas {
-        height: 180px !important;
-    }
-}
-
-
-/* =========================================================
-   MODAL SIGN — LANDSCAPE MOBILE (tinggi layar kecil)
-========================================================= */
-
-@media (max-height: 600px) {
-
-    /* Modal jangan pakai margin besar */
-    #kt_modal_sign .modal-dialog {
-        margin: 8px auto;
-        max-width: calc(100% - 16px);
-        width: calc(100% - 16px);
-    }
-
-    /* Content jadi flex column dengan height penuh */
-    #kt_modal_sign .modal-content {
-        max-height: calc(100vh - 16px);
-        display: flex;
-        flex-direction: column;
-    }
-
-    /* Header & footer tidak ikut scroll */
-    #kt_modal_sign .modal-header,
-    #kt_modal_sign .modal-footer {
+        padding: 16px 20px;
+        border-bottom: 1px solid #e4e6ef;
+        background: #f8f9fa;
         flex-shrink: 0;
-        padding: 10px 14px;
     }
 
     #kt_modal_sign .modal-title {
-        font-size: 14px;
+        font-family: "Arial Narrow", Arial, sans-serif;
+        font-size: 16px;
+        font-weight: 700;
+        color: #181c32;
     }
 
-    /* Body scrollable */
     #kt_modal_sign .modal-body {
-        flex: 1 1 auto;
+        padding: 20px;
+        font-family: "Arial Narrow", Arial, sans-serif;
         overflow-y: auto;
-        padding: 12px;
-        -webkit-overflow-scrolling: touch;
     }
 
-    /* Canvas lebih kecil di landscape */
-    .signature-pad-canvas {
-        height: 140px !important;
-    }
-
-    /* Tombol footer jadi horizontal lagi (hemat tinggi) */
     #kt_modal_sign .modal-footer {
-        flex-direction: row;
-        justify-content: flex-end;
+        padding: 14px 20px;
+        border-top: 1px solid #e4e6ef;
+        background: #f8f9fa;
+        gap: 8px;
+        flex-shrink: 0;
     }
-
-    #kt_modal_sign .modal-footer .btn {
-        width: auto;
-        padding: 8px 16px;
-        font-size: 13px;
-    }
-}
-
-
-/* =========================================================
-   KHUSUS LANDSCAPE + TINGGI SANGAT KECIL (< 420px)
-========================================================= */
-
-@media (max-height: 420px) {
-
-    .signature-pad-canvas {
-        height: 110px !important;
-    }
-
-    #kt_modal_sign .modal-body {
-        padding: 8px 12px;
-    }
-
-    #kt_modal_sign .modal-header,
-    #kt_modal_sign .modal-footer {
-        padding: 8px 12px;
-    }
-
-    #kt_modal_sign .modal-footer .btn {
-        padding: 6px 14px;
-        font-size: 12px;
-    }
-}
 
     /* =========================================================
        PRINT
@@ -589,11 +462,16 @@
 
         .document-page {
             width: 210mm !important;
+            height: 297mm !important;
             min-height: 297mm !important;
+
             margin: 0 !important;
-            padding: 15mm 20mm 15mm 20mm !important;
+
             page-break-after: always;
             break-after: page;
+
+            overflow: hidden;
+            position: relative;
         }
 
         .document-page:last-child {
@@ -601,21 +479,12 @@
             break-after: auto;
         }
 
-        /* Hide floating & modal saat print */
         .floating-sign-btn,
         .modal,
         .modal-backdrop {
             display: none !important;
         }
     }
-    .data-table .data-label {
-    /* ✅ Ganti dari 1% → 32mm (fixed) */
-    width: 32mm;
-    white-space: nowrap;
-    font-weight: bold;
-    padding-right: 2mm;
-    vertical-align: top;
-}
 </style>
 @endsection
 
@@ -627,7 +496,7 @@
 ========================================================== --}}
 <div class="document-page">
 
-   
+    @include('partials.document-header')
 
     <div class="doc-title">PERJANJIAN KERJA WAKTU TERTENTU</div>
     <div class="doc-no"><strong>NO : {{ $contract->contract_number }}</strong></div>
@@ -638,37 +507,38 @@
         di <strong>Balikpapan</strong> telah diadakan dan disepakati perjanjian kerja antara :
     </p>
 
-   <table class="data-table">
-    <tr>
-        <td class="data-label">Nama</td>
-        <td class="data-sep">:</td>
-        <td class="data-value"><strong>Muslimin Sanafi</strong></td>
-    </tr>
-    <tr>
-        <td class="data-label">Jabatan</td>
-        <td class="data-sep">:</td>
-        <td class="data-value">Head Of Balikpapan Branch</td>
-    </tr>
-    <tr>
-        <td class="data-label">Perusahaan</td>
-        <td class="data-sep">:</td>
-        <td class="data-value">PT Bukaka Teknik Utama Tbk. - Balikpapan</td>
-    </tr>
-    <tr>
-        <td class="data-label">Jenis Usaha</td>
-        <td class="data-sep">:</td>
-        <td class="data-value">EPC (Engineering Procurement and Construction)</td>
-    </tr>
-    <tr>
-        <td class="data-label">Alamat</td>
-        <td class="data-sep">:</td>
-        <td class="data-value">
-            Jl. Mulawarman Km. 21 Manggar
-            <br>
-            Balikpapan – Kalimantan Timur
-        </td>
-    </tr>
-</table>
+    <table class="data-table">
+        <tr>
+            <td class="data-label">Nama</td>
+            <td class="data-sep">:</td>
+            <td class="data-value"><strong>Muslimin Sanafi</strong></td>
+        </tr>
+        <tr>
+            <td class="data-label">Jabatan</td>
+            <td class="data-sep">:</td>
+            <td class="data-value">Head Of Balikpapan Branch</td>
+        </tr>
+        <tr>
+            <td class="data-label">Perusahaan</td>
+            <td class="data-sep">:</td>
+            <td class="data-value">PT Bukaka Teknik Utama Tbk. - Balikpapan</td>
+        </tr>
+        <tr>
+            <td class="data-label">Jenis Usaha</td>
+            <td class="data-sep">:</td>
+            <td class="data-value">EPC (Engineering Procurement and Construction)</td>
+        </tr>
+        <tr>
+            <td class="data-label">Alamat</td>
+            <td class="data-sep">:</td>
+            <td class="data-value">
+                Jl. Mulawarman Km. 21 Manggar
+                <br>
+                Balikpapan – Kalimantan Timur
+            </td>
+        </tr>
+    </table>
+
     <p style="text-align: center;"><strong>Balikpapan -- Kalimantan Timur</strong></p>
 
     <p>
@@ -678,50 +548,50 @@
     </p>
 
     <table class="data-table">
-    <tr>
-        <td class="data-label">Nama</td>
-        <td class="data-sep">:</td>
-        <td class="data-value"><strong>{{ $contract->employee_name ?? '................' }}</strong></td>
-    </tr>
-    <tr>
-        <td class="data-label">NIK</td>
-        <td class="data-sep">:</td>
-        <td class="data-value">{{ $contract->nik ?? '................' }}</td>
-    </tr>
-    <tr>
-        <td class="data-label">Dept.</td>
-        <td class="data-sep">:</td>
-        <td class="data-value">{{ $contract->department ?? '................' }}</td>
-    </tr>
-    <tr>
-        <td class="data-label">No. KTP</td>
-        <td class="data-sep">:</td>
-        <td class="data-value">{{ $contract->ktp_number ?? '................' }}</td>
-    </tr>
-    <tr>
-        <td class="data-label">T T L</td>
-        <td class="data-sep">:</td>
-        <td class="data-value">
-            {{ $contract->birth_place ?? '................' }},
-            {{ $contract->birth_date?->translatedFormat('d F Y') ?? '................' }}
-        </td>
-    </tr>
-    <tr>
-        <td class="data-label">Umur</td>
-        <td class="data-sep">:</td>
-        <td class="data-value">{{ $contract->age_at_contract ?? '................' }}</td>
-    </tr>
-    <tr>
-        <td class="data-label">Jenis Kelamin</td>
-        <td class="data-sep">:</td>
-        <td class="data-value">{{ $contract->gender ?? '................' }}</td>
-    </tr>
-    <tr>
-        <td class="data-label">Alamat</td>
-        <td class="data-sep">:</td>
-        <td class="data-value">{{ $contract->address ?? '................' }}</td>
-    </tr>
-</table>
+        <tr>
+            <td class="data-label">Nama</td>
+            <td class="data-sep">:</td>
+            <td class="data-value"><strong>{{ $contract->employee_name ?? '................' }}</strong></td>
+        </tr>
+        <tr>
+            <td class="data-label">NIK</td>
+            <td class="data-sep">:</td>
+            <td class="data-value">{{ $contract->nik ?? '................' }}</td>
+        </tr>
+        <tr>
+            <td class="data-label">Dept.</td>
+            <td class="data-sep">:</td>
+            <td class="data-value">{{ $contract->department ?? '................' }}</td>
+        </tr>
+        <tr>
+            <td class="data-label">No. KTP</td>
+            <td class="data-sep">:</td>
+            <td class="data-value">{{ $contract->ktp_number ?? '................' }}</td>
+        </tr>
+        <tr>
+            <td class="data-label">T T L</td>
+            <td class="data-sep">:</td>
+            <td class="data-value">
+                {{ $contract->birth_place ?? '................' }},
+                {{ $contract->birth_date?->translatedFormat('d F Y') ?? '................' }}
+            </td>
+        </tr>
+        <tr>
+            <td class="data-label">Umur</td>
+            <td class="data-sep">:</td>
+            <td class="data-value">{{ $contract->age_at_contract ?? '................' }}</td>
+        </tr>
+        <tr>
+            <td class="data-label">Jenis Kelamin</td>
+            <td class="data-sep">:</td>
+            <td class="data-value">{{ $contract->gender ?? '................' }}</td>
+        </tr>
+        <tr>
+            <td class="data-label">Alamat</td>
+            <td class="data-sep">:</td>
+            <td class="data-value">{{ $contract->address ?? '................' }}</td>
+        </tr>
+    </table>
 
     <p>
         Dalam perjanjian kerja ini bertindak untuk dan atas namanya sendiri selanjutnya disebut sebagai
@@ -748,23 +618,19 @@
             <td colspan="2" class="paraf-title">Paraf</td>
         </tr>
         <tr>
-            <td class="paraf-box">
-                 {{-- @if ($contract->signature)
-                <img src="{{ asset('storage/' . $contract->signature) }}"
-                     class="signature-image"
-                     alt="Employee Signature">
-            @endif --}}
-            </td>
+            <td class="paraf-box"></td>
             <td class="paraf-box">
                 @if ($contract->signature)
-                <img src="{{ asset('storage/' . $contract->signature) }}"
-                     class="signature-image"
-                     alt="Employee Signature">
-            @endif
-
+                    <img src="{{ asset('storage/' . $contract->signature) }}"
+                         class="signature-image"
+                         alt="Employee Signature">
+                @endif
             </td>
         </tr>
     </table>
+
+    @include('partials.document-footer')
+
 </div>
 
 
@@ -772,6 +638,8 @@
     PAGE 2
 ========================================================== --}}
 <div class="document-page">
+
+    @include('partials.document-header')
 
     <div class="page-number">2</div>
 
@@ -829,12 +697,44 @@
     <p>1. Selama berlakunya Perjanjian Kerja Waktu Tertentu ini, pihak Perusahaan memberikan imbalan sebagai berikut :</p>
 
     <p class="indent"><strong>Gaji Pokok : Rp {{ number_format($contract->basic_salary ?? 0, 0, ',', '.') }} Perbulan</strong></p>
-
     <p>
         2. Semua pekerja yang telah bekerja selama 12 (dua belas) bulan berturut-turut mendapat cuti tahunan
         sebanyak 12 (dua belas) hari kerja. Hak cuti tahunan pekerja berlaku setelah masa satu tahun masa
         kerja terhitung dari waktu pekerja mulai masuk kerja. Cuti tahunan diatur sebagai berikut :
     </p>
+
+    
+
+    <table class="paraf-table">
+        <tr>
+            <td colspan="2" class="paraf-title">Paraf</td>
+        </tr>
+        <tr>
+            <td class="paraf-box"></td>
+            <td class="paraf-box">
+                @if ($contract->signature)
+                    <img src="{{ asset('storage/' . $contract->signature) }}"
+                         class="signature-image"
+                         alt="Employee Signature">
+                @endif
+            </td>
+        </tr>
+    </table>
+
+    @include('partials.document-footer')
+
+</div>
+
+
+{{-- =========================================================
+    PAGE 3
+========================================================== --}}
+<div class="document-page">
+
+    @include('partials.document-header')
+
+    <div class="page-number">3</div>
+    
 
     <p class="indent">a. Sebanyak-banyaknya 6 (enam) hari kerja atau sesusi ketentuan PT. Bukaka Teknik Utama Tbk. cabang Balikpapan ditetapkan sebagai cuti bersama (cuti masal) pada setiap Idul Fitri.</p>
     <p class="indent">b. Sisanya 6 (enam) hari kerja dapat dipergunakan menurut kepentingan pribadi masing-masing pekerja.</p>
@@ -867,38 +767,6 @@
         berlaku untuk semua Pekerja yang Muslim / Non Muslim
     </p>
 
-     <table class="paraf-table">
-        <tr>
-            <td colspan="2" class="paraf-title">Paraf</td>
-        </tr>
-        <tr>
-            <td class="paraf-box">
-                 {{-- @if ($contract->signature)
-                <img src="{{ asset('storage/' . $contract->signature) }}"
-                     class="signature-image"
-                     alt="Employee Signature">
-            @endif --}}
-            </td>
-            <td class="paraf-box">
-                @if ($contract->signature)
-                <img src="{{ asset('storage/' . $contract->signature) }}"
-                     class="signature-image"
-                     alt="Employee Signature">
-            @endif
-
-            </td>
-        </tr>
-    </table>
-</div>
-
-
-{{-- =========================================================
-    PAGE 3
-========================================================== --}}
-<div class="document-page">
-
-    <div class="page-number">3</div>
-
     <p>
         6. Gaji, dan Lembur (bila ada) dibayarkan pada tanggal <strong>09</strong> setiap bulannya, dengan
         periode perhitungan tanggal 01 -- 30/31 bulan sebelumnya, dengan ketentuan sebagai berikut:
@@ -906,8 +774,7 @@
 
     <p class="indent">a. Apabila tanggal 09 jatuh pada hari Sabtu/Libur Nasional, maka Upah dibayarkan pada tanggal 08 (hari Jumat/hari sebelumnya)</p>
     <p class="indent">b. Apabila tanggal 09 jatuh pada hari Minggu, maka Upah akan dibayarkan pada tanggal 10 (hari Senin)</p>
-
-    <p>7. Potongan Ketidakhadiran dan Keterlambatan</p>
+     <p>7. Potongan Ketidakhadiran dan Keterlambatan</p>
 
     <p class="indent">
         a. <strong>Pekerja</strong> yang tidak masuk bekerja tanpa pemberitahuan dihari pertama serta tidak
@@ -916,6 +783,38 @@
     </p>
 
     <p class="formula">ALPA = Alpa X Gaji Pokok / 21</p>
+
+    
+    <table class="paraf-table">
+        <tr>
+            <td colspan="2" class="paraf-title">Paraf</td>
+        </tr>
+        <tr>
+            <td class="paraf-box"></td>
+            <td class="paraf-box">
+                @if ($contract->signature)
+                    <img src="{{ asset('storage/' . $contract->signature) }}"
+                         class="signature-image"
+                         alt="Employee Signature">
+                @endif
+            </td>
+        </tr>
+    </table>
+
+    @include('partials.document-footer')
+
+</div>
+
+
+{{-- =========================================================
+    PAGE 4
+========================================================== --}}
+<div class="document-page">
+
+    @include('partials.document-header')
+
+    <div class="page-number">4</div>
+   
 
     <p class="indent">
         b. <strong>Pekerja</strong> yang tidak masuk bekerja karena <strong>izin,</strong> maka wajib
@@ -970,39 +869,6 @@
         oleh Pekerja berdasarkan catatan lembur dan dibayarkan sesuai dengan perhitungan jam lembur yang
         ditetapkan sebagai berikut:
     </p>
-
-     <table class="paraf-table">
-        <tr>
-            <td colspan="2" class="paraf-title">Paraf</td>
-        </tr>
-        <tr>
-            <td class="paraf-box">
-                 {{-- @if ($contract->signature)
-                <img src="{{ asset('storage/' . $contract->signature) }}"
-                     class="signature-image"
-                     alt="Employee Signature">
-            @endif --}}
-            </td>
-            <td class="paraf-box">
-                @if ($contract->signature)
-                <img src="{{ asset('storage/' . $contract->signature) }}"
-                     class="signature-image"
-                     alt="Employee Signature">
-            @endif
-
-            </td>
-        </tr>
-    </table>
-</div>
-
-
-{{-- =========================================================
-    PAGE 4
-========================================================== --}}
-<div class="document-page">
-
-    <div class="page-number">4</div>
-
     <p class="indent">a. Perhitungan Upah lembur pada hari kerja :</p>
     <p class="indent-2">Jam Pertama : 1,5 x Gaji Pokok : 173 per jam</p>
     <p class="indent-2">Jam Kedua dst : 2 x Gaji Pokok : 173 per jam</p>
@@ -1011,6 +877,39 @@
     <p class="indent-2">Tujuh Jam Pertama : 2 x Gaji Pokok : 173 per jam</p>
     <p class="indent-2">Jam Kedelapan : 3 x Gaji Pokok : 173 per jam</p>
     <p class="indent-2">Jam Kesembilan dst : 4 x Gaji Pokok : 173 per jam</p>
+
+
+    
+
+    <table class="paraf-table">
+        <tr>
+            <td colspan="2" class="paraf-title">Paraf</td>
+        </tr>
+        <tr>
+            <td class="paraf-box"></td>
+            <td class="paraf-box">
+                @if ($contract->signature)
+                    <img src="{{ asset('storage/' . $contract->signature) }}"
+                         class="signature-image"
+                         alt="Employee Signature">
+                @endif
+            </td>
+        </tr>
+    </table>
+
+    @include('partials.document-footer')
+
+</div>
+
+
+{{-- =========================================================
+    PAGE 5
+========================================================== --}}
+<div class="document-page">
+
+    @include('partials.document-header')
+
+    <div class="page-number">5</div>
 
     <div class="pasal-title">PASAL 8</div>
     <div class="pasal-subtitle">KETENTUAN UPAH WAKTU SAKIT</div>
@@ -1050,8 +949,7 @@
     <p class="indent-2">- Pelanggaran pertama: Surat Peringatan Pertama (SP I)</p>
     <p class="indent-2">- Pelanggaran kedua: Surat Peringatan Kedua (SP II)</p>
     <p class="indent-2">- Pelanggaran ketiga: Surat Peringatan Ketiga (SP III)</p>
-
-    <p class="indent"><strong>b. Ketidakhadiran Berturut-turut (Mangkir)</strong></p>
+     <p class="indent"><strong>b. Ketidakhadiran Berturut-turut (Mangkir)</strong></p>
 
     <p class="indent">
         Dalam hal Pekerja tidak masuk kerja selama <strong>5 (lima) hari kerja atau lebih secara
@@ -1061,6 +959,39 @@
         dapat melakukan Pemutusan Hubungan Kerja (PHK) dengan alasan mangkir (pelanggaran disiplin oleh
         Pekerja) sesuai ketentuan Pasal 51 Peraturan Pemerintah Nomor 35 Tahun 2021.
     </p>
+
+    
+
+    <table class="paraf-table">
+        <tr>
+            <td colspan="2" class="paraf-title">Paraf</td>
+        </tr>
+        <tr>
+            <td class="paraf-box"></td>
+            <td class="paraf-box">
+                @if ($contract->signature)
+                    <img src="{{ asset('storage/' . $contract->signature) }}"
+                         class="signature-image"
+                         alt="Employee Signature">
+                @endif
+            </td>
+        </tr>
+    </table>
+
+    @include('partials.document-footer')
+
+</div>
+
+
+{{-- =========================================================
+    PAGE 6
+========================================================== --}}
+<div class="document-page">
+
+    @include('partials.document-header')
+
+    <div class="page-number">6</div>
+   
 
     <p>2. <strong>Kepatuhan Jam Kerja dan Area Kerja</strong></p>
 
@@ -1075,38 +1006,6 @@
     <p class="indent-2">- Pelanggaran pertama: Surat Peringatan Pertama (SP I)</p>
     <p class="indent-2">- Pelanggaran kedua: Surat Peringatan Kedua (SP II)</p>
     <p class="indent-2">- Pelanggaran ketiga: Surat Peringatan Ketiga (SP III)</p>
-
-     <table class="paraf-table">
-        <tr>
-            <td colspan="2" class="paraf-title">Paraf</td>
-        </tr>
-        <tr>
-            <td class="paraf-box">
-                 {{-- @if ($contract->signature)
-                <img src="{{ asset('storage/' . $contract->signature) }}"
-                     class="signature-image"
-                     alt="Employee Signature">
-            @endif --}}
-            </td>
-            <td class="paraf-box">
-                @if ($contract->signature)
-                <img src="{{ asset('storage/' . $contract->signature) }}"
-                     class="signature-image"
-                     alt="Employee Signature">
-            @endif
-
-            </td>
-        </tr>
-    </table>
-</div>
-
-
-{{-- =========================================================
-    PAGE 5
-========================================================== --}}
-<div class="document-page">
-
-    <div class="page-number">5</div>
 
     <p>3. <strong>Keselamatan, Kesehatan Kerja (K3), dan Fasilitas</strong></p>
 
@@ -1144,11 +1043,43 @@
         kerja, dan/atau operasional Perusahaan.
     </p>
 
+    
+
+    
+
+    <table class="paraf-table">
+        <tr>
+            <td colspan="2" class="paraf-title">Paraf</td>
+        </tr>
+        <tr>
+            <td class="paraf-box"></td>
+            <td class="paraf-box">
+                @if ($contract->signature)
+                    <img src="{{ asset('storage/' . $contract->signature) }}"
+                         class="signature-image"
+                         alt="Employee Signature">
+                @endif
+            </td>
+        </tr>
+    </table>
+
+    @include('partials.document-footer')
+
+</div>
+
+
+{{-- =========================================================
+    PAGE 7
+========================================================== --}}
+<div class="document-page">
+
+    @include('partials.document-header')
+
+    <div class="page-number">7</div>
     <p class="indent">Sanksi:</p>
     <p class="indent-2">- Pelanggaran pertama: Surat Peringatan Pertama (SP I)</p>
     <p class="indent-2">- Pelanggaran kedua: Surat Peringatan Kedua (SP II)</p>
     <p class="indent-2">- Pelanggaran ketiga: Surat Peringatan Ketiga (SP III)</p>
-
     <p>6. <strong>Kewajiban Pemutakhiran Data Pekerja</strong></p>
 
     <p class="indent">
@@ -1168,38 +1099,6 @@
     <p class="indent">8. Perubahan pihak yang menjadi ahli waris atau penerima manfaat hak ketenagakerjaan.</p>
 
     <p><strong>Sanksi :</strong> Surat Peringatan Pertama (SP I)</p>
-
-     <table class="paraf-table">
-        <tr>
-            <td colspan="2" class="paraf-title">Paraf</td>
-        </tr>
-        <tr>
-            <td class="paraf-box">
-                 {{-- @if ($contract->signature)
-                <img src="{{ asset('storage/' . $contract->signature) }}"
-                     class="signature-image"
-                     alt="Employee Signature">
-            @endif --}}
-            </td>
-            <td class="paraf-box">
-                @if ($contract->signature)
-                <img src="{{ asset('storage/' . $contract->signature) }}"
-                     class="signature-image"
-                     alt="Employee Signature">
-            @endif
-
-            </td>
-        </tr>
-    </table>
-</div>
-
-
-{{-- =========================================================
-    PAGE 6
-========================================================== --}}
-<div class="document-page">
-
-    <div class="page-number">6</div>
 
     <div class="pasal-title">PASAL 10</div>
     <div class="pasal-subtitle">PELANGGARAN TATA TERTIB</div>
@@ -1228,13 +1127,44 @@
         Tahun 2021</strong>.
     </p>
 
-    <p>
+   
+
+    <table class="paraf-table">
+        <tr>
+            <td colspan="2" class="paraf-title">Paraf</td>
+        </tr>
+        <tr>
+            <td class="paraf-box"></td>
+            <td class="paraf-box">
+                @if ($contract->signature)
+                    <img src="{{ asset('storage/' . $contract->signature) }}"
+                         class="signature-image"
+                         alt="Employee Signature">
+                @endif
+            </td>
+        </tr>
+    </table>
+
+    @include('partials.document-footer')
+
+</div>
+
+
+{{-- =========================================================
+    PAGE 8
+========================================================== --}}
+<div class="document-page">
+
+    @include('partials.document-header')
+
+    <div class="page-number">8</div>
+     <p>
         4. Khusus sanksi PHK atas pelanggaran berulang dan atau pelanggaran berat-mendesak, maka
         Perusahaan <strong>tidak berkewajiban membayarkan ganti rugi sisa masa kontrak</strong>
         sebagaimana dimaksud dalam Pasal 62 Undang-Undang Nomor 13 Tahun 2003.
     </p>
 
-    <h3 style="font-size:12pt; margin:8px 0 4px 0;">Ketertiban dan Kepatuhan Kerja</h3>
+    <h3>Ketertiban dan Kepatuhan Kerja</h3>
 
     <p>
         1. <strong>Standar Penampilan:</strong> Pekerja pria dilarang berambut panjang, gondrong, atau
@@ -1266,38 +1196,6 @@
     <p class="indent-2">Pelanggaran ke-2: SP II</p>
     <p class="indent-2">Pelanggaran ke-3: SP III atau Skorsing</p>
 
-     <table class="paraf-table">
-        <tr>
-            <td colspan="2" class="paraf-title">Paraf</td>
-        </tr>
-        <tr>
-            <td class="paraf-box">
-                 {{-- @if ($contract->signature)
-                <img src="{{ asset('storage/' . $contract->signature) }}"
-                     class="signature-image"
-                     alt="Employee Signature">
-            @endif --}}
-            </td>
-            <td class="paraf-box">
-                @if ($contract->signature)
-                <img src="{{ asset('storage/' . $contract->signature) }}"
-                     class="signature-image"
-                     alt="Employee Signature">
-            @endif
-
-            </td>
-        </tr>
-    </table>
-</div>
-
-
-{{-- =========================================================
-    PAGE 7
-========================================================== --}}
-<div class="document-page">
-
-    <div class="page-number">7</div>
-
     <p>
         4. <strong>Mengabaikan Prosedur Kerja:</strong> Pekerja wajib mematuhi prosedur kerja sesuai
         surat edaran instruksi teknis, serta program kerja yang ditetapkan oleh Perusahaan atau User.
@@ -1307,6 +1205,35 @@
     <p class="indent-2">Pelanggaran ke-1: Surat Peringatan Pertama dan Terakhir</p>
     <p class="indent-2">Pelanggaran ke-2: PHK</p>
 
+    <table class="paraf-table">
+        <tr>
+            <td colspan="2" class="paraf-title">Paraf</td>
+        </tr>
+        <tr>
+            <td class="paraf-box"></td>
+            <td class="paraf-box">
+                @if ($contract->signature)
+                    <img src="{{ asset('storage/' . $contract->signature) }}"
+                         class="signature-image"
+                         alt="Employee Signature">
+                @endif
+            </td>
+        </tr>
+    </table>
+
+    @include('partials.document-footer')
+
+</div>
+
+
+{{-- =========================================================
+    PAGE 9
+========================================================== --}}
+<div class="document-page">
+
+    @include('partials.document-header')
+
+    <div class="page-number">9</div>
     <p>
         5. <strong>Keterangan Tidak Benar:</strong> Pekerja dilarang memberikan laporan, data, atau
         informasi yang tidak benar terkait aset, pekerjaan, atau kegiatan operasional Perusahaan.
@@ -1349,38 +1276,37 @@
     <p class="indent">Kategori Pelanggaran: Mendesak</p>
     <p class="indent">Sanksi: PHK</p>
 
-     <table class="paraf-table">
+    
+
+    <table class="paraf-table">
         <tr>
             <td colspan="2" class="paraf-title">Paraf</td>
         </tr>
         <tr>
-            <td class="paraf-box">
-                 {{-- @if ($contract->signature)
-                <img src="{{ asset('storage/' . $contract->signature) }}"
-                     class="signature-image"
-                     alt="Employee Signature">
-            @endif --}}
-            </td>
+            <td class="paraf-box"></td>
             <td class="paraf-box">
                 @if ($contract->signature)
-                <img src="{{ asset('storage/' . $contract->signature) }}"
-                     class="signature-image"
-                     alt="Employee Signature">
-            @endif
-
+                    <img src="{{ asset('storage/' . $contract->signature) }}"
+                         class="signature-image"
+                         alt="Employee Signature">
+                @endif
             </td>
         </tr>
     </table>
+
+    @include('partials.document-footer')
+
 </div>
 
 
 {{-- =========================================================
-    PAGE 8
+    PAGE 10
 ========================================================== --}}
 <div class="document-page">
 
-    <div class="page-number">8</div>
+    @include('partials.document-header')
 
+    <div class="page-number">10</div>
     <p><strong>B. LARANGAN MEROKOK (K3 &amp; ZERO ACCIDENT)</strong></p>
 
     <p>
@@ -1421,38 +1347,6 @@
     <p class="indent-2" style="margin-left:20mm !important;">Pelanggaran ke-2: PHK</p>
     <p class="indent-2">d. Menyebabkan Kebakaran atau kerugian materil besar : PHK</p>
 
-     <table class="paraf-table">
-        <tr>
-            <td colspan="2" class="paraf-title">Paraf</td>
-        </tr>
-        <tr>
-            <td class="paraf-box">
-                 {{-- @if ($contract->signature)
-                <img src="{{ asset('storage/' . $contract->signature) }}"
-                     class="signature-image"
-                     alt="Employee Signature">
-            @endif --}}
-            </td>
-            <td class="paraf-box">
-                @if ($contract->signature)
-                <img src="{{ asset('storage/' . $contract->signature) }}"
-                     class="signature-image"
-                     alt="Employee Signature">
-            @endif
-
-            </td>
-        </tr>
-    </table>
-</div>
-
-
-{{-- =========================================================
-    PAGE 9
-========================================================== --}}
-<div class="document-page">
-
-    <div class="page-number">9</div>
-
     <p><strong>C. PERILAKU, ETIKA &amp; INFORMASI ELEKTRONIK</strong></p>
 
     <p>
@@ -1460,6 +1354,37 @@
         atau perangkat elektronik sejenis di area yang dilarang/ area terbatas yang ditetapkan Perusahaan/User.
     </p>
     <p class="indent">Kategori Pelanggaran: Berat</p>
+    
+
+    <table class="paraf-table">
+        <tr>
+            <td colspan="2" class="paraf-title">Paraf</td>
+        </tr>
+        <tr>
+            <td class="paraf-box"></td>
+            <td class="paraf-box">
+                @if ($contract->signature)
+                    <img src="{{ asset('storage/' . $contract->signature) }}"
+                         class="signature-image"
+                         alt="Employee Signature">
+                @endif
+            </td>
+        </tr>
+    </table>
+
+    @include('partials.document-footer')
+
+</div>
+
+
+{{-- =========================================================
+    PAGE 11
+========================================================== --}}
+<div class="document-page">
+
+    @include('partials.document-header')
+
+    <div class="page-number">11</div>
     <p class="indent">Sanksi:</p>
     <p class="indent-2">Pelanggaran ke-1: Surat Peringatan Pertama dan Terakhir</p>
     <p class="indent-2">Pelanggaran ke-2: PHK</p>
@@ -1508,6 +1433,37 @@
     <p class="indent-2">Pelanggaran ke-1: Skorsing maksimal 1 (satu) minggu</p>
     <p class="indent-2">Pelanggaran ke-2: PHK</p>
 
+    
+
+    <table class="paraf-table">
+        <tr>
+            <td colspan="2" class="paraf-title">Paraf</td>
+        </tr>
+        <tr>
+            <td class="paraf-box"></td>
+            <td class="paraf-box">
+                @if ($contract->signature)
+                    <img src="{{ asset('storage/' . $contract->signature) }}"
+                         class="signature-image"
+                         alt="Employee Signature">
+                @endif
+            </td>
+        </tr>
+    </table>
+
+    @include('partials.document-footer')
+
+</div>
+
+
+{{-- =========================================================
+    PAGE 12
+========================================================== --}}
+<div class="document-page">
+
+    @include('partials.document-header')
+
+    <div class="page-number">12</div>
     <p>
         20. <strong>Intimidasi:</strong> Mengancam secara fisik atau psikis terhadap atasan, bawahan,
         rekan kerja, atau keluarganya.
@@ -1516,38 +1472,6 @@
     <p class="indent">Sanksi:</p>
     <p class="indent-2">Pelanggaran ke-1: Skorsing maksimal 2 (dua) minggu</p>
     <p class="indent-2">Pelanggaran ke-2: PHK</p>
-
-     <table class="paraf-table">
-        <tr>
-            <td colspan="2" class="paraf-title">Paraf</td>
-        </tr>
-        <tr>
-            <td class="paraf-box">
-                 {{-- @if ($contract->signature)
-                <img src="{{ asset('storage/' . $contract->signature) }}"
-                     class="signature-image"
-                     alt="Employee Signature">
-            @endif --}}
-            </td>
-            <td class="paraf-box">
-                @if ($contract->signature)
-                <img src="{{ asset('storage/' . $contract->signature) }}"
-                     class="signature-image"
-                     alt="Employee Signature">
-            @endif
-
-            </td>
-        </tr>
-    </table>
-</div>
-
-
-{{-- =========================================================
-    PAGE 10
-========================================================== --}}
-<div class="document-page">
-
-    <div class="page-number">10</div>
 
     <p>
         21. <strong>Perjudian</strong>: Terbukti melakukan kegiatan perjudian dalam bentuk apa pun di
@@ -1592,7 +1516,38 @@
     <p class="indent-2">Pelanggaran ke-1: Skorsing minimal 1 (satu) minggu</p>
     <p class="indent-2">Pelanggaran ke-2: PHK</p>
 
-    <p>
+   
+
+    <table class="paraf-table">
+        <tr>
+            <td colspan="2" class="paraf-title">Paraf</td>
+        </tr>
+        <tr>
+            <td class="paraf-box"></td>
+            <td class="paraf-box">
+                @if ($contract->signature)
+                    <img src="{{ asset('storage/' . $contract->signature) }}"
+                         class="signature-image"
+                         alt="Employee Signature">
+                @endif
+            </td>
+        </tr>
+    </table>
+
+    @include('partials.document-footer')
+
+</div>
+
+
+{{-- =========================================================
+    PAGE 13
+========================================================== --}}
+<div class="document-page">
+
+    @include('partials.document-header')
+
+    <div class="page-number">14</div>
+     <p>
         26. <strong>Pembangkangan Medis:</strong> Menolak perintah melakukan pemeriksaan kesehatan atau
         MCU dan atau tidak mematuhi petunjuk dokter.
     </p>
@@ -1642,39 +1597,30 @@
     <p class="indent">Kategori Pelanggaran: Mendesak</p>
     <p class="indent">Sanksi: PHK</p>
 
-     <table class="paraf-table">
+    <table class="paraf-table">
         <tr>
             <td colspan="2" class="paraf-title">Paraf</td>
         </tr>
         <tr>
-            <td class="paraf-box">
-                 {{-- @if ($contract->signature)
-                <img src="{{ asset('storage/' . $contract->signature) }}"
-                     class="signature-image"
-                     alt="Employee Signature">
-            @endif --}}
-            </td>
+            <td class="paraf-box"></td>
             <td class="paraf-box">
                 @if ($contract->signature)
-                <img src="{{ asset('storage/' . $contract->signature) }}"
-                     class="signature-image"
-                     alt="Employee Signature">
-            @endif
-
+                    <img src="{{ asset('storage/' . $contract->signature) }}"
+                         class="signature-image"
+                         alt="Employee Signature">
+                @endif
             </td>
         </tr>
     </table>
+
+    @include('partials.document-footer')
 </div>
-
-
-{{-- =========================================================
-    PAGE 11
-========================================================== --}}
 <div class="document-page">
 
-    <div class="page-number">11</div>
+    @include('partials.document-header')
 
-    <p><strong>E. LAIN-LAIN</strong></p>
+    <div class="page-number">15</div>
+<p><strong>E. LAIN-LAIN</strong></p>
 
     <p>
         32. <strong>Diskresi Perusahaan:</strong> Perbuatan atau tindakan Pekerja yang belum diatur
@@ -1735,7 +1681,31 @@
         berakhirnya jangka waktu PKWT berdasarkan gaji pokok. (Sesuai Pasal 62 UU Ketenagakerjaan).
     </p>
 
-    <p>
+   
+    <table class="paraf-table">
+        <tr>
+            <td colspan="2" class="paraf-title">Paraf</td>
+        </tr>
+        <tr>
+            <td class="paraf-box"></td>
+            <td class="paraf-box">
+                @if ($contract->signature)
+                    <img src="{{ asset('storage/' . $contract->signature) }}"
+                         class="signature-image"
+                         alt="Employee Signature">
+                @endif
+            </td>
+        </tr>
+    </table>
+
+    @include('partials.document-footer')
+</div>
+<div class="document-page">
+
+    @include('partials.document-header')
+
+    <div class="page-number">16</div>
+     <p>
         3. Apabila Pekerja mengundurkan diri atas kemauan sendiri atau dianggap mengundurkan diri oleh
         perusahaan sebelum berakhirnya jangka waktu yang ditetapkan dalam Perjanjian ini, maka:
     </p>
@@ -1754,38 +1724,6 @@
         c. Pembayaran Uang Kompensasi sebagaimana dimaksud pada butir (a) dapat diperhitungkan
         (dikompensasikan) dengan kewajiban pembayaran ganti rugi oleh Pekerja kepada Perusahaan.
     </p>
-
-     <table class="paraf-table">
-        <tr>
-            <td colspan="2" class="paraf-title">Paraf</td>
-        </tr>
-        <tr>
-            <td class="paraf-box">
-                 {{-- @if ($contract->signature)
-                <img src="{{ asset('storage/' . $contract->signature) }}"
-                     class="signature-image"
-                     alt="Employee Signature">
-            @endif --}}
-            </td>
-            <td class="paraf-box">
-                @if ($contract->signature)
-                <img src="{{ asset('storage/' . $contract->signature) }}"
-                     class="signature-image"
-                     alt="Employee Signature">
-            @endif
-
-            </td>
-        </tr>
-    </table>
-</div>
-
-
-{{-- =========================================================
-    PAGE 12
-========================================================== --}}
-<div class="document-page">
-
-    <div class="page-number">12</div>
 
     <p>
         4. Pekerja tidak hadir selama 5 (Lima) hari dalam 1 (satu) bulan secara berturut -- turut, tanpa
@@ -1830,7 +1768,31 @@
         yang penyelesaiannya berpedoman pada ketentuan perundang-undangan yang berlaku.
     </p>
 
-    <p>
+   
+    <table class="paraf-table">
+        <tr>
+            <td colspan="2" class="paraf-title">Paraf</td>
+        </tr>
+        <tr>
+            <td class="paraf-box"></td>
+            <td class="paraf-box">
+                @if ($contract->signature)
+                    <img src="{{ asset('storage/' . $contract->signature) }}"
+                         class="signature-image"
+                         alt="Employee Signature">
+                @endif
+            </td>
+        </tr>
+    </table>
+
+    @include('partials.document-footer')
+</div>
+<div class="document-page">
+
+    @include('partials.document-header')
+
+    <div class="page-number">18</div>
+     <p>
         10. Hasil evaluasi Pekerja dinilai tidak mampu dan tidak cakap oleh Perusahaan / User dalam
         melaksanakan tugasnya dan sudah di tempatkan di bidang lain yang sesuai apabila ada, dan / atau
         melanggar tata tertib yang ditetapkan oleh Perusahaan / User.
@@ -1847,38 +1809,29 @@
         secara musyawarah dan kekeluargaan. Bila tidak tercapai kesepakatan maka akan diselesaikan
         menurut peraturan perundang -- undangan yang berlaku di Wilayah Republik Indonesia.
     </p>
-
-     <table class="paraf-table">
+    <table class="paraf-table">
         <tr>
             <td colspan="2" class="paraf-title">Paraf</td>
         </tr>
         <tr>
-            <td class="paraf-box">
-                 {{-- @if ($contract->signature)
-                <img src="{{ asset('storage/' . $contract->signature) }}"
-                     class="signature-image"
-                     alt="Employee Signature">
-            @endif --}}
-            </td>
+            <td class="paraf-box"></td>
             <td class="paraf-box">
                 @if ($contract->signature)
-                <img src="{{ asset('storage/' . $contract->signature) }}"
-                     class="signature-image"
-                     alt="Employee Signature">
-            @endif
-
+                    <img src="{{ asset('storage/' . $contract->signature) }}"
+                         class="signature-image"
+                         alt="Employee Signature">
+                @endif
             </td>
         </tr>
     </table>
+
+    @include('partials.document-footer')
 </div>
-
-
-{{-- =========================================================
-    PAGE 13
-========================================================== --}}
 <div class="document-page">
 
-    <div class="page-number">13</div>
+    @include('partials.document-header')
+
+    <div class="page-number">19</div>
 
     <div class="pasal-title">PASAL 14</div>
     <div class="pasal-subtitle">KETENTUAN LAIN</div>
@@ -1935,60 +1888,58 @@
     <div class="signature-wrapper">
         <div class="signature-column">
 
-        <div><strong>Pekerja</strong></div>
-        <div>&nbsp;</div>
+            <div><strong>Pekerja</strong></div>
+            <div>&nbsp;</div>
 
-        <div class="signature-space"></div>
+            <div class="signature-space"></div>
 
-        <div class="signature-image-wrapper">
-            @if ($contract->signature)
-                <img src="{{ asset('storage/' . $contract->signature) }}"
-                     class="signature-image"
-                     alt="Employee Signature">
-            @endif
+            <div class="signature-image-wrapper-2">
+                @if ($contract->signature)
+                    <img src="{{ asset('storage/' . $contract->signature) }}"
+                         class="signature-image-2"
+                         alt="Employee Signature">
+                @endif
+            </div>
+
+            <div class="signature-name">
+                {{ $contract->employee_name ?? '........................' }}
+            </div>
+
+            <div class="signature-title">
+                &nbsp;
+            </div>
+
         </div>
 
-        <div class="signature-name">
-            {{ $contract->employee_name ?? '........................' }}
-        </div>
+        {{-- Kolom Head of Branch --}}
+        <div class="signature-column">
 
-        <div class="signature-title">
-            &nbsp;
+            <div><strong>PT BUKAKA TEKNIK UTAMA Tbk</strong></div>
+            <div><strong>Cabang Balikpapan</strong></div>
+
+            <div class="signature-space"></div>
+
+            <div class="signature-image-wrapper">
+                @if ($contract->head_signature)
+                    <img src="{{ asset('storage/' . $contract->head_signature) }}"
+                         class="signature-image"
+                         alt="Head Signature">
+                @endif
+            </div>
+
+            <div class="signature-name">
+                IR. Muslimin Sanafi
+            </div>
+
+            <div class="signature-title">
+                Head Of Balikpapan Branch
+            </div>
+
         </div>
 
     </div>
 
-    {{-- Kolom Head of Branch --}}
-    <div class="signature-column">
-
-        <div><strong>PT BUKAKA TEKNIK UTAMA Tbk</strong></div>
-        <div><strong>Cabang Balikpapan</strong></div>
-
-        <div class="signature-space"></div>
-
-        <div class="signature-image-wrapper">
-            @if ($contract->head_signature)
-                <img src="{{ asset('storage/' . $contract->head_signature) }}"
-                     class="signature-image"
-                     alt="Head Signature">
-            @endif
-        </div>
-
-        <div class="signature-name">
-           IR. Muslimin Sanafi  
-        </div>
-
-        <div class="signature-title">
-            Head Of Balikpapan Branch
-        </div>
-
-    </div>
-
-
-    {{-- Kolom Pekerja --}}
-    
-
-</div>
+    @include('partials.document-footer')
 
 </div>
 
@@ -2163,24 +2114,23 @@ document.addEventListener('DOMContentLoaded', function () {
 
     function resizeCanvas() {
 
-    const width = canvas.offsetWidth;
-    const height = canvas.offsetHeight;
+        const width = canvas.offsetWidth;
+        const height = canvas.offsetHeight;
 
-    // ✅ Guard: jangan resize kalau canvas belum tampil
-    if (width === 0 || height === 0) {
-        return;
+        if (width === 0 || height === 0) {
+            return;
+        }
+
+        const ratio = Math.max(window.devicePixelRatio || 1, 1);
+
+        canvas.width = width * ratio;
+        canvas.height = height * ratio;
+
+        canvas.getContext('2d').setTransform(1, 0, 0, 1, 0, 0);
+        canvas.getContext('2d').scale(ratio, ratio);
+
+        signaturePad.clear();
     }
-
-    const ratio = Math.max(window.devicePixelRatio || 1, 1);
-
-    canvas.width = width * ratio;
-    canvas.height = height * ratio;
-
-    canvas.getContext('2d').setTransform(1, 0, 0, 1, 0, 0); // reset dulu
-    canvas.getContext('2d').scale(ratio, ratio);
-
-    signaturePad.clear();
-}
 
 
     /* =========================================================
@@ -2189,16 +2139,15 @@ document.addEventListener('DOMContentLoaded', function () {
 
     const modal = document.getElementById('kt_modal_sign');
 
-   modal.addEventListener('shown.bs.modal', function () {
+    modal.addEventListener('shown.bs.modal', function () {
 
-    // Tunggu transisi Bootstrap selesai (~300ms) + 1 frame
-    setTimeout(function () {
-        requestAnimationFrame(function () {
-            resizeCanvas();
-        });
-    }, 300);
+        setTimeout(function () {
+            requestAnimationFrame(function () {
+                resizeCanvas();
+            });
+        }, 300);
 
-});
+    });
 
     modal.addEventListener('hidden.bs.modal', function () {
 
@@ -2229,8 +2178,6 @@ document.addEventListener('DOMContentLoaded', function () {
 
     form.addEventListener('submit', function (e) {
 
-        /* ---------- CHECK SIGNATURE ---------- */
-
         if (signaturePad.isEmpty()) {
 
             e.preventDefault();
@@ -2244,8 +2191,6 @@ document.addEventListener('DOMContentLoaded', function () {
             return;
         }
 
-
-        /* ---------- CHECK AGREEMENT ---------- */
 
         const agreement = document.getElementById('contract-agreement');
 
@@ -2262,8 +2207,6 @@ document.addEventListener('DOMContentLoaded', function () {
             return;
         }
 
-
-        /* ---------- SAVE SIGNATURE ---------- */
 
         document.getElementById('signature_data').value =
             signaturePad.toDataURL('image/png');

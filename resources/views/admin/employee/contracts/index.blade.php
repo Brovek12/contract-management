@@ -230,7 +230,7 @@
                                     <td class="text-center">
                                         @can('read-my-contracts')
 
-                                        <a href="{{ route('employee.contracts.show', $item->id) }}"
+                                        <a href="{{ route('contracts.show', $item->id) }}"
                                            class="btn btn-icon btn-sm btn-light-primary"
                                            title="Lihat Contract">
 

@@ -42,8 +42,15 @@ class ContractController extends Controller
     ));
 }
 
-public function create()
+public function create(Request $request)
 {
+    $type = $request->get('type');
+
+    // Validasi type
+    if (!in_array($type, ['phm', 'phss', 'phkt'])) {
+        abort(404);
+    }
+
     $employees = User::whereNotNull('employee_number')
         ->orderBy('name')
         ->get();
@@ -59,7 +66,8 @@ public function create()
     return view('admin.hrd.contracts.create', compact(
         'employees',
         'projects',
-        'heads'
+        'heads',
+        'type'
     ));
 }
 
