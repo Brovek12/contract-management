@@ -1970,6 +1970,12 @@
 
     </button>
 @endif
+<a href="{{ url()->previous() }}"
+   class="floating-sign-btn">
+    <i class="ki-outline ki-arrow-left"></i>
+    Back
+</a>
+
 
 
 {{-- =========================================================
