@@ -44,6 +44,15 @@ Route::post(
     'contracts/{contract}/send',
     [ContractController::class, 'send']
 )->name('contracts.send');
+
+
+Route::post('/contracts/{contract}/approve-hrd',
+    [ContractController::class, 'approveHRD']
+)->name('contracts.approve.hrd');
+
+Route::post('/contracts/{contract}/approve-head',
+    [ContractController::class, 'approveHead']
+)->name('contracts.approve.head');
 Route::resource('contracts', ContractController::class);
 
     Route::resource('user', UserController::class);

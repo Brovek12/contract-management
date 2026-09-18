@@ -21,12 +21,17 @@ return new class extends Migration
             // Tanggal yang tercantum pada bagian pembukaan kontrak
             $table->date('contract_date');
 
+            // Jenis contract
+            $table->string('type')->nullable();
+
+            $table->string('title');
+
 
             // =====================================================
             // RELATION
             // =====================================================
 
-            // Employee yang menerima kontrak
+            // Employee yang menerima contract
             $table->foreignId('user_id')
                 ->constrained('users')
                 ->restrictOnDelete();
@@ -37,7 +42,7 @@ return new class extends Migration
                 ->constrained('projects')
                 ->nullOnDelete();
 
-            // Head of Branch / pihak pertama yang menandatangani
+            // Head of Branch / pihak pertama
             $table->foreignId('head_user_id')
                 ->nullable()
                 ->constrained('users')
@@ -46,12 +51,10 @@ return new class extends Migration
 
             // =====================================================
             // EMPLOYEE SNAPSHOT
-            // Data disimpan berdasarkan kondisi employee
-            // ketika contract dibuat
+            // Data employee ketika contract dibuat
             // =====================================================
 
             $table->string('employee_name');
-            $table->string('type')->nullable();
 
             $table->string('department')->nullable();
 
@@ -73,13 +76,12 @@ return new class extends Migration
             // male / female
             $table->string('gender')->nullable();
 
-            // Alamat berdasarkan data pada contract
+            // Alamat berdasarkan contract
             $table->text('address')->nullable();
 
 
             // =====================================================
             // CONTRACT PERIOD
-            // PASAL 1
             // =====================================================
 
             $table->date('start_date');
@@ -89,7 +91,6 @@ return new class extends Migration
 
             // =====================================================
             // POSITION & PLACEMENT
-            // PASAL 3 & PASAL 4
             // =====================================================
 
             // Jabatan / posisi pekerja
@@ -104,7 +105,6 @@ return new class extends Migration
 
             // =====================================================
             // SALARY
-            // PASAL 5
             // =====================================================
 
             $table->decimal('basic_salary', 15, 2)->nullable();
@@ -113,8 +113,6 @@ return new class extends Migration
             // =====================================================
             // CONTRACT DOCUMENT
             // =====================================================
-
-            $table->string('title');
 
             // PDF contract jika menggunakan upload
             $table->string('file_path')->nullable();
@@ -137,17 +135,24 @@ return new class extends Migration
             // EMPLOYEE SIGNATURE
             // =====================================================
 
-            // Path gambar tanda tangan employee
-            $table->string('signature')->nullable();
+            $table->string('employee_signature')->nullable();
 
-            $table->timestamp('signed_at')->nullable();
+            $table->timestamp('employee_signed_at')->nullable();
+
+
+            // =====================================================
+            // HRD SIGNATURE
+            // =====================================================
+
+            $table->string('hrd_signature')->nullable();
+
+            $table->timestamp('hrd_signed_at')->nullable();
 
 
             // =====================================================
             // HEAD OF BRANCH SIGNATURE
             // =====================================================
 
-            // Path gambar tanda tangan Head of Branch
             $table->string('head_signature')->nullable();
 
             $table->timestamp('head_signed_at')->nullable();

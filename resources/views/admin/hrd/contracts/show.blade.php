@@ -625,8 +625,8 @@
         <tr>
             <td class="paraf-box"></td>
             <td class="paraf-box">
-                @if ($contract->signature)
-                    <img src="{{ asset('storage/' . $contract->signature) }}"
+                @if ($contract->employee_signature)
+                    <img src="{{ asset('storage/' . $contract->employee_signature) }}"
                          class="signature-image"
                          alt="Employee Signature">
                 @endif
@@ -717,8 +717,8 @@
         <tr>
             <td class="paraf-box"></td>
             <td class="paraf-box">
-                @if ($contract->signature)
-                    <img src="{{ asset('storage/' . $contract->signature) }}"
+                @if ($contract->employee_signature)
+                    <img src="{{ asset('storage/' . $contract->employee_signature) }}"
                          class="signature-image"
                          alt="Employee Signature">
                 @endif
@@ -797,8 +797,8 @@
         <tr>
             <td class="paraf-box"></td>
             <td class="paraf-box">
-                @if ($contract->signature)
-                    <img src="{{ asset('storage/' . $contract->signature) }}"
+                @if ($contract->employee_signature)
+                    <img src="{{ asset('storage/' . $contract->employee_signature) }}"
                          class="signature-image"
                          alt="Employee Signature">
                 @endif
@@ -893,8 +893,8 @@
         <tr>
             <td class="paraf-box"></td>
             <td class="paraf-box">
-                @if ($contract->signature)
-                    <img src="{{ asset('storage/' . $contract->signature) }}"
+                @if ($contract->employee_signature)
+                    <img src="{{ asset('storage/' . $contract->employee_signature) }}"
                          class="signature-image"
                          alt="Employee Signature">
                 @endif
@@ -974,8 +974,8 @@
         <tr>
             <td class="paraf-box"></td>
             <td class="paraf-box">
-                @if ($contract->signature)
-                    <img src="{{ asset('storage/' . $contract->signature) }}"
+                @if ($contract->employee_signature)
+                    <img src="{{ asset('storage/' . $contract->employee_signature) }}"
                          class="signature-image"
                          alt="Employee Signature">
                 @endif
@@ -1059,8 +1059,8 @@
         <tr>
             <td class="paraf-box"></td>
             <td class="paraf-box">
-                @if ($contract->signature)
-                    <img src="{{ asset('storage/' . $contract->signature) }}"
+                @if ($contract->employee_signature)
+                    <img src="{{ asset('storage/' . $contract->employee_signature) }}"
                          class="signature-image"
                          alt="Employee Signature">
                 @endif
@@ -1141,8 +1141,8 @@
         <tr>
             <td class="paraf-box"></td>
             <td class="paraf-box">
-                @if ($contract->signature)
-                    <img src="{{ asset('storage/' . $contract->signature) }}"
+                @if ($contract->employee_signature)
+                    <img src="{{ asset('storage/' . $contract->employee_signature) }}"
                          class="signature-image"
                          alt="Employee Signature">
                 @endif
@@ -1217,8 +1217,8 @@
         <tr>
             <td class="paraf-box"></td>
             <td class="paraf-box">
-                @if ($contract->signature)
-                    <img src="{{ asset('storage/' . $contract->signature) }}"
+                @if ($contract->employee_signature)
+                    <img src="{{ asset('storage/' . $contract->employee_signature) }}"
                          class="signature-image"
                          alt="Employee Signature">
                 @endif
@@ -1290,8 +1290,8 @@
         <tr>
             <td class="paraf-box"></td>
             <td class="paraf-box">
-                @if ($contract->signature)
-                    <img src="{{ asset('storage/' . $contract->signature) }}"
+                @if ($contract->employee_signature)
+                    <img src="{{ asset('storage/' . $contract->employee_signature) }}"
                          class="signature-image"
                          alt="Employee Signature">
                 @endif
@@ -1368,8 +1368,8 @@
         <tr>
             <td class="paraf-box"></td>
             <td class="paraf-box">
-                @if ($contract->signature)
-                    <img src="{{ asset('storage/' . $contract->signature) }}"
+                @if ($contract->employee_signature)
+                    <img src="{{ asset('storage/' . $contract->employee_signature) }}"
                          class="signature-image"
                          alt="Employee Signature">
                 @endif
@@ -1447,8 +1447,8 @@
         <tr>
             <td class="paraf-box"></td>
             <td class="paraf-box">
-                @if ($contract->signature)
-                    <img src="{{ asset('storage/' . $contract->signature) }}"
+                @if ($contract->employee_signature)
+                    <img src="{{ asset('storage/' . $contract->employee_signature) }}"
                          class="signature-image"
                          alt="Employee Signature">
                 @endif
@@ -1530,8 +1530,8 @@
         <tr>
             <td class="paraf-box"></td>
             <td class="paraf-box">
-                @if ($contract->signature)
-                    <img src="{{ asset('storage/' . $contract->signature) }}"
+                @if ($contract->employee_signature)
+                    <img src="{{ asset('storage/' . $contract->employee_signature) }}"
                          class="signature-image"
                          alt="Employee Signature">
                 @endif
@@ -1609,8 +1609,8 @@
         <tr>
             <td class="paraf-box"></td>
             <td class="paraf-box">
-                @if ($contract->signature)
-                    <img src="{{ asset('storage/' . $contract->signature) }}"
+                @if ($contract->employee_signature)
+                    <img src="{{ asset('storage/' . $contract->employee_signature) }}"
                          class="signature-image"
                          alt="Employee Signature">
                 @endif
@@ -1694,8 +1694,8 @@
         <tr>
             <td class="paraf-box"></td>
             <td class="paraf-box">
-                @if ($contract->signature)
-                    <img src="{{ asset('storage/' . $contract->signature) }}"
+                @if ($contract->employee_signature)
+                    <img src="{{ asset('storage/' . $contract->employee_signature) }}"
                          class="signature-image"
                          alt="Employee Signature">
                 @endif
@@ -1781,8 +1781,8 @@
         <tr>
             <td class="paraf-box"></td>
             <td class="paraf-box">
-                @if ($contract->signature)
-                    <img src="{{ asset('storage/' . $contract->signature) }}"
+                @if ($contract->employee_signature)
+                    <img src="{{ asset('storage/' . $contract->employee_signature) }}"
                          class="signature-image"
                          alt="Employee Signature">
                 @endif
@@ -1821,8 +1821,8 @@
         <tr>
             <td class="paraf-box"></td>
             <td class="paraf-box">
-                @if ($contract->signature)
-                    <img src="{{ asset('storage/' . $contract->signature) }}"
+                @if ($contract->employee_signature)
+                    <img src="{{ asset('storage/' . $contract->employee_signature) }}"
                          class="signature-image"
                          alt="Employee Signature">
                 @endif
@@ -1899,8 +1899,8 @@
             <div class="signature-space-2"></div>
 
             <div class="signature-image-wrapper-2">
-                @if ($contract->signature)
-                    <img src="{{ asset('storage/' . $contract->signature) }}"
+                @if ($contract->employee_signature)
+                    <img src="{{ asset('storage/' . $contract->employee_signature) }}"
                          class="signature-image-2"
                          alt="Employee Signature">
                 @endif

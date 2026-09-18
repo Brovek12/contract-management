@@ -24,8 +24,16 @@ class Contract extends Model
         // RELATION
         // =====================================================
 
+        // Employee
         'user_id',
+
+        // Project
         'project_id',
+
+        // HRD
+        'hrd_user_id',
+
+        // Head of Branch
         'head_user_id',
 
         // =====================================================
@@ -80,11 +88,18 @@ class Contract extends Model
         // EMPLOYEE SIGNATURE
         // =====================================================
 
-        'signature',
-        'signed_at',
+        'employee_signature',
+        'employee_signed_at',
 
         // =====================================================
-        // HEAD SIGNATURE
+        // HRD SIGNATURE
+        // =====================================================
+
+        'hrd_signature',
+        'hrd_signed_at',
+
+        // =====================================================
+        // HEAD OF BRANCH SIGNATURE
         // =====================================================
 
         'head_signature',
@@ -100,19 +115,21 @@ class Contract extends Model
 
     protected $casts = [
 
-        'contract_date'   => 'date',
+        'contract_date' => 'date',
 
-        'birth_date'      => 'date',
+        'birth_date' => 'date',
 
-        'start_date'      => 'date',
+        'start_date' => 'date',
 
-        'end_date'        => 'date',
+        'end_date' => 'date',
 
-        'signed_at'       => 'datetime',
+        'employee_signed_at' => 'datetime',
 
-        'head_signed_at'  => 'datetime',
+        'hrd_signed_at' => 'datetime',
 
-        'basic_salary'    => 'decimal:2',
+        'head_signed_at' => 'datetime',
+
+        'basic_salary' => 'decimal:2',
     ];
 
 
@@ -138,6 +155,19 @@ class Contract extends Model
         return $this->belongsTo(
             Project::class,
             'project_id'
+        );
+    }
+
+
+    // =========================================================
+    // HRD
+    // =========================================================
+
+    public function hrdUser(): BelongsTo
+    {
+        return $this->belongsTo(
+            User::class,
+            'hrd_user_id'
         );
     }
 

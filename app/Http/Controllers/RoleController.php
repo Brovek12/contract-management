@@ -27,9 +27,9 @@ class RoleController extends Controller
     {
         $user = Auth::user();
 
-        // if (!$user->hasPermissionTo('read-roles')) {
-        //     abort(403, 'Unallowed.');
-        // }
+         if (!$user->hasPermissionTo('read-roles')) {
+          abort(403);
+        }
 
         $roles = $this->role
             ->withCount(['permissions', 'users as model_has_role_count'])
@@ -94,9 +94,10 @@ class RoleController extends Controller
     {
         $user = Auth::user();
 
-        // if (!$user->hasPermissionTo('read-roles')) {
-        //     abort(403, 'Unallowed.');
-        // }
+         if (!$user->hasPermissionTo('read-roles')) {
+          abort(403);
+        }
+
 
         $db = $this->role
             ->with('permissions')

@@ -16,32 +16,52 @@ class UserSeeder extends Seeder
     {
         $users = [
             [
-                'name' => 'Admin',
+                'name' => 'Super Admin',
                 'email' => 'admin@example.com',
                 'phone' => '08123456789',
                 'username' => 'admin',
                 'password' => Hash::make('123123'),
-                 'employee_number' => 'HRD-ADM-001',
+                'employee_number' => 'SUPER-001',
                 'role' => 'Admin'
             ],
             [
-                'name' => 'Cak Monde',
-                'email' => 'sitea@example.com',
+                'name' => 'Om Karyawan',
+                'email' => 'karyawan@example.com',
                 'phone' => '08123456789',
-                'username' => 'site123',
+                'username' => 'karyawanbukaka',
                 'password' => Hash::make('123123'),
                 'role' => 'Employee',
-                   'employee_number' => 'EMP-PHSS-002',
+                'employee_number' => 'EMP-PHSS-RIG-002',
                 'projects_id' => '1'
             ],
             [
-                'name' => 'Om HRD',
-                'email' => 'ho@example.com',
+                'name' => 'Orang HRD',
+                'email' => 'hrd@example.com',
                 'phone' => '08123456789',
-                'username' => 'ho1234',
-                'employee_number' => 'HRD-ADM-002',
+                'username' => 'hrdbukaka',
+                'employee_number' => 'HRD-BPN-ADM-002',
                 'password' => Hash::make('123123'),
                 'role' => 'HRD',
+                'projects_id' => '2'
+            ],
+            [
+                'name' => 'Hana Duharlan',
+                'email' => 'hana@example.com',
+                'phone' => '08123456789',
+                'username' => 'hanaduharlan',
+                'employee_number' => 'HRD-BPN-HEAD-001',
+                'password' => Hash::make('123123'),
+                'role' => 'HRD_Head',
+                'projects_id' => '2'
+            ],
+              [
+                'name' => 'Muslimin Sanafi',
+                'email' => 'muslimin@example.com',
+                'phone' => '08123456789',
+                'username' => 'musliminsanafi',
+                'employee_number' => 'MAN-BPN-HEAD-001',
+                'password' => Hash::make('123123'),
+                'role' => 'General_Manager',
                 'projects_id' => '2'
             ],
         ];

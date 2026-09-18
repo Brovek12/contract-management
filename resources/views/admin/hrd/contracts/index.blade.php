@@ -225,8 +225,18 @@
 
                                                 @elseif ($item->status === 'signed')
 
+                                                    <span class="badge badge-light-info">
+                                                        Need Head HRD Approval
+                                                    </span>
+                                                @elseif ($item->status === 'signed-hrd')
+
+                                                    <span class="badge badge-light-info">
+                                                        Need Head Approval
+                                                    </span>
+                                                @elseif ($item->status === 'signed-head')
+
                                                     <span class="badge badge-light-success">
-                                                        Signed
+                                                        Complete
                                                     </span>
 
                                                 @elseif ($item->status === 'expired')
@@ -274,27 +284,81 @@
     {{-- SEND CONTRACT --}}
     @if ($item->status === 'draft')
 
-        <button type="button"
-                class="btn btn-icon btn-sm"
-                onclick="confirmSend({{ $item->id }})"
-                title="Send Contract">
+    {{-- Send Contract --}}
+    <button type="button"
+            class="btn btn-icon btn-sm"
+            onclick="confirmSend({{ $item->id }})"
+            title="Send Contract">
 
-            <i class="ki-outline ki-send text-primary fs-2"></i>
+        <i class="ki-outline ki-send text-primary fs-2"></i>
 
-        </button>
+    </button>
+
+    <form
+        id="send-form-{{ $item->id }}"
+        action="{{ route('contracts.send', $item->id) }}"
+        method="POST"
+        style="display:none;">
+
+        @csrf
+
+    </form>
 
 
-        <form
-            id="send-form-{{ $item->id }}"
-            action="{{ route('contracts.send', $item->id) }}"
-            method="POST"
-            style="display:none;">
+@elseif ($item->status === 'signed')
 
-            @csrf
+    {{-- HRD Approval --}}
+    <button type="button"
+            class="btn btn-icon btn-sm"
+            onclick="confirmApproveHRD({{ $item->id }})"
+            title="Approve HRD">
 
-        </form>
+        <i class="ki-outline ki-check-circle text-primary fs-2"></i>
 
-    @endif
+    </button>
+
+    <form
+        id="approve-hrd-form-{{ $item->id }}"
+        action="{{ route('contracts.approve.hrd', $item->id) }}"
+        method="POST"
+        style="display:none;">
+
+        @csrf
+
+    </form>
+
+
+@elseif ($item->status === 'signed-hrd')
+
+    {{-- Head Approval --}}
+    <button type="button"
+            class="btn btn-icon btn-sm"
+            onclick="confirmApproveHead({{ $item->id }})"
+            title="Approve Head">
+
+        <i class="ki-outline ki-check-circle text-primary fs-2"></i>
+
+    </button>
+
+    <form
+        id="approve-head-form-{{ $item->id }}"
+        action="{{ route('contracts.approve.head', $item->id) }}"
+        method="POST"
+        style="display:none;">
+
+        @csrf
+
+    </form>
+
+
+@elseif ($item->status === 'signed-head')
+
+    {{-- Complete --}}
+    <span class="badge badge-light-success">
+        Complete
+    </span>
+
+@endif
 
 @endcan
 
@@ -462,6 +526,50 @@
     });
 
 }
+ function confirmApproveHRD(id) {
+        Swal.fire({
+            title: 'Approve Contract?',
+            text: 'Contract akan disetujui oleh Head HRD.',
+            icon: 'question',
+            showCancelButton: true,
+            confirmButtonText: 'Yes, Approve',
+            cancelButtonText: 'Cancel',
+            customClass: {
+                confirmButton: 'btn btn-primary',
+                cancelButton: 'btn btn-light'
+            },
+            buttonsStyling: false
+        }).then((result) => {
+
+            if (result.isConfirmed) {
+                document.getElementById('approve-hrd-form-' + id).submit();
+            }
+
+        });
+    }
+
+
+    function confirmApproveHead(id) {
+        Swal.fire({
+            title: 'Approve Contract?',
+            text: 'Contract akan diselesaikan setelah approval Head.',
+            icon: 'question',
+            showCancelButton: true,
+            confirmButtonText: 'Yes, Approve',
+            cancelButtonText: 'Cancel',
+            customClass: {
+                confirmButton: 'btn btn-primary',
+                cancelButton: 'btn btn-light'
+            },
+            buttonsStyling: false
+        }).then((result) => {
+
+            if (result.isConfirmed) {
+                document.getElementById('approve-head-form-' + id).submit();
+            }
+
+        });
+    }
 
     </script>
 

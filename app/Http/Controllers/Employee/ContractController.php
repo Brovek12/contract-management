@@ -93,45 +93,64 @@ class ContractController extends Controller
             compact('contract')
         );
     }
-  public function sign(Request $request, Contract $contract)
+public function sign(Request $request, Contract $contract)
 {
     try {
 
-        // Pastikan contract milik employee yang sedang login
+        // =====================================================
+        // CEK OWNERSHIP CONTRACT
+        // =====================================================
+
         if ($contract->user_id !== auth()->id()) {
             abort(403);
         }
 
-        // Contract hanya bisa ditandatangani jika status sent/viewed
+
+        // =====================================================
+        // CEK STATUS CONTRACT
+        // =====================================================
+
         if (!in_array($contract->status, ['sent', 'viewed'])) {
             return redirect()
                 ->back()
                 ->with('ERR', 'Contract tidak dapat ditandatangani.');
         }
 
-        // Validasi
+
+        // =====================================================
+        // VALIDASI
+        // =====================================================
+
         $request->validate([
             'signature' => 'required|string',
             'agreement' => 'required|accepted',
         ]);
 
+
+        // =====================================================
+        // SIGNATURE DATA
+        // =====================================================
+
         $signature = $request->signature;
 
-        // Pastikan format signature adalah PNG base64
-        if (!preg_match('/^data:image\/png;base64,/', $signature)) {
+
+        // Pastikan signature berupa PNG Base64
+        if (!str_starts_with($signature, 'data:image/png;base64,')) {
             return redirect()
                 ->back()
                 ->with('ERR', 'Format tanda tangan tidak valid.');
         }
 
-        // Hapus prefix data:image/png;base64,
-        $signature = str_replace(
-            'data:image/png;base64,',
-            '',
-            $signature
+
+        // =====================================================
+        // DECODE BASE64
+        // =====================================================
+
+        $signature = substr(
+            $signature,
+            strlen('data:image/png;base64,')
         );
 
-        // Decode base64
         $imageData = base64_decode($signature, true);
 
         if ($imageData === false) {
@@ -140,25 +159,44 @@ class ContractController extends Controller
                 ->with('ERR', 'Data tanda tangan tidak valid.');
         }
 
-        // Nama file
-        $fileName = 'signature_' . $contract->id . '_' . time() . '.png';
 
-        // Path penyimpanan
+        // =====================================================
+        // SIMPAN FILE SIGNATURE
+        // =====================================================
+
+        $fileName = 'employee_signature_'
+            . $contract->id
+            . '_'
+            . time()
+            . '.png';
+
         $path = 'contracts/signatures/' . $fileName;
 
-        // Simpan file
-        Storage::disk('public')->put($path, $imageData);
+        Storage::disk('public')->put(
+            $path,
+            $imageData
+        );
 
-        // Simpan ke database
+
+        // =====================================================
+        // UPDATE CONTRACT
+        // =====================================================
+
         $contract->update([
-            'signature' => $path,
+            'employee_signature' => $path,
+            'employee_signed_at' => now(),
             'status' => 'signed',
-            'signed_at' => now(),
         ]);
+
+
+        // =====================================================
+        // SUCCESS
+        // =====================================================
 
         return redirect()
             ->back()
             ->with('OK', 'Contract Berhasil Ditandatangani');
+
 
     } catch (\Exception $e) {
 

@@ -326,5 +326,42 @@ public function send(Contract $contract)
     }
 }
 
+public function approveHRD(Contract $contract)
+{
+    try {
+
+        $contract->update([
+            'status' => 'signed-hrd',
+        ]);
+
+        return back()->with('OK', 'SOP Berhasil Disetujui Head HRD');
+
+    } catch (\Exception $e) {
+
+        return back()->with(
+            'ERR',
+            'Gagal Menyetujui SOP: ' . $e->getMessage()
+        );
+    }
+}
+public function approveHead(Contract $contract)
+{
+    try {
+
+        $contract->update([
+            'status' => 'signed-head',
+        ]);
+
+        return back()->with('OK', 'SOP Berhasil Diselesaikan');
+
+    } catch (\Exception $e) {
+
+        return back()->with(
+            'ERR',
+            'Gagal Menyelesaikan SOP: ' . $e->getMessage()
+        );
+    }
+}
+
 
 }
