@@ -337,31 +337,6 @@
 
 
                         <div class="menu-sub menu-sub-accordion">
-
-
-                            {{-- ================================================= --}}
-                            {{-- LIST KARYAWAN --}}
-                            {{-- ================================================= --}}
-
-                            
-
-                                <div class="menu-item">
-
-                                    <a class="menu-link text-hover-primary"
-                                       href="{{ route('employees.index') }}">
-
-                                        <span class="menu-bullet">
-                                            <span class="bullet bullet-dot"></span>
-                                        </span>
-
-                                        <span class="{{ Route::is('employees*') ? 'text-primary' : 'text-gray-700' }} text-hover-primary menu-title">
-                                            List Karyawan
-                                        </span>
-
-                                    </a>
-
-                                </div>
-
                             @endcan
 
 

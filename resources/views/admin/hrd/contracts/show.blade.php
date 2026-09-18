@@ -172,8 +172,13 @@
     }
 
     .signature-space {
-        height: 10mm;
+        height: 20mm;
         width: 100%;
+    }
+    .signature-space-2{
+        height:7mm;
+        width: 100%;
+
     }
 
     .signature-image-wrapper-2 {
@@ -191,7 +196,7 @@
 .signature-image-2 {
     display: block;
     max-width: 42mm;
-    max-height: 20mm;
+    max-height: 8mm;
     object-fit: contain;
 
     transform: scale(2);     /* ✅ perbesar 2x lipat */
@@ -1891,7 +1896,7 @@
             <div><strong>Pekerja</strong></div>
             <div>&nbsp;</div>
 
-            <div class="signature-space"></div>
+            <div class="signature-space-2"></div>
 
             <div class="signature-image-wrapper-2">
                 @if ($contract->signature)
