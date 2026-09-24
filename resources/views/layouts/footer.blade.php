@@ -4,7 +4,7 @@
         <!--begin::Copyright-->
         <div class="order-2 text-gray-900 order-md-1">
             <span class="text-muted fw-semibold me-1">2026&copy;</span>
-            <a href="https://keenthemes.com" target="_blank" class="text-gray-800 text-hover-primary">Bukaka Balikpapan Brench</a>
+            <a href="https://bukakablp.com" target="_blank" class="text-gray-800 text-hover-primary">Bukaka Balikpapan Brench</a>
         </div>
         <!--end::Copyright-->
     </div>

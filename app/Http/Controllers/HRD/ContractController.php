@@ -306,6 +306,12 @@ public function store(Request $request)
 
 public function show(Contract $contract)
 {
+     $user = Auth::user();
+    // ✅ Pengamanan: employee hanya boleh lihat kontrak miliknya
+    if (auth()->user()->hasRole('Employee') && $contract->user_id !== auth()->id()) {
+        abort(403, 'Kontrak ini bukan milik Anda.');
+    }
+
     $contract->load([
         'user',
         'project',
@@ -313,25 +319,19 @@ public function show(Contract $contract)
         'headUser',
     ]);
 
-      if ($contract->type === 'ipfms-dobu') {
-        return view(
-        'admin.hrd.contracts.show-dobu',
-        [
+    if ($contract->type === 'ipfms-dobu') {
+        return view('admin.hrd.contracts.show-dobu', [
             'contract' => $contract,
             'type'     => $contract->type,
             'category' => $contract->category,
-        ]
-    );
+        ]);
     }
 
-    return view(
-        'admin.hrd.contracts.show',
-        [
-            'contract' => $contract,
-            'type'     => $contract->type,
-            'category' => $contract->category,
-        ]
-    );
+    return view('admin.hrd.contracts.show', [
+        'contract' => $contract,
+        'type'     => $contract->type,
+        'category' => $contract->category,
+    ]);
 }
 
 public function edit(Contract $contract)
@@ -552,18 +552,18 @@ public function send(Contract $contract)
 public function approveHRD(Contract $contract)
 {
     try {
-
         $contract->update([
-            'status' => 'signed-hrd',
+            'status'         => 'signed-hrd',
+            'hrd_signature'  => auth()->id(),
+            'hrd_signed_at'  => now(),
         ]);
 
-        return back()->with('OK', 'SOP Berhasil Disetujui Head HRD');
+        return back()->with('OK', 'Kontrak Berhasil Disetujui Head HRD');
 
     } catch (\Exception $e) {
-
         return back()->with(
             'ERR',
-            'Gagal Menyetujui SOP: ' . $e->getMessage()
+            'Gagal Menyetujui Kontrak: ' . $e->getMessage()
         );
     }
 }
@@ -573,15 +573,17 @@ public function approveHead(Contract $contract)
 
         $contract->update([
             'status' => 'signed-head',
+            'head_signature' => auth()->id(),
+            'head_signed_at' => now(),
         ]);
 
-        return back()->with('OK', 'SOP Berhasil Diselesaikan');
+        return back()->with('OK', 'Kontrak Berhasil Diselesaikan');
 
     } catch (\Exception $e) {
 
         return back()->with(
             'ERR',
-            'Gagal Menyelesaikan SOP: ' . $e->getMessage()
+            'Gagal Menyelesaikan Kontrak: ' . $e->getMessage()
         );
     }
 }

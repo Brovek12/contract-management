@@ -22,12 +22,14 @@ class ContractController extends Controller
         }
         $contracts = Contract::with('project')
             ->where('user_id', auth()->id())
-            ->whereIn('status', [
-                'sent',
-                'viewed',
-                'signed',
-                'expired',
-            ])
+          ->whereIn('status', [
+    'sent',
+    'viewed',
+    'signed',
+    'signed-hrd',
+    'signed-head',
+    'expired',
+])
             ->latest()
             ->get();
 
@@ -38,61 +40,7 @@ class ContractController extends Controller
     /**
      * Menampilkan detail contract milik employee.
      */
-    public function show(Contract $contract)
-    {
-         $user = Auth::user();
-
-        if (!$user->hasPermissionTo('read-my-contracts')) {
-            abort(403);
-        }
-        /*
-        |--------------------------------------------------------------------------
-        | Security Check
-        |--------------------------------------------------------------------------
-        | Employee hanya boleh melihat contract yang memang ditujukan
-        | kepada akun yang sedang login.
-        */
-        if ($contract->user_id !== auth()->id()) {
-            abort(403);
-        }
-
-
-        /*
-        |--------------------------------------------------------------------------
-        | Update Status
-        |--------------------------------------------------------------------------
-        | Jika sebelumnya masih "sent", berarti employee baru pertama kali
-        | membuka contract tersebut.
-        */
-        if ($contract->status === 'sent') {
-
-            $contract->update([
-                'status' => 'viewed',
-            ]);
-        }
-
-
-        /*
-        |--------------------------------------------------------------------------
-        | Load Relationship
-        |--------------------------------------------------------------------------
-        */
-        $contract->load([
-            'project',
-            'creator',
-        ]);
-
-
-        /*
-        |--------------------------------------------------------------------------
-        | Return View
-        |--------------------------------------------------------------------------
-        */
-        return view(
-            'admin.employee.contracts.show',
-            compact('contract')
-        );
-    }
+   
 public function sign(Request $request, Contract $contract)
 {
     try {

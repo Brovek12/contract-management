@@ -13,20 +13,32 @@ class AuthController extends Controller
         return view('auth.login');
     }
 
-    public function login(Request $request)
-    {
-        $credentials = $request->validate([
-            'username' => 'required',
-            'password' => 'required'
-        ]);
+   public function login(Request $request)
+{
+    $credentials = $request->validate([
+        'username' => 'required',
+        'password' => 'required'
+    ]);
 
-        if (Auth::attempt($credentials)) {
-            $request->session()->regenerate();
-            return redirect()->intended('/')->with('OK', 'Login berhasil');
-        } else {
-            return redirect()->back()->with('ERR', 'Username atau Password yang anda masukkan salah');
+    if (Auth::attempt($credentials)) {
+        $request->session()->regenerate();
+
+        $user = Auth::user();
+
+        // ✅ Kalau employee → langsung ke halaman contract
+        if ($user->hasRole('Employee')) {
+            return redirect()->intended(route('employee.contracts.index'))
+                ->with('OK', 'Login berhasil');
         }
+
+        // HRD / Admin → dashboard seperti biasa
+        return redirect()->intended('/')
+            ->with('OK', 'Login berhasil');
     }
+
+    return redirect()->back()
+        ->with('ERR', 'Username atau Password yang anda masukkan salah');
+}
 
     public function logout(Request $request)
     {

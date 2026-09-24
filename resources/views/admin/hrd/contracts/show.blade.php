@@ -192,6 +192,16 @@
     position: relative;      /* ✅ untuk anchor absolute */
     overflow: visible;       /* ✅ biar gambar bisa keluar */
 }
+.signature-image {
+    display: block;
+    max-width: 42mm;
+    max-height: 8mm;
+    object-fit: contain;
+
+    transform: scale(2) translateY(-5mm);  /* ✅ geser ke atas 3mm */
+    transform-origin: center center;
+    position: relative;
+}
 
 .signature-image-2 {
     display: block;
@@ -205,14 +215,20 @@
     z-index: 5;
 }
 
-    .signature-name {
-        margin-top: 2px;
-        margin-bottom: 2px;
-        font-weight: bold;
-        text-decoration: underline;
+   .signature-name-2 {
+    font-weight: bold;
+    text-decoration: underline;
 
-        min-height: 1.2em;
-    }
+    min-height: 1.2em;
+   /* ✅ naik 3mm, tidak ganggu layout lain */
+}
+   .signature-name {
+    font-weight: bold;
+    text-decoration: underline;
+
+    min-height: 1.2em;
+     margin-top: -7mm;
+}
 
     .signature-title {
         min-height: 1.2em;
@@ -539,6 +555,24 @@
             padding: 0 !important;
             background: #ffffff !important;
         }
+        @media print {
+    /* Sembunyikan Back button */
+    .floating-sign-btn-2 {
+        display: none !important;
+    }
+
+    /* Sembunyikan progress stepper */
+    .progress-stepper-wrap {
+        display: none !important;
+    }
+
+    /* Sembunyikan toolbar / nav / sidebar */
+    .app-sidebar,
+    .app-header,
+    .app-toolbar {
+        display: none !important;
+    }
+}
 
         .document-page {
             width: 210mm !important;
@@ -572,12 +606,15 @@
 @endsection
 
 
+
 @section('document-content')
+ @include('admin.hrd.contracts.partials.show-progress', ['contract' => $contract])
 
 {{-- =========================================================
     PAGE 1
 ========================================================== --}}
 <div class="document-page">
+    
 
     @include('partials.document-header')
 
@@ -2053,7 +2090,7 @@ Pada hari ini <strong>
                 @endif
             </div>
 
-            <div class="signature-name">
+            <div class="signature-name-2">
                 {{ $contract->employee_name ?? '........................' }}
             </div>
 
@@ -2073,9 +2110,9 @@ Pada hari ini <strong>
 
             <div class="signature-image-wrapper">
                 @if ($contract->head_signature)
-                    <img src="{{ asset('storage/' . $contract->head_signature) }}"
-                         class="signature-image"
-                         alt="Head Signature">
+                 <img src="{{ asset('images/muslimin-sanafi.jpeg') }}"
+                    class="signature-image"
+                    alt="Muslimin Sanafi">
                 @endif
             </div>
 

@@ -2,11 +2,23 @@
 
 @section('title', 'Contract')
 
-{{-- CSS khusus halaman ini dihapus, sudah pindah ke global datatable-custom.css --}}
-
 @section('pageTitle', 'Contract')
 @section('mainSection', 'Contract Management')
 @section('currentSection', 'Contract')
+<style>
+    /* Supaya dropdown tidak ke-crop */
+.table-responsive {
+    overflow-x: auto;
+    overflow-y: visible;
+    position: relative;
+}
+
+/* Dropdown menu diposisikan fixed saat terbuka */
+.table-responsive .dropdown-menu {
+    position: fixed !important;
+    z-index: 9999;
+}
+</style>
 
 @section('content')
     <!--begin::Content-->
@@ -29,48 +41,48 @@
                         </h3>
 
                         <div class="card-toolbar">
-                          @can('create-contracts')
-    <div class="dropdown">
-        <button
-            class="btn btn-sm btn-primary dropdown-toggle"
-            type="button"
-            data-bs-toggle="dropdown"
-            aria-expanded="false"
-        >
-            <i class="ki-duotone ki-plus fs-3"></i>
-            Tambah
-        </button>
+                            @can('create-contracts')
+                                <div class="dropdown">
+                                    <button
+                                        class="btn btn-sm btn-primary dropdown-toggle"
+                                        type="button"
+                                        data-bs-toggle="dropdown"
+                                        aria-expanded="false"
+                                    >
+                                        <i class="ki-duotone ki-plus fs-3"></i>
+                                        Tambah
+                                    </button>
 
-        <ul class="dropdown-menu dropdown-menu-end">
-            <li>
-                <a class="dropdown-item" href="#"
-                   data-bs-toggle="modal" data-bs-target="#modalManajerial">
-                    <i class="ki-duotone ki-briefcase fs-3 me-2"></i>
-                    Manajerial
-                </a>
-            </li>
-            <li>
-                <a class="dropdown-item" href="#"
-                   data-bs-toggle="modal" data-bs-target="#modalNonManajerial">
-                    <i class="ki-duotone ki-people fs-3 me-2"></i>
-                    Non-Manajerial
-                </a>
-            </li>
-            <li>
-                <a class="dropdown-item" href="#"
-                   data-bs-toggle="modal" data-bs-target="#modalProject">
-                    <i class="ki-duotone ki-project fs-3 me-2"></i>
-                    Project
-                </a>
-            </li>
-        </ul>
-    </div>
+                                    <ul class="dropdown-menu dropdown-menu-end">
+                                        <li>
+                                            <a class="dropdown-item" href="#"
+                                               data-bs-toggle="modal" data-bs-target="#modalManajerial">
+                                                <i class="ki-duotone ki-briefcase fs-3 me-2"></i>
+                                                Manajerial
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a class="dropdown-item" href="#"
+                                               data-bs-toggle="modal" data-bs-target="#modalNonManajerial">
+                                                <i class="ki-duotone ki-people fs-3 me-2"></i>
+                                                Non-Manajerial
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a class="dropdown-item" href="#"
+                                               data-bs-toggle="modal" data-bs-target="#modalProject">
+                                                <i class="ki-duotone ki-project fs-3 me-2"></i>
+                                                Project
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
 
-    {{-- Modals --}}
-    @include('admin.hrd.contracts.modal.modal_manajerial')
-    @include('admin.hrd.contracts.modal.modal_non_manajerial')
-    @include('admin.hrd.contracts.modal.modal_project')
-@endcan
+                                {{-- Modals --}}
+                                @include('admin.hrd.contracts.modal.modal_manajerial')
+                                @include('admin.hrd.contracts.modal.modal_non_manajerial')
+                                @include('admin.hrd.contracts.modal.modal_project')
+                            @endcan
                         </div>
                     </div>
                     <!--end::Header-->
@@ -90,6 +102,60 @@
                                            class="form-control form-control-solid ps-12"
                                            placeholder="Cari Contract...">
                                 </div>
+                            </div>
+
+                            {{-- Category --}}
+                            <div class="col-md-2">
+                                <label class="form-label fw-semibold fs-7 mb-2">Category</label>
+                                <select id="filterCategory"
+                                        data-control="select2"
+                                        data-placeholder="All Category"
+                                        data-allow-clear="true"
+                                        class="form-select form-select-solid">
+                                    <option value=""></option>
+                                    <option value="managerial">Managerial</option>
+                                    <option value="non-managerial">Non-Managerial</option>
+                                    <option value="project">Project</option>
+                                </select>
+                            </div>
+
+                            {{-- Type --}}
+                            <div class="col-md-2">
+                                <label class="form-label fw-semibold fs-7 mb-2">Type</label>
+                                <select id="filterType"
+                                        data-control="select2"
+                                        data-placeholder="All Type"
+                                        data-allow-clear="true"
+                                        class="form-select form-select-solid">
+                                    <option value=""></option>
+
+                                    {{-- MANAGERIAL --}}
+                                    <optgroup label="Managerial">
+                                        <option value="gp-um-ut-fungsi">gp-um-ut-fungsi</option>
+                                        <option value="gp-mahal-um-ut-fungsi">gp-mahal-um-ut-fungsi</option>
+                                        <option value="all-in">all-in</option>
+                                    </optgroup>
+
+                                    {{-- NON-MANAGERIAL --}}
+                                    <optgroup label="Non-Managerial">
+                                        <option value="security">security</option>
+                                        <option value="ob">ob</option>
+                                        <option value="gp-um-ut-laut">gp-um-ut-laut</option>
+                                        <option value="gp-um-ut">gp-um-ut</option>
+                                        <option value="gp-mahal-um-ut-fungsi-pls">gp-mahal-um-ut-fungsi-pls</option>
+                                        <option value="gp-mahal-um-ut">gp-mahal-um-ut</option>
+                                    </optgroup>
+
+                                    {{-- PROJECT --}}
+                                    <optgroup label="Project">
+                                        <option value="pep-lokal-buny">pep-lokal-buny</option>
+                                        <option value="elis-phkt-5-2">elis-phkt-5-2</option>
+                                        <option value="elis-phkt-6-1">elis-phkt-6-1</option>
+                                        <option value="eni-muara-bakau-lembur">eni-muara-bakau-lembur</option>
+                                        <option value="eni-muara-bakau-all-in">eni-muara-bakau-all-in</option>
+                                        <option value="ipfms-dobu">ipfms-dobu</option>
+                                    </optgroup>
+                                </select>
                             </div>
 
                             {{-- Project --}}
@@ -193,6 +259,8 @@
 
                                         <th class="text-center min-w-50px">No</th>
                                         <th class="text-center min-w-125px">Contract Number</th>
+                                        <th class="text-center min-w-125px">Category</th>     {{-- KOLOM BARU --}}
+                                        <th class="text-center min-w-150px">Type</th>         {{-- KOLOM BARU --}}
                                         <th class="text-center min-w-150px">Employee</th>
                                         <th class="text-center min-w-125px">Project</th>
                                         <th class="text-center min-w-125px">Owner</th>
@@ -204,7 +272,40 @@
                                     </tr>
                                 </thead>
                                 <tbody>
+                                    @php
+                                        // Mapping type → category (fallback kalau kolom category tidak ada di DB)
+                                        $typeCategoryMap = [
+                                            'gp-um-ut-fungsi'           => 'managerial',
+                                            'gp-mahal-um-ut-fungsi'     => 'managerial',
+                                            'all-in'                    => 'managerial',
+                                            'security'                  => 'non-managerial',
+                                            'ob'                        => 'non-managerial',
+                                            'gp-um-ut-laut'             => 'non-managerial',
+                                            'gp-um-ut'                  => 'non-managerial',
+                                            'gp-mahal-um-ut-fungsi-pls' => 'non-managerial',
+                                            'gp-mahal-um-ut'            => 'non-managerial',
+                                            'pep-lokal-buny'            => 'project',
+                                            'elis-phkt-5-2'             => 'project',
+                                            'elis-phkt-6-1'             => 'project',
+                                            'eni-muara-bakau-lembur'    => 'project',
+                                            'eni-muara-bakau-all-in'    => 'project',
+                                            'ipfms-dobu'                => 'project',
+                                        ];
+
+                                        // Badge style per kategori
+                                        $categoryBadgeMap = [
+                                            'managerial'     => ['badge-light-primary', 'Managerial'],
+                                            'non-managerial' => ['badge-light-success', 'Non-Managerial'],
+                                            'project'        => ['badge-light-warning', 'Project'],
+                                        ];
+                                    @endphp
+
                                     @foreach ($data as $index => $item)
+                                        @php
+                                            $rowType     = $item->type ?? '';
+                                            $rowCategory = $item->category ?? ($typeCategoryMap[$rowType] ?? '');
+                                            [$catBadgeClass, $catBadgeLabel] = $categoryBadgeMap[$rowCategory] ?? ['badge-light-secondary', $rowCategory ?: '-'];
+                                        @endphp
                                         <tr>
                                             {{-- CHECK PER ROW --}}
                                             <td class="text-center">
@@ -220,6 +321,22 @@
 
                                             <td class="text-center fw-semibold">
                                                 {{ $item->contract_number }}
+                                            </td>
+
+                                            {{-- CATEGORY (kolom baru) --}}
+                                            <td class="text-center"
+                                                data-category="{{ $rowCategory }}">
+                                                <span class="badge {{ $catBadgeClass }}">
+                                                    {{ $catBadgeLabel }}
+                                                </span>
+                                            </td>
+
+                                            {{-- TYPE (kolom baru) --}}
+                                            <td class="text-center"
+                                                data-type="{{ $rowType }}">
+                                                <span class="badge badge-light-primary">
+                                                    {{ $rowType ?: '-' }}
+                                                </span>
                                             </td>
 
                                             <td class="text-start">
@@ -419,6 +536,24 @@
 @section('script')
     <script>
         // ============================================
+        // Index kolom (sesuai urutan <th> di atas)
+        // 0=checkbox, 1=No, 2=ContractNumber, 3=Category,
+        // 4=Type, 5=Employee, 6=Project, 7=Owner, 8=Title,
+        // 9=StartDate, 10=EndDate, 11=Status, 12=Action
+        // ============================================
+        const COL = {
+            CHECKBOX: 0,
+            NO:       1,
+            CATEGORY: 3,
+            TYPE:     4,
+            PROJECT:  6,
+            START:    9,
+            END:      10,
+            STATUS:   11,
+            ACTION:   12,
+        };
+
+        // ============================================
         // Permission flags dari Blade
         // ============================================
         const PERMISSIONS = {
@@ -485,38 +620,79 @@
                     caseInsensitive: true
                 },
                 columnDefs: [
-                    { orderable: false, targets: [0, 1, 9] }
+                    { orderable: false, targets: [COL.CHECKBOX, COL.NO, COL.ACTION] }
                 ]
             });
 
             // ============================================
-            // ✨ DATE RANGE FILTER — pakai helper global
+            // DATE RANGE FILTER (kolom Start Date)
             // ============================================
             DataTableHelper.registerDateRangeFilter({
                 table:        table,
                 startInput:   '#filterStartDate',
                 endInput:     '#filterEndDate',
-                columnIndex:  6,
+                columnIndex:  COL.START,
                 useDataOrder: true
             });
 
             // ============================================
-            // Search
+            // Search (global)
             // ============================================
             $('#filterSearch').on('keyup', function () {
                 table.search(this.value).draw();
             });
 
             // ============================================
-            // Filter Project (kolom index 4)
+            // Custom filter untuk Category & Type
+            // (pakai data-attribute dari cell)
             // ============================================
-            $('#filterProject').on('change', function () {
-                var val = this.value;
-                table.column(4).search(val ? '^' + val + '$' : '', true, false).draw();
+            $.fn.dataTable.ext.search.push(function (settings, data, dataIndex) {
+                if (settings.nTable.id !== 'contractTable') return true;
+
+                var selectedCategory = $('#filterCategory').val();
+                var selectedType     = $('#filterType').val();
+
+                if (!selectedCategory && !selectedType) return true;
+
+                var row = table.row(dataIndex).node();
+
+                if (selectedCategory) {
+                    var rowCategory = $(row).find('td').eq(COL.CATEGORY).data('category') || '';
+                    if (rowCategory !== selectedCategory) return false;
+                }
+
+                if (selectedType) {
+                    var rowType = $(row).find('td').eq(COL.TYPE).data('type') || '';
+                    if (rowType !== selectedType) return false;
+                }
+
+                return true;
             });
 
             // ============================================
-            // Filter Status (kolom index 8)
+            // Filter Category (custom filter)
+            // ============================================
+            $('#filterCategory').on('change', function () {
+                table.draw();
+            });
+
+            // ============================================
+            // Filter Type (custom filter)
+            // ============================================
+            $('#filterType').on('change', function () {
+                table.draw();
+            });
+
+            // ============================================
+            // Filter Project (exact match, kolom index 6)
+            // ============================================
+            $('#filterProject').on('change', function () {
+                var val = this.value;
+                table.column(COL.PROJECT).search(val ? '^' + val + '$' : '', true, false).draw();
+            });
+
+            // ============================================
+            // Filter Status (badge label, kolom index 11)
             // ============================================
             $('#filterStatus').on('change', function () {
                 var val = this.value;
@@ -529,7 +705,7 @@
                     'signed-head': 'Complete',
                     'expired':     'Expired'
                 };
-                table.column(8).search(val ? labelMap[val] : '', true, false).draw();
+                table.column(COL.STATUS).search(val ? labelMap[val] : '', true, false).draw();
             });
 
             // ============================================
@@ -537,10 +713,13 @@
             // ============================================
             $('#resetFilter').on('click', function () {
                 $('#filterSearch').val('');
-                $('#filterProject').val('').trigger('change.select2');
-                $('#filterStatus').val('').trigger('change.select2');
 
-                // ✨ Reset date range pakai helper
+                $('#filterCategory').val(null).trigger('change.select2');
+                $('#filterType').val(null).trigger('change.select2');
+                $('#filterProject').val(null).trigger('change.select2');
+                $('#filterStatus').val(null).trigger('change.select2');
+
+                // Reset date range pakai helper
                 DataTableHelper.resetDateRangeFilter(table, '#filterStartDate', '#filterEndDate');
 
                 table.search('').columns().search('').draw();
@@ -898,4 +1077,5 @@
             });
         }
     </script>
+    
 @endsection
