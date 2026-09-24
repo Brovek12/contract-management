@@ -21,7 +21,13 @@ return new class extends Migration
             // Tanggal yang tercantum pada bagian pembukaan kontrak
             $table->date('contract_date');
 
-            // Jenis contract
+            // Kategori besar contract
+            // managerial | non-managerial | project
+            $table->string('category')->nullable();
+
+            // Varian spesifik di dalam kategori
+            // contoh: all-in, gp-um-ut-fungsi, gp-mahal-um-ut-fungsi,
+            //         security, ob, dst
             $table->string('type')->nullable();
 
             $table->string('title');
@@ -40,6 +46,12 @@ return new class extends Migration
             $table->foreignId('project_id')
                 ->nullable()
                 ->constrained('projects')
+                ->nullOnDelete();
+
+            // HRD yang membuat / bertanggung jawab
+            $table->foreignId('hrd_user_id')
+                ->nullable()
+                ->constrained('users')
                 ->nullOnDelete();
 
             // Head of Branch / pihak pertama
@@ -111,6 +123,23 @@ return new class extends Migration
 
 
             // =====================================================
+            // ALLOWANCES
+            // Nullable, hanya diisi sesuai type contract
+            // =====================================================
+
+            // all-in
+            $table->decimal('project_allowance', 15, 2)->nullable();
+
+            // gp-mahal-um-ut-fungsi
+            $table->decimal('cost_allowance', 15, 2)->nullable();
+
+            // per hari masuk kerja
+            $table->decimal('meal_allowance', 15, 2)->nullable();
+            $table->decimal('transport_allowance', 15, 2)->nullable();
+            $table->decimal('functional_allowance', 15, 2)->nullable();
+
+
+            // =====================================================
             // CONTRACT DOCUMENT
             // =====================================================
 
@@ -127,6 +156,8 @@ return new class extends Migration
                 'sent',
                 'viewed',
                 'signed',
+                'signed-hrd',
+                'signed-head',
                 'expired',
             ])->default('draft');
 

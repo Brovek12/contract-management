@@ -38,6 +38,20 @@
                         <div class="mt-1 text-danger d-none"
                             id="codeError"></div>
                     </div>
+                    <div class="mb-3">
+                        <label for="owner" class="form-label">
+                            Owner
+                            <span class="text-danger">*</span>
+                        </label>
+
+                        <input type="text"
+                            class="form-control"
+                            id="owner"
+                            name="owner">
+
+                        <div class="mt-1 text-danger d-none"
+                            id="ownerError"></div>
+                    </div>
 
                     <!-- Nama -->
                     <div class="mb-3">
@@ -134,6 +148,11 @@
                 id: 'code',
                 errorId: 'codeError',
                 name: 'Kode'
+            }
+            {
+                id: 'owner',
+                errorId: 'ownerError',
+                name: 'Owner'
             }
         ];
 

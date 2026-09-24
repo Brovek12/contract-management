@@ -20,6 +20,48 @@
     <link href="{{ asset('assets/plugins/global/plugins.bundle.css') }}" rel="stylesheet" type="text/css" />
     <link href="{{ asset('assets/css/style.bundle.css') }}" rel="stylesheet" type="text/css" />
     <!--end::Global Stylesheets Bundle-->
+
+    {{-- ===== CUSTOM DATATABLE CSS (GLOBAL) ===== --}}
+    <style>
+        /* ============ TABLE HEADER ============ */
+        .datatable-custom thead tr {
+            background-color: #e7f3ff !important;
+            border-bottom: 2px solid #3699ff;
+        }
+
+        .datatable-custom thead th {
+            color: #1b5e94 !important;
+            font-weight: 700;
+            letter-spacing: 0.03em;
+            text-transform: uppercase;
+            font-size: 0.75rem;
+            padding-top: 1rem;
+            padding-bottom: 1rem;
+        }
+
+        /* ============ TABLE BODY ============ */
+        .datatable-custom tbody tr {
+            background-color: #ffffff;
+            transition: background-color 0.15s ease;
+        }
+
+        .datatable-custom tbody tr:hover {
+            background-color: #f4faff !important;
+        }
+
+        .datatable-custom tbody td {
+            color: #3f4254;
+            font-size: 0.85rem;
+            border-bottom: 1px solid #f0f2f5;
+            padding-top: 0.85rem;
+            padding-bottom: 0.85rem;
+        }
+
+        .datatable-custom tbody tr.row-selected {
+            background-color: #e7f3ff !important;
+        }
+    </style>
+
     @yield('style')
 </head>
 <!--end::Head-->
@@ -82,7 +124,94 @@
         </i>
     </div>
     <!--end::Scrolltop-->
+
     @include('layouts.js-file')
+
+    {{-- ===== CUSTOM DATATABLE HELPER (GLOBAL) ===== --}}
+    <script>
+        /**
+         * ============================================================
+         * DataTable Helper — Global Utility
+         * ============================================================
+         * Helper reusable untuk DataTables.
+         *
+         * Fitur:
+         *   - registerDateRangeFilter()  → filter rentang tanggal
+         *   - resetDateRangeFilter()     → reset filter rentang tanggal
+         *
+         * Contoh pakai:
+         *   DataTableHelper.registerDateRangeFilter({
+         *       table:        table,
+         *       startInput:   '#filterStartDate',
+         *       endInput:     '#filterEndDate',
+         *       columnIndex:  6,
+         *       useDataOrder: true
+         *   });
+         * ============================================================
+         */
+        (function (window, $) {
+            'use strict';
+
+            function registerDateRangeFilter(config) {
+
+                var table        = config.table;
+                var startInput   = config.startInput;
+                var endInput     = config.endInput;
+                var columnIndex  = config.columnIndex;
+                var useDataOrder = config.useDataOrder !== false;
+
+                if (!table || !startInput || !endInput || columnIndex === undefined) {
+                    console.warn('[DataTableHelper] registerDateRangeFilter: config tidak lengkap.', config);
+                    return;
+                }
+
+                // Guard: hanya berlaku untuk tabel yang didaftarkan
+                $.fn.dataTable.ext.search.push(function (settings, data, dataIndex) {
+
+                    if (settings.nTable !== table.table().node()) {
+                        return true;
+                    }
+
+                    var startVal = $(startInput).val();
+                    var endVal   = $(endInput).val();
+
+                    if (!startVal && !endVal) return true;
+
+                    var rawDate;
+
+                    if (useDataOrder) {
+                        var rowNode = table.row(dataIndex).node();
+                        rawDate = $(rowNode).find('td').eq(columnIndex).data('order');
+                    } else {
+                        rawDate = data[columnIndex];
+                    }
+
+                    if (!rawDate) return false;
+
+                    if (startVal && rawDate < startVal) return false;
+                    if (endVal   && rawDate > endVal)   return false;
+
+                    return true;
+                });
+
+                $(startInput).on('change', function () { table.draw(); });
+                $(endInput).on('change',   function () { table.draw(); });
+            }
+
+            function resetDateRangeFilter(table, startInput, endInput) {
+                $(startInput).val('');
+                $(endInput).val('');
+                if (table) table.draw();
+            }
+
+            window.DataTableHelper = {
+                registerDateRangeFilter: registerDateRangeFilter,
+                resetDateRangeFilter:    resetDateRangeFilter,
+            };
+
+        })(window, jQuery);
+    </script>
+
     @yield('script')
 </body>
 <!--end::Body-->

@@ -12,6 +12,7 @@ class Project extends Model
         'code',
         'name',
         'location',
+        'owner',
         'is_active',
     ];
 

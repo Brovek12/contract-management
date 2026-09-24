@@ -28,6 +28,20 @@
                             required
                         >
                     </div>
+                    <div class="mb-3">
+                        <label for="edit_owner{{ $item->id }}" class="form-label">
+                            Owner
+                            <span class="text-danger">*</span>
+                        </label>
+                        <input
+                            type="text"
+                            class="form-control"
+                            id="edit_owner{{ $item->id }}"
+                            name="owner"
+                            value="{{ $item->owner }}"
+                            required
+                        >
+                    </div>
 
                     <!-- Nama -->
                     <div class="mb-3">

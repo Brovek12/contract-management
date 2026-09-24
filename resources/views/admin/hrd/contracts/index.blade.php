@@ -1,18 +1,14 @@
-
 @extends('layouts.app')
 
 @section('title', 'Contract')
 
-@section('style')
-
-@endsection
+{{-- CSS khusus halaman ini dihapus, sudah pindah ke global datatable-custom.css --}}
 
 @section('pageTitle', 'Contract')
 @section('mainSection', 'Contract Management')
 @section('currentSection', 'Contract')
 
 @section('content')
-
     <!--begin::Content-->
     <div class="content d-flex flex-column flex-column-fluid" id="kt_content">
 
@@ -23,385 +19,386 @@
             <div id="kt_content_container" class="container-xxl">
 
                 <!--begin::Card-->
-                <div class="mb-5 card mb-xl-8">
+                <div class="card mb-5 mb-xl-8">
 
                     <!--begin::Header-->
-                    <div class="p-0 pt-5 border-0 card-header">
-
+                    <div class="card-header border-0 pt-6">
                         <h3 class="card-title align-items-start flex-column">
-                            <span class="mb-1 card-label fw-bold fs-3 ps-6">
-                                List Contract
-                            </span>
+                            <span class="card-label fw-bold fs-3 mb-1">List Contract</span>
+                            <span class="text-muted fw-semibold fs-7">Manage all contract data</span>
                         </h3>
 
                         <div class="card-toolbar">
+                          @can('create-contracts')
+    <div class="dropdown">
+        <button
+            class="btn btn-sm btn-primary dropdown-toggle"
+            type="button"
+            data-bs-toggle="dropdown"
+            aria-expanded="false"
+        >
+            <i class="ki-duotone ki-plus fs-3"></i>
+            Tambah
+        </button>
 
-                            <!--begin::Search-->
-                            <div class="my-1 d-flex align-items-center position-relative me-5 rounded-3">
+        <ul class="dropdown-menu dropdown-menu-end">
+            <li>
+                <a class="dropdown-item" href="#"
+                   data-bs-toggle="modal" data-bs-target="#modalManajerial">
+                    <i class="ki-duotone ki-briefcase fs-3 me-2"></i>
+                    Manajerial
+                </a>
+            </li>
+            <li>
+                <a class="dropdown-item" href="#"
+                   data-bs-toggle="modal" data-bs-target="#modalNonManajerial">
+                    <i class="ki-duotone ki-people fs-3 me-2"></i>
+                    Non-Manajerial
+                </a>
+            </li>
+            <li>
+                <a class="dropdown-item" href="#"
+                   data-bs-toggle="modal" data-bs-target="#modalProject">
+                    <i class="ki-duotone ki-project fs-3 me-2"></i>
+                    Project
+                </a>
+            </li>
+        </ul>
+    </div>
 
-                                <i class="ki-outline ki-magnifier fs-3 position-absolute ms-6">
-                                    <span class="path1"></span>
-                                    <span class="path2"></span>
-                                </i>
-
-                                <input type="text"
-                                    data-kt-docs-table-filter="search"
-                                    class="form-control form-control-solid w-250px ps-15"
-                                    placeholder="Cari Contract..."
-                                    style="height: calc(1.5em + 0.75rem + 2px);" />
-
-                            </div>
-                            <!--end::Search-->
-
-                            <!--begin::Add-->
-                            @can('create-contracts')
-                                <div class="dropdown">
-    <button
-        class="btn btn-sm btn-primary btn-active-light-primary me-6 dropdown-toggle"
-        type="button"
-        data-bs-toggle="dropdown"
-        aria-expanded="false"
-    >
-        <i class="ki-duotone ki-plus fs-3"></i>
-        Tambah
-    </button>
-
-    <ul class="dropdown-menu">
-        <li>
-            <a class="dropdown-item" href="{{ route('contracts.create', ['type' => 'phm']) }}">
-                <i class="ki-duotone ki-document fs-3 me-2"></i>
-                Contract PHM
-            </a>
-        </li>
-
-        <li>
-            <a class="dropdown-item" href="{{ route('contracts.create', ['type' => 'phss']) }}">
-                <i class="ki-duotone ki-document fs-3 me-2"></i>
-                Contract PHSS
-            </a>
-        </li>
-
-        <li>
-            <a class="dropdown-item" href="{{ route('contracts.create', ['type' => 'phkt']) }}">
-                <i class="ki-duotone ki-document fs-3 me-2"></i>
-                Contract PHKT
-            </a>
-        </li>
-    </ul>
-</div>
-                            @endcan
-                            <!--end::Add-->
-
+    {{-- Modals --}}
+    @include('admin.hrd.contracts.modal.modal_manajerial')
+    @include('admin.hrd.contracts.modal.modal_non_manajerial')
+    @include('admin.hrd.contracts.modal.modal_project')
+@endcan
                         </div>
-
                     </div>
                     <!--end::Header-->
 
+                    <!--begin::Filter-->
+                    <div class="card-body border-top pt-5 pb-4">
+                        <div class="row g-3 align-items-end">
+
+                            {{-- Search --}}
+                            <div class="col-md-3">
+                                <label class="form-label fw-semibold fs-7 mb-2">Search</label>
+                                <div class="position-relative">
+                                    <i class="ki-outline ki-magnifier fs-3 position-absolute ms-4 top-50 translate-middle-y"></i>
+                                    <input type="text"
+                                           id="filterSearch"
+                                           data-kt-docs-table-filter="search"
+                                           class="form-control form-control-solid ps-12"
+                                           placeholder="Cari Contract...">
+                                </div>
+                            </div>
+
+                            {{-- Project --}}
+                            <div class="col-md-2">
+                                <label class="form-label fw-semibold fs-7 mb-2">Project</label>
+                                <select id="filterProject"
+                                        data-control="select2"
+                                        data-placeholder="Semua Project"
+                                        data-allow-clear="true"
+                                        class="form-select form-select-solid">
+                                    <option value=""></option>
+                                    @foreach ($projects as $project)
+                                        <option value="{{ $project->name }}">{{ $project->name }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+
+                            {{-- Status --}}
+                            <div class="col-md-2">
+                                <label class="form-label fw-semibold fs-7 mb-2">Status</label>
+                                <select id="filterStatus"
+                                        data-control="select2"
+                                        data-placeholder="Semua Status"
+                                        data-allow-clear="true"
+                                        class="form-select form-select-solid">
+                                    <option value=""></option>
+                                    <option value="draft">Draft</option>
+                                    <option value="sent">Sent</option>
+                                    <option value="viewed">Viewed</option>
+                                    <option value="signed">Need Head HRD Approval</option>
+                                    <option value="signed-hrd">Need Head Approval</option>
+                                    <option value="signed-head">Complete</option>
+                                    <option value="expired">Expired</option>
+                                </select>
+                            </div>
+
+                            {{-- Start Date From --}}
+                            <div class="col-md-2">
+                                <label class="form-label fw-semibold fs-7 mb-2">Start Date From</label>
+                                <input type="date"
+                                       id="filterStartDate"
+                                       class="form-control form-control-solid">
+                            </div>
+
+                            {{-- Start Date To --}}
+                            <div class="col-md-2">
+                                <label class="form-label fw-semibold fs-7 mb-2">Start Date To</label>
+                                <input type="date"
+                                       id="filterEndDate"
+                                       class="form-control form-control-solid">
+                            </div>
+
+                            {{-- Reset --}}
+                            <div class="col-md-1">
+                                <button type="button"
+                                        id="resetFilter"
+                                        class="btn btn-light w-100"
+                                        title="Reset Filter">
+                                    <i class="ki-outline ki-arrows-circle fs-2"></i>
+                                </button>
+                            </div>
+
+                        </div>
+                    </div>
+                    <!--end::Filter-->
+
                     <!--begin::Body-->
-                    <div class="p-0 card-body">
+                    <div class="card-body pt-0">
 
-                        <!--begin::Table container-->
-                        <div class="table-responsive table-bordered">
+                        <!--begin::Bulk Action Bar-->
+                        <div id="bulkActionBar"
+                             class="d-none alert bg-light-primary border border-primary border-dashed d-flex flex-column flex-sm-row w-100 p-5 mb-5">
+                            <i class="ki-outline ki-information-5 fs-2hx text-primary me-4 mb-5 mb-sm-0"></i>
 
-                            <!--begin::Table-->
-                            <table class="table text-center align-middle gs-0 gy-4" id="contractTable">
+                            <div class="d-flex flex-column pe-0 pe-sm-10">
+                                <h4 class="fw-semibold mb-1">
+                                    <span id="selectedCount">0</span> contract dipilih
+                                </h4>
+                                <span class="text-muted fs-7" id="bulkActionInfo">
+                                    Pilih aksi yang ingin dijalankan untuk contract yang dipilih.
+                                </span>
+                            </div>
 
-                                <!--begin::Table head-->
+                            <div class="d-flex flex-row-fluid justify-content-end gap-2 ms-sm-5 mt-3 mt-sm-0" id="bulkActionButtons">
+                                {{-- Tombol bulk akan dirender oleh JavaScript --}}
+                            </div>
+                        </div>
+                        <!--end::Bulk Action Bar-->
+
+                        <div class="table-responsive">
+                            <table class="table table-row-bordered table-row-gray-300 align-middle gs-0 gy-4 datatable-custom"
+                                   id="contractTable">
                                 <thead>
-                                    <tr class="p-0 fw-bold text-muted">
-
-                                        <th class="text-center bg-light">
-                                            No
+                                    <tr class="fw-bold text-muted bg-light">
+                                        {{-- CHECK ALL --}}
+                                        <th class="text-center min-w-30px">
+                                            <div class="form-check form-check-sm form-check-custom form-check-solid d-flex justify-content-center">
+                                                <input class="form-check-input" type="checkbox" id="checkAll" />
+                                            </div>
                                         </th>
 
-                                        <th class="text-center bg-light">
-                                            Contract Number
-                                        </th>
-
-                                        <th class="text-center bg-light">
-                                            Employee
-                                        </th>
-
-                                        <th class="text-center bg-light">
-                                            Project
-                                        </th>
-
-                                        <th class="text-center bg-light">
-                                            Title
-                                        </th>
-
-                                        <th class="text-center bg-light">
-                                            Start Date
-                                        </th>
-
-                                        <th class="text-center bg-light">
-                                            End Date
-                                        </th>
-
-                                        <th class="text-center bg-light">
-                                            Status
-                                        </th>
-
-                                        <th class="text-center bg-light">
-                                            Aksi
-                                        </th>
-
+                                        <th class="text-center min-w-50px">No</th>
+                                        <th class="text-center min-w-125px">Contract Number</th>
+                                        <th class="text-center min-w-150px">Employee</th>
+                                        <th class="text-center min-w-125px">Project</th>
+                                        <th class="text-center min-w-125px">Owner</th>
+                                        <th class="text-center min-w-150px">Title</th>
+                                        <th class="text-center min-w-100px">Start Date</th>
+                                        <th class="text-center min-w-100px">End Date</th>
+                                        <th class="text-center min-w-150px">Status</th>
+                                        <th class="text-center min-w-125px">Action</th>
                                     </tr>
                                 </thead>
-                                <!--end::Table head-->
-
-                                <!--begin::Table body-->
                                 <tbody>
-
                                     @foreach ($data as $index => $item)
-
                                         <tr>
-
-                                            <!-- No -->
+                                            {{-- CHECK PER ROW --}}
                                             <td class="text-center">
-                                                {{ $index + 1 }}
+                                                <div class="form-check form-check-sm form-check-custom form-check-solid d-flex justify-content-center">
+                                                    <input class="form-check-input row-checkbox"
+                                                           type="checkbox"
+                                                           value="{{ $item->id }}"
+                                                           data-status="{{ $item->status }}" />
+                                                </div>
                                             </td>
 
-                                            <!-- Contract Number -->
-                                            <td class="text-center">
+                                            <td class="text-center">{{ $index + 1 }}</td>
+
+                                            <td class="text-center fw-semibold">
                                                 {{ $item->contract_number }}
                                             </td>
 
-                                            <!-- Employee -->
-                                            <td class="text-start ps-4">
-
-                                                <span class="text-gray-900 fw-semibold">
+                                            <td class="text-start">
+                                                <span class="text-gray-900 fw-semibold d-block">
                                                     {{ $item->user->name ?? '-' }}
                                                 </span>
-
-                                                <br>
-
                                                 <small class="text-muted">
                                                     {{ $item->user->employee_number ?? '-' }}
                                                 </small>
-
                                             </td>
 
-                                            <!-- Project -->
                                             <td class="text-center">
                                                 {{ $item->project->name ?? '-' }}
                                             </td>
+                                            <td class="text-center">
+                                                {{ $item->project->owner ?? '-' }}
+                                            </td>
 
-                                            <!-- Title -->
                                             <td class="text-start">
                                                 {{ $item->title }}
                                             </td>
 
-                                            <!-- Start Date -->
-                                            <td class="text-center">
+                                            {{-- Start Date --}}
+                                            <td class="text-center"
+                                                data-order="{{ $item->start_date?->format('Y-m-d') }}">
                                                 {{ $item->start_date?->format('d M Y') ?? '-' }}
                                             </td>
 
-                                            <!-- End Date -->
-                                            <td class="text-center">
+                                            {{-- End Date --}}
+                                            <td class="text-center"
+                                                data-order="{{ $item->end_date?->format('Y-m-d') }}">
                                                 {{ $item->end_date?->format('d M Y') ?? '-' }}
                                             </td>
 
-                                            <!-- Status -->
+                                            {{-- Status --}}
                                             <td class="text-center">
+                                                @php
+                                                    $statusMap = [
+                                                        'draft'       => ['badge-light-secondary', 'Draft'],
+                                                        'sent'        => ['badge-light-warning', 'Sent'],
+                                                        'viewed'      => ['badge-light-info', 'Viewed'],
+                                                        'signed'      => ['badge-light-info', 'Need Head HRD Approval'],
+                                                        'signed-hrd'  => ['badge-light-info', 'Need Head Approval'],
+                                                        'signed-head' => ['badge-light-success', 'Complete'],
+                                                        'expired'     => ['badge-light-danger', 'Expired'],
+                                                    ];
+                                                    [$badgeClass, $badgeLabel] = $statusMap[$item->status] ?? ['badge-light-secondary', ucfirst($item->status)];
+                                                @endphp
+                                                <span class="badge {{ $badgeClass }}">{{ $badgeLabel }}</span>
+                                            </td>
 
-                                                @if ($item->status === 'draft')
+                                            {{-- AKSI --}}
+                                            <td class="text-center">
+                                                @php
+                                                    $statusAction = null;
 
-                                                    <span class="badge badge-light-secondary">
-                                                        Draft
-                                                    </span>
+                                                    if ($item->status === 'draft') {
+                                                        $statusAction = [
+                                                            'route'   => route('contracts.send', $item->id),
+                                                            'formId'  => "send-form-{$item->id}",
+                                                            'onclick' => "confirmSend({$item->id})",
+                                                            'icon'    => 'ki-send',
+                                                            'label'   => 'Send Contract',
+                                                            'color'   => 'text-primary',
+                                                        ];
+                                                    } elseif ($item->status === 'signed') {
+                                                        $statusAction = [
+                                                            'route'   => route('contracts.approve.hrd', $item->id),
+                                                            'formId'  => "approve-hrd-form-{$item->id}",
+                                                            'onclick' => "confirmApproveHRD({$item->id})",
+                                                            'icon'    => 'ki-check-circle',
+                                                            'label'   => 'Approve HRD',
+                                                            'color'   => 'text-success',
+                                                        ];
+                                                    } elseif ($item->status === 'signed-hrd') {
+                                                        $statusAction = [
+                                                            'route'   => route('contracts.approve.head', $item->id),
+                                                            'formId'  => "approve-head-form-{$item->id}",
+                                                            'onclick' => "confirmApproveHead({$item->id})",
+                                                            'icon'    => 'ki-check-circle',
+                                                            'label'   => 'Approve Head',
+                                                            'color'   => 'text-success',
+                                                        ];
+                                                    }
+                                                @endphp
 
-                                                @elseif ($item->status === 'sent')
+                                                @if (
+                                                    auth()->user()->can('read-contracts') ||
+                                                    auth()->user()->can('edit-contracts') ||
+                                                    auth()->user()->can('delete-contracts')
+                                                )
+                                                    <div class="dropdown">
+                                                        <button type="button"
+                                                                class="btn btn-sm btn-icon btn-light btn-active-light-primary"
+                                                                data-bs-toggle="dropdown"
+                                                                aria-expanded="false"
+                                                                title="Aksi">
+                                                            <i class="ki-outline ki-dots-vertical fs-4"></i>
+                                                        </button>
 
-                                                    <span class="badge badge-light-warning">
-                                                        Sent
-                                                    </span>
+                                                        <ul class="dropdown-menu dropdown-menu-end">
 
-                                                @elseif ($item->status === 'viewed')
+                                                            {{-- View --}}
+                                                            @can('read-contracts')
+                                                                <li>
+                                                                    <a class="dropdown-item"
+                                                                       href="{{ route('contracts.show', $item->id) }}">
+                                                                        <i class="ki-outline ki-eye fs-4 me-2 text-primary"></i>
+                                                                        Lihat Detail
+                                                                    </a>
+                                                                </li>
+                                                            @endcan
 
-                                                    <span class="badge badge-light-info">
-                                                        Viewed
-                                                    </span>
+                                                            {{-- Edit --}}
+                                                            @can('edit-contracts')
+                                                                <li>
+                                                                    <a class="dropdown-item"
+                                                                       href="{{ route('contracts.edit', $item->id) }}">
+                                                                        <i class="ki-outline ki-pencil fs-4 me-2 text-warning"></i>
+                                                                        Edit Contract
+                                                                    </a>
+                                                                </li>
+                                                            @endcan
 
-                                                @elseif ($item->status === 'signed')
+                                                            {{-- Aksi status --}}
+                                                            @if ($statusAction && auth()->user()->can('edit-contracts'))
+                                                                <li>
+                                                                    <a class="dropdown-item"
+                                                                       href="javascript:void(0)"
+                                                                       onclick="{{ $statusAction['onclick'] }}">
+                                                                        <i class="ki-outline {{ $statusAction['icon'] }} fs-4 me-2 {{ $statusAction['color'] }}"></i>
+                                                                        {{ $statusAction['label'] }}
+                                                                    </a>
+                                                                </li>
+                                                            @endif
 
-                                                    <span class="badge badge-light-info">
-                                                        Need Head HRD Approval
-                                                    </span>
-                                                @elseif ($item->status === 'signed-hrd')
+                                                            {{-- Delete --}}
+                                                            @can('delete-contracts')
+                                                                <li><hr class="dropdown-divider"></li>
+                                                                <li>
+                                                                    <a class="dropdown-item text-danger"
+                                                                       href="javascript:void(0)"
+                                                                       onclick="confirmDelete({{ $item->id }})">
+                                                                        <i class="ki-outline ki-trash fs-4 me-2"></i>
+                                                                        Hapus Contract
+                                                                    </a>
+                                                                </li>
+                                                            @endcan
 
-                                                    <span class="badge badge-light-info">
-                                                        Need Head Approval
-                                                    </span>
-                                                @elseif ($item->status === 'signed-head')
-
-                                                    <span class="badge badge-light-success">
-                                                        Complete
-                                                    </span>
-
-                                                @elseif ($item->status === 'expired')
-
-                                                    <span class="badge badge-light-danger">
-                                                        Expired
-                                                    </span>
-
-                                                @else
-
-                                                    <span class="badge badge-light-secondary">
-                                                        {{ ucfirst($item->status) }}
-                                                    </span>
-
+                                                        </ul>
+                                                    </div>
                                                 @endif
 
-                                            </td>
+                                                {{-- Form tersembunyi untuk aksi status --}}
+                                                @if ($statusAction && auth()->user()->can('edit-contracts'))
+                                                    <form id="{{ $statusAction['formId'] }}"
+                                                          action="{{ $statusAction['route'] }}"
+                                                          method="POST"
+                                                          style="display:none;">
+                                                        @csrf
+                                                    </form>
+                                                @endif
 
-                                            <!-- Aksi -->
-                                            <td class="text-center">
-
-                                                @can('read-contracts')
-                                                    <a href="{{ route('contracts.show', $item->id) }}"
-                                                        class="btn btn-icon btn-sm"
-                                                        title="Detail Contract">
-
-                                                        <i class="ki-outline ki-eye text-primary fs-2"></i>
-
-                                                    </a>
-                                                @endcan
-
-                                                
-@can('edit-contracts')
-
-    {{-- EDIT CONTRACT --}}
-    <a href="{{ route('contracts.edit', $item->id) }}"
-       class="btn btn-icon btn-sm"
-       title="Edit Contract">
-
-        <i class="ki-outline ki-pencil text-warning fs-2"></i>
-
-    </a>
-
-
-    {{-- SEND CONTRACT --}}
-    @if ($item->status === 'draft')
-
-    {{-- Send Contract --}}
-    <button type="button"
-            class="btn btn-icon btn-sm"
-            onclick="confirmSend({{ $item->id }})"
-            title="Send Contract">
-
-        <i class="ki-outline ki-send text-primary fs-2"></i>
-
-    </button>
-
-    <form
-        id="send-form-{{ $item->id }}"
-        action="{{ route('contracts.send', $item->id) }}"
-        method="POST"
-        style="display:none;">
-
-        @csrf
-
-    </form>
-
-
-@elseif ($item->status === 'signed')
-
-    {{-- HRD Approval --}}
-    <button type="button"
-            class="btn btn-icon btn-sm"
-            onclick="confirmApproveHRD({{ $item->id }})"
-            title="Approve HRD">
-
-        <i class="ki-outline ki-check-circle text-primary fs-2"></i>
-
-    </button>
-
-    <form
-        id="approve-hrd-form-{{ $item->id }}"
-        action="{{ route('contracts.approve.hrd', $item->id) }}"
-        method="POST"
-        style="display:none;">
-
-        @csrf
-
-    </form>
-
-
-@elseif ($item->status === 'signed-hrd')
-
-    {{-- Head Approval --}}
-    <button type="button"
-            class="btn btn-icon btn-sm"
-            onclick="confirmApproveHead({{ $item->id }})"
-            title="Approve Head">
-
-        <i class="ki-outline ki-check-circle text-primary fs-2"></i>
-
-    </button>
-
-    <form
-        id="approve-head-form-{{ $item->id }}"
-        action="{{ route('contracts.approve.head', $item->id) }}"
-        method="POST"
-        style="display:none;">
-
-        @csrf
-
-    </form>
-
-
-@elseif ($item->status === 'signed-head')
-
-    {{-- Complete --}}
-    <span class="badge badge-light-success">
-        Complete
-    </span>
-
-@endif
-
-@endcan
-
-
+                                                {{-- Form tersembunyi delete --}}
                                                 @can('delete-contracts')
-                                                    <button type="button"
-                                                        class="btn btn-icon btn-sm btn-delete"
-                                                        onclick="confirmDelete({{ $item->id }})"
-                                                        title="Delete Contract">
-
-                                                        <i class="ki-outline ki-trash text-danger fs-2"></i>
-
-                                                    </button>
-
                                                     <form id="delete-form-{{ $item->id }}"
-                                                        action="{{ route('contracts.destroy', $item->id) }}"
-                                                        method="POST"
-                                                        style="display:none;">
-
+                                                          action="{{ route('contracts.destroy', $item->id) }}"
+                                                          method="POST"
+                                                          style="display:none;">
                                                         @csrf
                                                         @method('DELETE')
-
                                                     </form>
                                                 @endcan
-
                                             </td>
-
                                         </tr>
-                                            {{-- @include('admin.hrd.contracts.modal-edit', [
-        'item' => $item
-    ]) --}}
-
                                     @endforeach
-
                                 </tbody>
-                                <!--end::Table body-->
-
                             </table>
-                            <!--end::Table-->
-
                         </div>
-                        <!--end::Table container-->
-
                     </div>
                     <!--end::Body-->
 
@@ -420,157 +417,485 @@
 
 
 @section('script')
-
     <script>
+        // ============================================
+        // Permission flags dari Blade
+        // ============================================
+        const PERMISSIONS = {
+            canEdit:   @json(auth()->user()->can('edit-contracts')),
+            canDelete: @json(auth()->user()->can('delete-contracts')),
+        };
 
-        $(document).ready(function() {
+        // ============================================
+        // Mapping status → definisi bulk action
+        // ============================================
+        const BULK_ACTIONS = {
+            'draft': {
+                label:     'Send Semua',
+                icon:      'ki-send',
+                btnClass:  'btn-primary',
+                route:     '{{ route("contracts.bulk-send") }}',
+                confirmTitle: 'Kirim Semua Contract?',
+                confirmText:  'Semua contract draft yang dipilih akan dikirim ke employee.',
+                confirmBtn:   'Ya, kirim!',
+            },
+            'signed': {
+                label:     'Approve HRD Semua',
+                icon:      'ki-check-circle',
+                btnClass:  'btn-primary',
+                route:     '{{ route("contracts.bulk-approve-hrd") }}',
+                confirmTitle: 'Approve HRD Semua?',
+                confirmText:  'Semua contract yang dipilih akan disetujui oleh Head HRD.',
+                confirmBtn:   'Ya, approve!',
+            },
+            'signed-hrd': {
+                label:     'Approve Head Semua',
+                icon:      'ki-check-circle',
+                btnClass:  'btn-primary',
+                route:     '{{ route("contracts.bulk-approve-head") }}',
+                confirmTitle: 'Approve Head Semua?',
+                confirmText:  'Semua contract yang dipilih akan diselesaikan setelah approval Head.',
+                confirmBtn:   'Ya, approve!',
+            },
+        };
 
+        $(document).ready(function () {
+
+            // ============================================
+            // Inisialisasi Select2
+            // ============================================
+            $('[data-control="select2"]').select2({
+                minimumResultsForSearch: Infinity,
+                width: '100%'
+            });
+
+            // ============================================
+            // Inisialisasi DataTable
+            // ============================================
             var table = $('#contractTable').DataTable({
-
-                "searching": true,
-                "ordering": true,
-                "paging": true,
-                "info": true,
-
-                "search": {
-                    "smart": false,
-                    "regex": false,
-                    "caseInsensitive": true
+                searching: true,
+                ordering: true,
+                paging: true,
+                info: true,
+                pageLength: 50,
+                lengthMenu: [[10, 25, 50, 100, 200], [10, 25, 50, 100, 200]],
+                search: {
+                    smart: false,
+                    regex: false,
+                    caseInsensitive: true
                 },
-
-                "columnDefs": [
-                    {
-                        "orderable": false,
-                        "targets": [0, 8]
-                    }
+                columnDefs: [
+                    { orderable: false, targets: [0, 1, 9] }
                 ]
-
             });
 
-            $('[data-kt-docs-table-filter="search"]').on('keyup', function() {
+            // ============================================
+            // ✨ DATE RANGE FILTER — pakai helper global
+            // ============================================
+            DataTableHelper.registerDateRangeFilter({
+                table:        table,
+                startInput:   '#filterStartDate',
+                endInput:     '#filterEndDate',
+                columnIndex:  6,
+                useDataOrder: true
+            });
 
+            // ============================================
+            // Search
+            // ============================================
+            $('#filterSearch').on('keyup', function () {
                 table.search(this.value).draw();
-
             });
 
-        });
+            // ============================================
+            // Filter Project (kolom index 4)
+            // ============================================
+            $('#filterProject').on('change', function () {
+                var val = this.value;
+                table.column(4).search(val ? '^' + val + '$' : '', true, false).draw();
+            });
 
+            // ============================================
+            // Filter Status (kolom index 8)
+            // ============================================
+            $('#filterStatus').on('change', function () {
+                var val = this.value;
+                var labelMap = {
+                    'draft':       'Draft',
+                    'sent':        'Sent',
+                    'viewed':      'Viewed',
+                    'signed':      'Need Head HRD Approval',
+                    'signed-hrd':  'Need Head Approval',
+                    'signed-head': 'Complete',
+                    'expired':     'Expired'
+                };
+                table.column(8).search(val ? labelMap[val] : '', true, false).draw();
+            });
 
-        function confirmDelete(contractId) {
+            // ============================================
+            // Reset Filter
+            // ============================================
+            $('#resetFilter').on('click', function () {
+                $('#filterSearch').val('');
+                $('#filterProject').val('').trigger('change.select2');
+                $('#filterStatus').val('').trigger('change.select2');
 
-            Swal.fire({
+                // ✨ Reset date range pakai helper
+                DataTableHelper.resetDateRangeFilter(table, '#filterStartDate', '#filterEndDate');
 
-                title: 'Apakah Anda yakin?',
+                table.search('').columns().search('').draw();
+            });
 
-                text: "Contract ini akan dihapus secara permanen!",
+            // ============================================
+            // CHECK ALL
+            // ============================================
+            $('#checkAll').on('change', function () {
+                var isChecked = this.checked;
 
-                icon: 'warning',
+                $('#contractTable tbody .row-checkbox').each(function () {
+                    if ($(this).closest('tr').is(':visible')) {
+                        $(this).prop('checked', isChecked);
+                    }
+                });
 
-                showCancelButton: true,
+                updateBulkActionBar();
+            });
 
-                confirmButtonColor: 'var(--bs-primary)',
+            // ============================================
+            // CHECK PER ROW
+            // ============================================
+            $(document).on('change', '.row-checkbox', function () {
+                updateCheckAllState();
+                updateBulkActionBar();
+            });
 
-                cancelButtonColor: 'var(--bs-danger)',
+            // ============================================
+            // Sinkronisasi saat DataTable redraw
+            // ============================================
+            table.on('draw', function () {
+                updateCheckAllState();
+                updateBulkActionBar();
+            });
 
-                confirmButtonText: 'Ya, hapus!',
+            // ============================================
+            // Update state "checkAll"
+            // ============================================
+            function updateCheckAllState() {
+                var visibleCheckboxes = $('#contractTable tbody .row-checkbox').filter(function () {
+                    return $(this).closest('tr').is(':visible');
+                });
 
-                cancelButtonText: 'Batal',
+                var checkedVisible = visibleCheckboxes.filter(':checked');
 
-                reverseButtons: true
+                if (visibleCheckboxes.length === 0) {
+                    $('#checkAll').prop('checked', false).prop('indeterminate', false);
+                } else if (checkedVisible.length === visibleCheckboxes.length) {
+                    $('#checkAll').prop('checked', true).prop('indeterminate', false);
+                } else if (checkedVisible.length === 0) {
+                    $('#checkAll').prop('checked', false).prop('indeterminate', false);
+                } else {
+                    $('#checkAll').prop('checked', false).prop('indeterminate', true);
+                }
+            }
 
-            }).then((result) => {
+            // ============================================
+            // Ambil ID + status yang dicentang
+            // ============================================
+            function getSelected() {
+                var ids = [];
+                var statuses = new Set();
 
-                if (result.isConfirmed) {
+                $('#contractTable tbody .row-checkbox:checked').each(function () {
+                    ids.push($(this).val());
+                    statuses.add($(this).data('status'));
+                });
 
-                    document
-                        .getElementById('delete-form-' + contractId)
-                        .submit();
+                return {
+                    ids: ids,
+                    statuses: Array.from(statuses),
+                    isUniform: statuses.size === 1,
+                    singleStatus: statuses.size === 1 ? Array.from(statuses)[0] : null,
+                };
+            }
 
+            // ============================================
+            // Update Bulk Action Bar
+            // ============================================
+            function updateBulkActionBar() {
+
+                var selected = getSelected();
+                var count = selected.ids.length;
+
+                $('#selectedCount').text(count);
+
+                if (count === 0) {
+                    $('#bulkActionBar').addClass('d-none');
+                    return;
                 }
 
+                $('#bulkActionBar').removeClass('d-none');
+
+                var $container = $('#bulkActionButtons');
+                var $info      = $('#bulkActionInfo');
+
+                $container.empty();
+
+                // ---- TIDAK SERAGAM ----
+                if (!selected.isUniform) {
+                    $info.html('<span class="text-danger fw-semibold">Status contract tidak seragam.</span> Bulk action hanya bisa dilakukan jika semua contract yang dipilih memiliki status yang sama.');
+                    if (PERMISSIONS.canDelete) {
+                        $container.append(buildDeleteButton());
+                    }
+                    $container.append(buildCancelButton());
+                    return;
+                }
+
+                // ---- SERAGAM ----
+                var status = selected.singleStatus;
+                var action = BULK_ACTIONS[status];
+
+                if (action && PERMISSIONS.canEdit) {
+                    $info.text('Status terdeteksi: ' + status + '. Aksi yang tersedia di bawah ini.');
+                    $container.append(buildActionButton(action));
+                } else if (action && !PERMISSIONS.canEdit) {
+                    $info.html('<span class="text-muted">Anda tidak memiliki izin untuk melakukan aksi bulk pada status ini.</span>');
+                } else {
+                    $info.html('<span class="text-muted">Tidak ada bulk action yang tersedia untuk status <b>' + status + '</b>.</span>');
+                }
+
+                if (PERMISSIONS.canDelete) {
+                    $container.append(buildDeleteButton());
+                }
+
+                $container.append(buildCancelButton());
+            }
+
+            // ============================================
+            // Builder tombol
+            // ============================================
+            function buildActionButton(action) {
+                return $('<button>', {
+                    type: 'button',
+                    class: 'btn btn-sm ' + action.btnClass,
+                    html: '<i class="ki-outline ' + action.icon + ' fs-4 me-1"></i> ' + action.label,
+                    on: {
+                        click: function () { runBulkAction(action); }
+                    }
+                });
+            }
+
+            function buildDeleteButton() {
+                return $('<button>', {
+                    type: 'button',
+                    class: 'btn btn-sm btn-danger',
+                    html: '<i class="ki-outline ki-trash fs-4 me-1"></i> Hapus Terpilih',
+                    on: {
+                        click: function () { bulkDelete(); }
+                    }
+                });
+            }
+
+            function buildCancelButton() {
+                return $('<button>', {
+                    type: 'button',
+                    class: 'btn btn-sm btn-light',
+                    text: 'Batal',
+                    on: {
+                        click: function () { clearSelection(); }
+                    }
+                });
+            }
+
+            // ============================================
+            // Jalankan bulk action
+            // ============================================
+            function runBulkAction(action) {
+
+                var ids = getSelected().ids;
+
+                if (ids.length === 0) {
+                    Swal.fire({
+                        icon: 'info',
+                        title: 'Tidak ada data dipilih',
+                        text: 'Silakan pilih minimal satu contract terlebih dahulu.'
+                    });
+                    return;
+                }
+
+                Swal.fire({
+                    title: action.confirmTitle,
+                    text: action.confirmText + ' (' + ids.length + ' contract)',
+                    icon: 'question',
+                    showCancelButton: true,
+                    confirmButtonColor: 'var(--bs-primary)',
+                    cancelButtonColor: 'var(--bs-secondary)',
+                    confirmButtonText: action.confirmBtn,
+                    cancelButtonText: 'Batal',
+                    reverseButtons: true
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        submitBulkForm(action.route, ids);
+                    }
+                });
+            }
+
+            // ============================================
+            // Bulk Delete
+            // ============================================
+            function bulkDelete() {
+
+                var ids = getSelected().ids;
+
+                if (ids.length === 0) {
+                    Swal.fire({
+                        icon: 'info',
+                        title: 'Tidak ada data dipilih',
+                        text: 'Silakan pilih minimal satu contract terlebih dahulu.'
+                    });
+                    return;
+                }
+
+                Swal.fire({
+                    title: 'Hapus ' + ids.length + ' contract?',
+                    text: "Data yang dihapus tidak dapat dikembalikan!",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: 'var(--bs-danger)',
+                    cancelButtonColor: 'var(--bs-secondary)',
+                    confirmButtonText: 'Ya, hapus!',
+                    cancelButtonText: 'Batal',
+                    reverseButtons: true
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        submitBulkForm('{{ route("contracts.bulk-delete") }}', ids);
+                    }
+                });
+            }
+
+            // ============================================
+            // Helper: submit form bulk secara dinamis
+            // ============================================
+            function submitBulkForm(url, ids) {
+
+                var form = $('<form>', {
+                    'method': 'POST',
+                    'action': url
+                });
+
+                form.append($('<input>', {
+                    'type': 'hidden',
+                    'name': '_token',
+                    'value': '{{ csrf_token() }}'
+                }));
+
+                if (url.indexOf('bulk-delete') !== -1) {
+                    form.append($('<input>', {
+                        'type': 'hidden',
+                        'name': '_method',
+                        'value': 'DELETE'
+                    }));
+                }
+
+                ids.forEach(function (id) {
+                    form.append($('<input>', {
+                        'type': 'hidden',
+                        'name': 'ids[]',
+                        'value': id
+                    }));
+                });
+
+                $('body').append(form);
+                form.submit();
+            }
+
+            // ============================================
+            // Clear selection
+            // ============================================
+            window.clearSelection = function () {
+                $('#contractTable tbody .row-checkbox').prop('checked', false);
+                $('#checkAll').prop('checked', false).prop('indeterminate', false);
+                updateBulkActionBar();
+            };
+
+        });
+
+        // ============================================
+        // Konfirmasi Aksi per-row (SweetAlert)
+        // ============================================
+        function confirmDelete(contractId) {
+            Swal.fire({
+                title: 'Apakah Anda yakin?',
+                text: "Contract ini akan dihapus secara permanen!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: 'var(--bs-primary)',
+                cancelButtonColor: 'var(--bs-danger)',
+                confirmButtonText: 'Ya, hapus!',
+                cancelButtonText: 'Batal',
+                reverseButtons: true
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    document.getElementById('delete-form-' + contractId).submit();
+                }
             });
-
         }
+
         function confirmSend(contractId) {
-
-    Swal.fire({
-
-        title: 'Kirim Contract?',
-
-        text: 'Contract akan dikirim ke employee yang dipilih.',
-
-        icon: 'question',
-
-        showCancelButton: true,
-
-        confirmButtonColor: 'var(--bs-primary)',
-
-        cancelButtonColor: 'var(--bs-danger)',
-
-        confirmButtonText: 'Ya, kirim!',
-
-        cancelButtonText: 'Batal',
-
-        reverseButtons: true
-
-    }).then((result) => {
-
-        if (result.isConfirmed) {
-
-            document
-                .getElementById('send-form-' + contractId)
-                .submit();
-
+            Swal.fire({
+                title: 'Kirim Contract?',
+                text: 'Contract akan dikirim ke employee yang dipilih.',
+                icon: 'question',
+                showCancelButton: true,
+                confirmButtonColor: 'var(--bs-primary)',
+                cancelButtonColor: 'var(--bs-danger)',
+                confirmButtonText: 'Ya, kirim!',
+                cancelButtonText: 'Batal',
+                reverseButtons: true
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    document.getElementById('send-form-' + contractId).submit();
+                }
+            });
         }
 
-    });
+        function confirmApproveHRD(id) {
+            Swal.fire({
+                title: 'Approve Contract?',
+                text: 'Contract akan disetujui oleh Head HRD.',
+                icon: 'question',
+                showCancelButton: true,
+                confirmButtonText: 'Yes, Approve',
+                cancelButtonText: 'Cancel',
+                customClass: {
+                    confirmButton: 'btn btn-primary',
+                    cancelButton: 'btn btn-light'
+                },
+                buttonsStyling: false
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    document.getElementById('approve-hrd-form-' + id).submit();
+                }
+            });
+        }
 
-}
- function confirmApproveHRD(id) {
-        Swal.fire({
-            title: 'Approve Contract?',
-            text: 'Contract akan disetujui oleh Head HRD.',
-            icon: 'question',
-            showCancelButton: true,
-            confirmButtonText: 'Yes, Approve',
-            cancelButtonText: 'Cancel',
-            customClass: {
-                confirmButton: 'btn btn-primary',
-                cancelButton: 'btn btn-light'
-            },
-            buttonsStyling: false
-        }).then((result) => {
-
-            if (result.isConfirmed) {
-                document.getElementById('approve-hrd-form-' + id).submit();
-            }
-
-        });
-    }
-
-
-    function confirmApproveHead(id) {
-        Swal.fire({
-            title: 'Approve Contract?',
-            text: 'Contract akan diselesaikan setelah approval Head.',
-            icon: 'question',
-            showCancelButton: true,
-            confirmButtonText: 'Yes, Approve',
-            cancelButtonText: 'Cancel',
-            customClass: {
-                confirmButton: 'btn btn-primary',
-                cancelButton: 'btn btn-light'
-            },
-            buttonsStyling: false
-        }).then((result) => {
-
-            if (result.isConfirmed) {
-                document.getElementById('approve-head-form-' + id).submit();
-            }
-
-        });
-    }
-
+        function confirmApproveHead(id) {
+            Swal.fire({
+                title: 'Approve Contract?',
+                text: 'Contract akan diselesaikan setelah approval Head.',
+                icon: 'question',
+                showCancelButton: true,
+                confirmButtonText: 'Yes, Approve',
+                cancelButtonText: 'Cancel',
+                customClass: {
+                    confirmButton: 'btn btn-primary',
+                    cancelButton: 'btn btn-light'
+                },
+                buttonsStyling: false
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    document.getElementById('approve-head-form-' + id).submit();
+                }
+            });
+        }
     </script>
-
 @endsection

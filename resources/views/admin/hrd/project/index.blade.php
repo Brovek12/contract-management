@@ -69,6 +69,10 @@
                                     </th>
 
                                     <th class="text-center bg-light">
+                                        Owner
+                                    </th>
+
+                                    <th class="text-center bg-light">
                                         Nama Project
                                     </th>
 
@@ -96,6 +100,9 @@
 
                 <td class="text-center">
                     {{ $item->code }}
+                </td>
+                <td class="text-center">
+                    {{ $item->owner }}
                 </td>
 
                 <td class="text-center">

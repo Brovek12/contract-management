@@ -18,6 +18,7 @@ class Contract extends Model
         'contract_number',
         'contract_date',
         'title',
+        'category',        // ← baru
         'type',
 
         // =====================================================
@@ -71,6 +72,23 @@ class Contract extends Model
         // =====================================================
 
         'basic_salary',
+
+        // =====================================================
+        // ALLOWANCES
+        // Diisi sesuai type contract
+        // =====================================================
+
+        'project_allowance',      // ← baru (all-in)
+        'cost_allowance',         // ← baru (gp-mahal-um-ut-fungsi)
+        'meal_allowance',         // ← baru (per hari)
+        'transport_allowance',    // ← baru (per hari)
+        'functional_allowance',   // ← baru (per hari)
+        'security_incentive',     // ← baru (security)
+        'night_shift_allowance',  // ← baru (security)
+        'sea_allowance',          // ← baru (gp-um-ut-laut)
+        'pulse_allowance',        // ← baru (gp-mahal-um-ut-fungsi-pls)
+        
+'attendance_allowance',
 
         // =====================================================
         // FILE
@@ -130,6 +148,20 @@ class Contract extends Model
         'head_signed_at' => 'datetime',
 
         'basic_salary' => 'decimal:2',
+
+        // Allowances
+        'project_allowance'    => 'decimal:2',   // ← baru
+        'cost_allowance'       => 'decimal:2',   // ← baru
+        'meal_allowance'       => 'decimal:2',   // ← baru
+        'transport_allowance'  => 'decimal:2',   // ← baru
+        'functional_allowance' => 'decimal:2',   // ← baru
+
+        
+        'security_incentive'     => 'decimal:2',   // ← baru
+        'night_shift_allowance'  => 'decimal:2',   // ← baru
+        'sea_allowance'          => 'decimal:2',   // ← baru
+        'pulse_allowance'        => 'decimal:2',   // ← baru
+        'attendance_allowance'        => 'decimal:2',   // ← baru
     ];
 
 

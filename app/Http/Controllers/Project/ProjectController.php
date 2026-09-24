@@ -56,6 +56,7 @@ class ProjectController extends Controller
             Project::create([
                 'code'      => $request->code,
                 'name'      => $request->name,
+                'owner'     => $request->owner,
                 'location'  => $request->location,
                 'is_active' => $request->is_active,
             ]);
@@ -101,6 +102,7 @@ class ProjectController extends Controller
 
             $project->update([
                 'code'      => $request->code,
+                'owner'     => $request->owner,
                 'name'      => $request->name,
                 'location'  => $request->location,
                 'is_active' => $request->is_active,
