@@ -5,20 +5,6 @@
 @section('pageTitle', 'Contract')
 @section('mainSection', 'Contract Management')
 @section('currentSection', 'Contract')
-<style>
-    /* Supaya dropdown tidak ke-crop */
-.table-responsive {
-    overflow-x: auto;
-    overflow-y: visible;
-    position: relative;
-}
-
-/* Dropdown menu diposisikan fixed saat terbuka */
-.table-responsive .dropdown-menu {
-    position: fixed !important;
-    z-index: 9999;
-}
-</style>
 
 @section('content')
     <!--begin::Content-->
@@ -247,7 +233,7 @@
 
                         <div class="table-responsive">
                             <table class="table table-row-bordered table-row-gray-300 align-middle gs-0 gy-4 datatable-custom"
-                             style="font-size: 10px;"
+                                   style="font-size: 10px;"
                                    id="contractTable">
                                 <thead>
                                     <tr class="fw-bold text-muted bg-light">
@@ -260,8 +246,8 @@
 
                                         <th class="text-center min-w-50px">No</th>
                                         <th class="text-center min-w-125px">Contract Number</th>
-                                        <th class="text-center min-w-125px">Category</th>     {{-- KOLOM BARU --}}
-                                        <th class="text-center min-w-150px">Type</th>         {{-- KOLOM BARU --}}
+                                        <th class="text-center min-w-125px">Category</th>
+                                        <th class="text-center min-w-150px">Type</th>
                                         <th class="text-center min-w-150px">Employee</th>
                                         <th class="text-center min-w-125px">Project</th>
                                         <th class="text-center min-w-125px">Owner</th>
@@ -274,7 +260,6 @@
                                 </thead>
                                 <tbody>
                                     @php
-                                        // Mapping type → category (fallback kalau kolom category tidak ada di DB)
                                         $typeCategoryMap = [
                                             'gp-um-ut-fungsi'           => 'managerial',
                                             'gp-mahal-um-ut-fungsi'     => 'managerial',
@@ -293,7 +278,6 @@
                                             'ipfms-dobu'                => 'project',
                                         ];
 
-                                        // Badge style per kategori
                                         $categoryBadgeMap = [
                                             'managerial'     => ['badge-light-primary', 'Managerial'],
                                             'non-managerial' => ['badge-light-success', 'Non-Managerial'],
@@ -324,7 +308,7 @@
                                                 {{ $item->contract_number }}
                                             </td>
 
-                                            {{-- CATEGORY (kolom baru) --}}
+                                            {{-- CATEGORY --}}
                                             <td class="text-center"
                                                 data-category="{{ $rowCategory }}">
                                                 <span class="badge {{ $catBadgeClass }}">
@@ -332,7 +316,7 @@
                                                 </span>
                                             </td>
 
-                                            {{-- TYPE (kolom baru) --}}
+                                            {{-- TYPE --}}
                                             <td class="text-center"
                                                 data-type="{{ $rowType }}">
                                                 <span class="badge badge-light-primary">
@@ -429,10 +413,11 @@
                                                     auth()->user()->can('edit-contracts') ||
                                                     auth()->user()->can('delete-contracts')
                                                 )
-                                                    <div class="dropdown">
+                                                    <div class="dropdown" data-bs-strategy="fixed">
                                                         <button type="button"
                                                                 class="btn btn-sm btn-icon btn-light btn-active-light-primary"
                                                                 data-bs-toggle="dropdown"
+                                                                data-bs-strategy="fixed"
                                                                 aria-expanded="false"
                                                                 title="Aksi">
                                                             <i class="ki-outline ki-dots-vertical fs-4"></i>
@@ -537,10 +522,7 @@
 @section('script')
     <script>
         // ============================================
-        // Index kolom (sesuai urutan <th> di atas)
-        // 0=checkbox, 1=No, 2=ContractNumber, 3=Category,
-        // 4=Type, 5=Employee, 6=Project, 7=Owner, 8=Title,
-        // 9=StartDate, 10=EndDate, 11=Status, 12=Action
+        // Index kolom
         // ============================================
         const COL = {
             CHECKBOX: 0,
@@ -626,7 +608,7 @@
             });
 
             // ============================================
-            // DATE RANGE FILTER (kolom Start Date)
+            // DATE RANGE FILTER
             // ============================================
             DataTableHelper.registerDateRangeFilter({
                 table:        table,
@@ -644,8 +626,7 @@
             });
 
             // ============================================
-            // Custom filter untuk Category & Type
-            // (pakai data-attribute dari cell)
+            // Custom filter Category & Type
             // ============================================
             $.fn.dataTable.ext.search.push(function (settings, data, dataIndex) {
                 if (settings.nTable.id !== 'contractTable') return true;
@@ -670,22 +651,11 @@
                 return true;
             });
 
-            // ============================================
-            // Filter Category (custom filter)
-            // ============================================
-            $('#filterCategory').on('change', function () {
-                table.draw();
-            });
+            $('#filterCategory').on('change', function () { table.draw(); });
+            $('#filterType').on('change', function () { table.draw(); });
 
             // ============================================
-            // Filter Type (custom filter)
-            // ============================================
-            $('#filterType').on('change', function () {
-                table.draw();
-            });
-
-            // ============================================
-            // Filter Project (exact match, kolom index 6)
+            // Filter Project (exact match)
             // ============================================
             $('#filterProject').on('change', function () {
                 var val = this.value;
@@ -693,7 +663,7 @@
             });
 
             // ============================================
-            // Filter Status (badge label, kolom index 11)
+            // Filter Status
             // ============================================
             $('#filterStatus').on('change', function () {
                 var val = this.value;
@@ -720,7 +690,6 @@
                 $('#filterProject').val(null).trigger('change.select2');
                 $('#filterStatus').val(null).trigger('change.select2');
 
-                // Reset date range pakai helper
                 DataTableHelper.resetDateRangeFilter(table, '#filterStartDate', '#filterEndDate');
 
                 table.search('').columns().search('').draw();
@@ -757,9 +726,6 @@
                 updateBulkActionBar();
             });
 
-            // ============================================
-            // Update state "checkAll"
-            // ============================================
             function updateCheckAllState() {
                 var visibleCheckboxes = $('#contractTable tbody .row-checkbox').filter(function () {
                     return $(this).closest('tr').is(':visible');
@@ -778,9 +744,6 @@
                 }
             }
 
-            // ============================================
-            // Ambil ID + status yang dicentang
-            // ============================================
             function getSelected() {
                 var ids = [];
                 var statuses = new Set();
@@ -798,11 +761,7 @@
                 };
             }
 
-            // ============================================
-            // Update Bulk Action Bar
-            // ============================================
             function updateBulkActionBar() {
-
                 var selected = getSelected();
                 var count = selected.ids.length;
 
@@ -820,7 +779,6 @@
 
                 $container.empty();
 
-                // ---- TIDAK SERAGAM ----
                 if (!selected.isUniform) {
                     $info.html('<span class="text-danger fw-semibold">Status contract tidak seragam.</span> Bulk action hanya bisa dilakukan jika semua contract yang dipilih memiliki status yang sama.');
                     if (PERMISSIONS.canDelete) {
@@ -830,7 +788,6 @@
                     return;
                 }
 
-                // ---- SERAGAM ----
                 var status = selected.singleStatus;
                 var action = BULK_ACTIONS[status];
 
@@ -850,9 +807,6 @@
                 $container.append(buildCancelButton());
             }
 
-            // ============================================
-            // Builder tombol
-            // ============================================
             function buildActionButton(action) {
                 return $('<button>', {
                     type: 'button',
@@ -886,11 +840,7 @@
                 });
             }
 
-            // ============================================
-            // Jalankan bulk action
-            // ============================================
             function runBulkAction(action) {
-
                 var ids = getSelected().ids;
 
                 if (ids.length === 0) {
@@ -919,11 +869,7 @@
                 });
             }
 
-            // ============================================
-            // Bulk Delete
-            // ============================================
             function bulkDelete() {
-
                 var ids = getSelected().ids;
 
                 if (ids.length === 0) {
@@ -952,11 +898,7 @@
                 });
             }
 
-            // ============================================
-            // Helper: submit form bulk secara dinamis
-            // ============================================
             function submitBulkForm(url, ids) {
-
                 var form = $('<form>', {
                     'method': 'POST',
                     'action': url
@@ -988,19 +930,27 @@
                 form.submit();
             }
 
-            // ============================================
-            // Clear selection
-            // ============================================
             window.clearSelection = function () {
                 $('#contractTable tbody .row-checkbox').prop('checked', false);
                 $('#checkAll').prop('checked', false).prop('indeterminate', false);
                 updateBulkActionBar();
             };
 
+            // ============================================
+            // FIX: Reposisi dropdown saat scroll
+            // (kalau data-bs-strategy="fixed" belum cukup)
+            // ============================================
+            document.addEventListener('show.bs.dropdown', function (e) {
+                var menu = e.target.querySelector('.dropdown-menu');
+                if (menu) {
+                    menu.style.zIndex = '9999';
+                }
+            });
+
         });
 
         // ============================================
-        // Konfirmasi Aksi per-row (SweetAlert)
+        // Konfirmasi Aksi per-row
         // ============================================
         function confirmDelete(contractId) {
             Swal.fire({
@@ -1078,5 +1028,4 @@
             });
         }
     </script>
-    
 @endsection
