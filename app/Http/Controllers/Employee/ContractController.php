@@ -56,13 +56,20 @@ public function sign(Request $request, Contract $contract)
 
         // =====================================================
         // CEK STATUS CONTRACT
+        // Boleh sign/edit selama: sent, viewed, signed
         // =====================================================
 
-        if (!in_array($contract->status, ['sent', 'viewed'])) {
-            return redirect()
-                ->back()
-                ->with('ERR', 'Contract tidak dapat ditandatangani.');
+        if (!in_array($contract->status, ['sent', 'viewed', 'signed'])) {
+            abort(403, 'Contract cannot be signed or edited.');
         }
+
+
+        // =====================================================
+        // TENTUKAN APAKAH INI EDIT ATAU SIGN BARU
+        // =====================================================
+
+        $isEditing = $contract->status === 'signed'
+                     && !empty($contract->employee_signature);
 
 
         // =====================================================
@@ -109,7 +116,20 @@ public function sign(Request $request, Contract $contract)
 
 
         // =====================================================
-        // SIMPAN FILE SIGNATURE
+        // HAPUS FILE SIGNATURE LAMA (kalau edit)
+        // =====================================================
+
+        if ($isEditing && $contract->employee_signature) {
+            $oldPath = $contract->employee_signature;
+
+            if (Storage::disk('public')->exists($oldPath)) {
+                Storage::disk('public')->delete($oldPath);
+            }
+        }
+
+
+        // =====================================================
+        // SIMPAN FILE SIGNATURE BARU
         // =====================================================
 
         $fileName = 'employee_signature_'
@@ -130,20 +150,33 @@ public function sign(Request $request, Contract $contract)
         // UPDATE CONTRACT
         // =====================================================
 
-        $contract->update([
+        // Data yang selalu di-update
+        $data = [
             'employee_signature' => $path,
             'employee_signed_at' => now(),
-            'status' => 'signed',
-        ]);
+        ];
+
+        // Hanya update status kalau BUKAN edit
+        // (biar status yang sudah naik ke 'signed-hrd' / 'signed-head'
+        //  tidak turun kembali ke 'signed')
+        if (!$isEditing) {
+            $data['status'] = 'signed';
+        }
+
+        $contract->update($data);
 
 
         // =====================================================
         // SUCCESS
         // =====================================================
 
+        $message = $isEditing
+            ? 'Tanda Tangan Berhasil Diperbarui'
+            : 'Contract Berhasil Ditandatangani';
+
         return redirect()
             ->back()
-            ->with('OK', 'Contract Berhasil Ditandatangani');
+            ->with('OK', $message);
 
 
     } catch (\Exception $e) {

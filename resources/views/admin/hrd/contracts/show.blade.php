@@ -22,7 +22,6 @@
 
     /* =========================================================
        A4 PAGE
-       ⚠️ Padding & height diatur oleh layout parent
     ========================================================= */
 
     .document-page {
@@ -178,57 +177,55 @@
     .signature-space-2{
         height:7mm;
         width: 100%;
-
     }
 
     .signature-image-wrapper-2 {
-    height: 10mm;
-    width: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin-bottom: 2mm;
+        height: 10mm;
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-bottom: 2mm;
 
-    position: relative;      /* ✅ untuk anchor absolute */
-    overflow: visible;       /* ✅ biar gambar bisa keluar */
-}
-.signature-image {
-    display: block;
-    max-width: 42mm;
-    max-height: 8mm;
-    object-fit: contain;
+        position: relative;
+        overflow: visible;
+    }
 
-    transform: scale(2) translateY(-5mm);  /* ✅ geser ke atas 3mm */
-    transform-origin: center center;
-    position: relative;
-}
+    .signature-image {
+        display: block;
+        max-width: 42mm;
+        max-height: 8mm;
+        object-fit: contain;
 
-.signature-image-2 {
-    display: block;
-    max-width: 42mm;
-    max-height: 8mm;
-    object-fit: contain;
+        transform: scale(2) translateY(-5mm);
+        transform-origin: center center;
+        position: relative;
+    }
 
-    transform: scale(2);     /* ✅ perbesar 2x lipat */
-    transform-origin: center center;
-    position: relative;      /* ✅ di atas elemen lain */
-    z-index: 5;
-}
+    .signature-image-2 {
+        display: block;
+        max-width: 42mm;
+        max-height: 8mm;
+        object-fit: contain;
 
-   .signature-name-2 {
-    font-weight: bold;
-    text-decoration: underline;
+        transform: scale(2);
+        transform-origin: center center;
+        position: relative;
+        z-index: 5;
+    }
 
-    min-height: 1.2em;
-   /* ✅ naik 3mm, tidak ganggu layout lain */
-}
-   .signature-name {
-    font-weight: bold;
-    text-decoration: underline;
+    .signature-name-2 {
+        font-weight: bold;
+        text-decoration: underline;
+        min-height: 1.2em;
+    }
 
-    min-height: 1.2em;
-     margin-top: -7mm;
-}
+    .signature-name {
+        font-weight: bold;
+        text-decoration: underline;
+        min-height: 1.2em;
+        margin-top: -7mm;
+    }
 
     .signature-title {
         min-height: 1.2em;
@@ -290,18 +287,18 @@
         text-align: center;
     }
 
- .paraf-table .paraf-box img {
-    display: block;
-    margin: 0 auto;
-    margin-left:-3mm;
-    max-width: 140%;        /* ✅ bisa lebih lebar dari kolom */
-    max-height: 140%;       /* ✅ bisa lebih tinggi dari box */
-    width: auto;
-    height: auto;
-    object-fit: contain;
-    transform: scale(1.4);  /* ✅ perbesar 30% */
-    transform-origin: center center;
-}
+    .paraf-table .paraf-box img {
+        display: block;
+        margin: 0 auto;
+        margin-left: -3mm;
+        max-width: 140%;
+        max-height: 140%;
+        width: auto;
+        height: auto;
+        object-fit: contain;
+        transform: scale(1.4);
+        transform-origin: center center;
+    }
 
     /* =========================================================
        DATA TABLE (identitas)
@@ -381,9 +378,22 @@
         box-shadow: 0 12px 32px rgba(0, 158, 247, 0.65);
         background: #0086d1;
     }
+
+    /* Tombol Edit Signature (warna hijau) */
+    .floating-sign-btn.is-edit {
+        background: #17C653;
+        animation: none;
+        box-shadow: 0 8px 24px rgba(23, 198, 83, 0.35);
+    }
+
+    .floating-sign-btn.is-edit:hover {
+        background: #12a344;
+        box-shadow: 0 12px 32px rgba(23, 198, 83, 0.55);
+    }
+
     /* =====================================================
        FLOATING SIGN BUTTON 2 — Kiri Bawah
-       ===================================================== */
+    ===================================================== */
     .floating-sign-btn-2 {
         position: fixed;
         bottom: 30px;
@@ -438,7 +448,6 @@
         transform: translateX(3px);
     }
 
-    /* Kalau mau ikon panahnya mengarah ke kiri (back) */
     .floating-sign-btn-2 i.ki-arrow-left {
         transition: transform 0.25s ease;
     }
@@ -447,7 +456,6 @@
         transform: translateX(-3px);
     }
 
-    /* Responsive — kecilkan di mobile */
     @media (max-width: 576px) {
         .floating-sign-btn-2 {
             bottom: 20px;
@@ -555,24 +563,23 @@
             padding: 0 !important;
             background: #ffffff !important;
         }
-        @media print {
-    /* Sembunyikan Back button */
-    .floating-sign-btn-2 {
-        display: none !important;
-    }
 
-    /* Sembunyikan progress stepper */
-    .progress-stepper-wrap {
-        display: none !important;
-    }
+        /* Sembunyikan Back button */
+        .floating-sign-btn-2 {
+            display: none !important;
+        }
 
-    /* Sembunyikan toolbar / nav / sidebar */
-    .app-sidebar,
-    .app-header,
-    .app-toolbar {
-        display: none !important;
-    }
-}
+        /* Sembunyikan progress stepper */
+        .progress-stepper-wrap {
+            display: none !important;
+        }
+
+        /* Sembunyikan toolbar / nav / sidebar */
+        .app-sidebar,
+        .app-header,
+        .app-toolbar {
+            display: none !important;
+        }
 
         .document-page {
             width: 210mm !important;
@@ -598,9 +605,6 @@
         .modal-backdrop {
             display: none !important;
         }
-        
-        
-
     }
 </style>
 @endsection
@@ -610,11 +614,20 @@
 @section('document-content')
  @include('admin.hrd.contracts.partials.show-progress', ['contract' => $contract])
 
+@php
+    // Status yang boleh sign/edit tanda tangan
+    $editableStatuses = ['sent', 'viewed', 'signed'];
+
+    $isEditing = $contract->status === 'signed' && $contract->employee_signature;
+
+    $canSign = auth()->user()->hasRole('Employee')
+               && in_array($contract->status, $editableStatuses);
+@endphp
+
 {{-- =========================================================
     PAGE 1
 ========================================================== --}}
 <div class="document-page">
-    
 
     @include('partials.document-header')
 
@@ -808,12 +821,6 @@ Pada hari ini <strong>
     kerja terhitung dari waktu pekerja mulai masuk kerja. Cuti tahunan diatur sebagai berikut :
 </p>
  <p class="indent">a. Sebanyak-banyaknya 6 (enam) hari kerja atau sesusi ketentuan PT. Bukaka Teknik Utama Tbk. cabang Balikpapan ditetapkan sebagai cuti bersama (cuti masal) pada setiap Idul Fitri.</p>
-    <p class="indent">b. Sisanya 6 (enam) hari kerja dapat dipergunakan menurut kepentingan pribadi masing-masing pekerja.</p>
-    <p class="indent">c. Apabila pada saat cuti masal di Hari Raya Idul Fitri karena kondisi pekerjaan, pekerja wajib masuk maka kehadirannya dapat diperhitungkan sebagai lembur di hari libur atau menggeser cutinya.</p>
-
-   
-
-    
 
     <table class="paraf-table">
     <tr>
@@ -841,8 +848,6 @@ Pada hari ini <strong>
     </tr>
 </table>
 
-
-
 </div>
 
 
@@ -854,6 +859,8 @@ Pada hari ini <strong>
     @include('partials.document-header')
 
     <div class="page-number">3</div>
+     <p class="indent">b. Sisanya 6 (enam) hari kerja dapat dipergunakan menurut kepentingan pribadi masing-masing pekerja.</p>
+    <p class="indent">c. Apabila pada saat cuti masal di Hari Raya Idul Fitri karena kondisi pekerjaan, pekerja wajib masuk maka kehadirannya dapat diperhitungkan sebagai lembur di hari libur atau menggeser cutinya.</p>
      <p>3. <strong>Pekerja</strong> diikutsertakan dalam Program <strong>BPJS Ketenagakerjaan</strong> yang meliputi :</p>
 
     <p class="indent">a. Jaminan Kematian</p>
@@ -910,20 +917,7 @@ Pada hari ini <strong>
         yang tidak dapat menunjukkan surat Keterangan sakit dari dokter namun sudah menginformasikan
         kepada atasan maka Pekerja dianggap <strong>izin.</strong>
     </p>
-    
- 
 
-    <p class="indent">
-        d. Setiap <strong>Pekerja</strong> yang terlambat datang untuk bekerja kecuali seizin atasannya,
-        maka berlaku pemotongan Gaji dengan formula sebagai berikut :
-    </p>
-
-    <p class="formula">Potongan Keterlambatan = Keterlambatan X Gaji Pokok / 8 / 21</p>
-
-   
-
- 
-    
     <table class="paraf-table">
     <tr>
         <td colspan="2" class="paraf-title">Paraf</td>
@@ -950,8 +944,6 @@ Pada hari ini <strong>
     </tr>
 </table>
 
-  
-
 </div>
 
 
@@ -963,6 +955,12 @@ Pada hari ini <strong>
     @include('partials.document-header')
 
     <div class="page-number">4</div>
+    <p class="indent">
+        d. Setiap <strong>Pekerja</strong> yang terlambat datang untuk bekerja kecuali seizin atasannya,
+        maka berlaku pemotongan Gaji dengan formula sebagai berikut :
+    </p>
+
+    <p class="formula">Potongan Keterlambatan = Keterlambatan X Gaji Pokok / 8 / 21</p>
      <p class="indent">
         e. Gaji yang tidak dibayarkan ini berlaku untuk seluruh <strong>Pekerja</strong> sesuai dengan
         ketentuan yang tercantum di dalam Peraturan Perusahaan.
@@ -980,7 +978,7 @@ Pada hari ini <strong>
 
 
     @include('admin.hrd.contracts.partials.show-pasal7-lembur', ['contract' => $contract, 'type' => $type])
-    
+
     <div class="pasal-title">PASAL 8</div>
     <div class="pasal-subtitle">KETENTUAN UPAH WAKTU SAKIT</div>
 
@@ -992,14 +990,8 @@ Pada hari ini <strong>
 
     <p>2. Pembayaran upah selama Pekerja tidak dapat bekerja karena sakit dilakukan dengan ketentuan sebagai berikut:</p>
      <p class="indent">a. Untuk 4 (empat) bulan pertama, dibayarkan sebesar <strong>100% (seratus persen)</strong> dari upah.</p>
-     
+
     <p class="indent">b. Untuk 4 (empat) bulan kedua, dibayarkan sebesar <strong>75% (tujuh puluh lima persen)</strong> dari upah.</p>
-
-
-   
-
-
-    
 
     <table class="paraf-table">
     <tr>
@@ -1026,8 +1018,6 @@ Pada hari ini <strong>
         </td>
     </tr>
 </table>
-
-
 
 </div>
 
@@ -1060,7 +1050,6 @@ Pada hari ini <strong>
         bulan periode berjalan</strong> dikualifikasikan sebagai pelanggaran disiplin kerja.
     </p>
 
-
     <p class="indent">Sanksi:</p>
     <p class="indent-2">- Pelanggaran pertama: Surat Peringatan Pertama (SP I)</p>
     <p class="indent-2">- Pelanggaran kedua: Surat Peringatan Kedua (SP II)</p>
@@ -1090,16 +1079,6 @@ Pada hari ini <strong>
     <p class="indent-2">- Pelanggaran ketiga: Surat Peringatan Ketiga (SP III)</p>
       <p>3. <strong>Keselamatan, Kesehatan Kerja (K3), dan Fasilitas</strong></p>
 
-   
-
-   
-
- 
-
-    
-
-    
-
     <table class="paraf-table">
     <tr>
         <td colspan="2" class="paraf-title">Paraf</td>
@@ -1126,8 +1105,6 @@ Pada hari ini <strong>
     </tr>
 </table>
 
-
-
 </div>
 
 
@@ -1145,7 +1122,7 @@ Pada hari ini <strong>
         mengenakan tanda pengenal (ID Card) resmi yang dikeluarkan oleh Perusahaan dan/atau User selama
         berada di area kerja.
     </p>
-   
+
        <p>Sanksi :</p>
     <p class="indent-2">- Pelanggaran ke-1: Teguran tertulis</p>
     <p class="indent-2">- Pelanggaran ke-2: Surat Peringatan Pertama (SP I)</p>
@@ -1159,16 +1136,12 @@ Pada hari ini <strong>
         dengan standar operasional prosedur Perusahaan.
     </p>
 
-    
-    
-
     <p class="indent">Sanksi:</p>
     <p class="indent-2">- Pelanggaran pertama: Surat Peringatan Pertama (SP I)</p>
     <p class="indent-2">- Pelanggaran kedua: Surat Peringatan Kedua (SP II)</p>
     <p class="indent-2">- Pelanggaran ketiga: Surat Peringatan Ketiga (SP III)</p>
 
     <p>5. <strong>Larangan Tidur dan Kelalaian di Jam Kerja</strong></p>
-  
 
     <p class="indent">
         Pekerja dilarang tidur pada jam kerja di luar waktu istirahat atau melakukan aktivitas pribadi
@@ -1195,12 +1168,6 @@ Pada hari ini <strong>
     <p class="indent">5. Kematian anggota keluarga inti;</p>
     <p class="indent">6. Perubahan identitas kependudukan (ktp, kk, atau dokumen sejenis);</p>
 
-
-
-    
-
-    
-
     <table class="paraf-table">
     <tr>
         <td colspan="2" class="paraf-title">Paraf</td>
@@ -1226,8 +1193,6 @@ Pada hari ini <strong>
         </td>
     </tr>
 </table>
-
-    
 
 </div>
 
@@ -1261,9 +1226,6 @@ Pada hari ini <strong>
         Perusahaan.
     </p>
 
-   
-
-  
     <p>
         3. Khusus untuk jenis pelanggaran yang diklasifikasikan sebagai <strong>Pelanggaran
         Mendesak</strong>, Perusahaan berhak menjatuhkan sanksi <strong>Pemutusan Hubungan Kerja
@@ -1299,10 +1261,6 @@ Pada hari ini <strong>
     <p class="indent-2">Pelanggaran ke-2: SP II</p>
     <p class="indent-2">Pelanggaran ke-3: SP III atau Skorsing</p>
 
-    <p>
-       
-   
-
     <table class="paraf-table">
     <tr>
         <td colspan="2" class="paraf-title">Paraf</td>
@@ -1328,7 +1286,6 @@ Pada hari ini <strong>
         </td>
     </tr>
 </table>
-
 
 </div>
 
@@ -1389,12 +1346,7 @@ Pada hari ini <strong>
       <p>
         8. <strong>Senjata dan Minuman Keras:</strong> Pekerja dilarang membawa, menyimpan, menggunakan,
         atau mengancam dengan senjata tajam, senjata api, maupun minuman keras di lingkungan kerja.
-    </p>    
-
- 
-      
-
-    
+    </p>
 
     <table class="paraf-table">
     <tr>
@@ -1422,7 +1374,6 @@ Pada hari ini <strong>
     </tr>
 </table>
 
-
 </div>
 
 
@@ -1433,7 +1384,7 @@ Pada hari ini <strong>
 
     @include('partials.document-header')
   <div class="page-number">9</div>
-   
+
     <p class="indent">Kategori Pelanggaran: Berat / Mendesak</p>
     <p class="indent">Sanksi:</p>
     <p class="indent-2">a. Apabila hanya membawa: Skorsing</p>
@@ -1456,7 +1407,6 @@ Pada hari ini <strong>
     <p class="indent-2" style="margin-left:20mm !important;">Pelanggaran ke-1: Surat Peringatan Pertama dan Terakhir</p>
     <p class="indent-2" style="margin-left:20mm !important;">Pelanggaran ke-2: PHK</p>
     <p class="indent-2">b. Menyebabkan Kebakaran atau kerugian materil besar : PHK</p>
-    
 
     <p>
         11. Merokok pada waktu jam istirahat di area yang dilarang merokok/ area terbatas di Office &amp; Workshop
@@ -1484,9 +1434,6 @@ Pada hari ini <strong>
     <p class="indent-2">a. Tidak menyebabkan Kebakaran atau kerugian materil</p>
     <p class="indent-2" style="margin-left:20mm !important;">Pelanggaran ke-1: Surat Peringatan Pertama dan Terakhir</p>
     <p class="indent-2" style="margin-left:20mm !important;">Pelanggaran ke-2: PHK</p>
-    
-
-    
 
     <table class="paraf-table">
     <tr>
@@ -1513,8 +1460,6 @@ Pada hari ini <strong>
         </td>
     </tr>
 </table>
-
-
 
 </div>
 
@@ -1549,7 +1494,7 @@ Pada hari ini <strong>
     <p class="indent">Sanksi:</p>
     <p class="indent-2">Pelanggaran ke-1: Surat Peringatan Pertama dan Terakhir</p>
     <p class="indent-2">Pelanggaran ke-2: PHK</p>
-    
+
     <p>
         16. <strong>Manipulasi MCU/Kesehatan:</strong> Pekerja dilarang memanipulasi pemeriksaan
         kesehatan atau menggunakan identitas orang lain atau diwakilkan orang lain dalam pelaksanaan
@@ -1561,7 +1506,6 @@ Pada hari ini <strong>
     <p class="indent-2">Pelanggaran ke-2: PHK</p>
 
     <p>
-    
         17. <strong>Pencurian:</strong> Terbukti mengambil barang atau aset perusahaan, kepemilikan
         pekerja lain yang bukan miliknya secara tidak sah di lingkungan kerja.
     </p>
@@ -1584,11 +1528,6 @@ Pada hari ini <strong>
     <p class="indent">Sanksi:</p>
     <p class="indent-2">Pelanggaran ke-1: Skorsing maksimal 1 (satu) minggu</p>
     <p class="indent-2">Pelanggaran ke-2: PHK</p>
-
-     
-
-
-    
 
     <table class="paraf-table">
     <tr>
@@ -1649,7 +1588,7 @@ Pada hari ini <strong>
     </p>
     <p class="indent">Kategori Pelanggaran: Mendesak</p>
     <p class="indent">Sanksi: PHK</p>
-  
+
     <p>
         23. <strong>Kekerasan Fisik:</strong> Berkelahi, memukul, melukai orang lain, membunuh, atau
         melakukan tindak pidana hukum lainnya baik rekan kerja maupun keluarganya baik di lingkungan
@@ -1687,11 +1626,6 @@ Pada hari ini <strong>
     <p class="indent">Sanksi:</p>
     <p class="indent-2">Pelanggaran ke-1: Surat Peringatan Pertama dan Terakhir</p>
 
-
-    
-
-   
-
     <table class="paraf-table">
     <tr>
         <td colspan="2" class="paraf-title">Paraf</td>
@@ -1717,7 +1651,6 @@ Pada hari ini <strong>
         </td>
     </tr>
 </table>
-
 
 </div>
 
@@ -1746,8 +1679,6 @@ Pada hari ini <strong>
     </p>
     <p class="indent">Kategori Pelanggaran: Mendesak</p>
     <p class="indent">Sanksi: PHK</p>
-
-   
 
     <p>
         29. <strong>Kelalaian Tugas:</strong> Lalai menjalankan tugas hingga menimbulkan kerugian bagi
@@ -1789,9 +1720,6 @@ Pada hari ini <strong>
         dampak yang ditimbulkan, dan ketentuan peraturan perundang-undangan yang berlaku.
     </p>
 
-
-
-    
     <table class="paraf-table">
     <tr>
         <td colspan="2" class="paraf-title">Paraf</td>
@@ -1819,6 +1747,7 @@ Pada hari ini <strong>
 </table>
 
 </div>
+
 <div class="document-page">
 
     @include('partials.document-header')
@@ -1851,9 +1780,6 @@ Pada hari ini <strong>
     </p>
 
     <p class="formula">(Masa Kerja (bulan) / 12) x Gaji Pokok).</p>
-
-
-    
 
     <p>
         2. Apabila Perusahaan mengakhiri Hubungan Kerja sebelum berakhirnya jangka waktu yang ditetapkan
@@ -1896,11 +1822,6 @@ Pada hari ini <strong>
         tertulis sebanyak 2 (dua) kali maka dapat di PHK karena mangkir (PP 35 pasal 51).
     </p>
 
-
-    
-
-
-   
     <table class="paraf-table">
     <tr>
         <td colspan="2" class="paraf-title">Paraf</td>
@@ -1927,14 +1848,14 @@ Pada hari ini <strong>
     </tr>
 </table>
 
-
 </div>
+
 <div class="document-page">
 
     @include('partials.document-header')
 
     <div class="page-number">14</div>
-    
+
     <p>
         5. Pekerja tidak berhak menuntut ganti rugi kontrak dan hanya akan menerima pendapatan sampai
         saat tanggal pemutusan Perjanjian Kerja Waktu Tertentu jika :
@@ -1958,7 +1879,6 @@ Pada hari ini <strong>
         7. Pekerja yang mengundurkan diri wajib menyelesaikan tanggungjawab pekerjaan / alih tugas
         kepada pekerja yang ditunjuk atasan.
     </p>
-    <p> 8. Pekerja yang mengundurkan diri wajib menyelesaukan tangggun gjawab dan pekerjaan akuh tybga skepada pekerja yang ditunjuk atasan yang pada logika yang sebenarnya ada beberpaa hal yang perlu diperhatikan 
 
     <p>
         8. Apabila masa kerja Pekerja memenuhi persyaratan saat akhir hubungan kerja, maka Pekerja akan
@@ -1987,7 +1907,6 @@ Pada hari ini <strong>
         menurut peraturan perundang -- undangan yang berlaku di Wilayah Republik Indonesia.
     </p>
 
-   
     <table class="paraf-table">
     <tr>
         <td colspan="2" class="paraf-title">Paraf</td>
@@ -2139,21 +2058,19 @@ Pada hari ini <strong>
     FLOATING SIGN BUTTON
 ========================================================= --}}
 
-@if (
-    auth()->user()->hasRole('Employee') &&
-    in_array($contract->status, ['sent', 'viewed'])
-)
+@if ($canSign)
     <button type="button"
-            class="floating-sign-btn"
+            class="floating-sign-btn {{ $isEditing ? 'is-edit' : '' }}"
             data-bs-toggle="modal"
             data-bs-target="#kt_modal_sign">
 
-        <i class="ki-outline ki-pencil"></i>
+        <i class="ki-outline {{ $isEditing ? 'ki-pencil' : 'ki-pencil' }}"></i>
 
-        Sign Contract
+        {{ $isEditing ? 'Edit Signature' : 'Sign Contract' }}
 
     </button>
 @endif
+
 <a href="{{ url()->previous() }}"
    class="floating-sign-btn-2">
     <i class="ki-outline ki-arrow-right"></i>
@@ -2166,7 +2083,7 @@ Pada hari ini <strong>
     SIGNATURE MODAL
 ========================================================= --}}
 
-@if (in_array($contract->status, ['sent', 'viewed']))
+@if ($canSign)
 
 <div class="modal fade"
      id="kt_modal_sign"
@@ -2180,7 +2097,7 @@ Pada hari ini <strong>
             <div class="modal-header">
 
                 <h5 class="modal-title">
-                    Tanda Tangan Contract
+                    {{ $isEditing ? 'Edit Tanda Tangan' : 'Tanda Tangan Contract' }}
                 </h5>
 
                 <button type="button"
@@ -2263,7 +2180,7 @@ Pada hari ini <strong>
 
                         <i class="ki-outline ki-pencil"></i>
 
-                        Tandatangani Contract
+                        {{ $isEditing ? 'Update Tanda Tangan' : 'Tandatangani Contract' }}
 
                     </button>
 
