@@ -247,6 +247,7 @@
 
                         <div class="table-responsive">
                             <table class="table table-row-bordered table-row-gray-300 align-middle gs-0 gy-4 datatable-custom"
+                             style="font-size: 10px;"
                                    id="contractTable">
                                 <thead>
                                     <tr class="fw-bold text-muted bg-light">
