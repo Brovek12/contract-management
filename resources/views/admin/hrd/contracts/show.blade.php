@@ -550,62 +550,64 @@
     ========================================================= */
 
     @media print {
-
-        @page {
-            size: A4 portrait;
-            margin: 0 !important;
-        }
-
-        html,
-        body {
-            width: 210mm !important;
-            margin: 0 !important;
-            padding: 0 !important;
-            background: #ffffff !important;
-        }
-
-        /* Sembunyikan Back button */
-        .floating-sign-btn-2 {
-            display: none !important;
-        }
-
-        /* Sembunyikan progress stepper */
-        .progress-stepper-wrap {
-            display: none !important;
-        }
-
-        /* Sembunyikan toolbar / nav / sidebar */
-        .app-sidebar,
-        .app-header,
-        .app-toolbar {
-            display: none !important;
-        }
-
-        .document-page {
-            width: 210mm !important;
-            height: 297mm !important;
-            min-height: 297mm !important;
-
-            margin: 0 !important;
-
-            page-break-after: always;
-            break-after: page;
-
-            overflow: hidden;
-            position: relative;
-        }
-
-        .document-page:last-child {
-            page-break-after: auto;
-            break-after: auto;
-        }
-
-        .floating-sign-btn,
-        .modal,
-        .modal-backdrop {
-            display: none !important;
-        }
+    @page {
+        size: A4 portrait;
+        margin: 0 !important;
     }
+
+    html, body {
+        width: 210mm !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        background: #ffffff !important;
+    }
+
+    /* Sembunyikan Back button */
+    .floating-sign-btn-2 {
+        display: none !important;
+    }
+
+    /* ✅ Perbaiki nama class — pakai yang benar */
+    .progress-stepper-float,
+    .progress-stepper-card {
+        display: none !important;
+    }
+
+    /* Sembunyikan toolbar / nav / sidebar */
+    .app-sidebar,
+    .app-header,
+    .app-toolbar {
+        display: none !important;
+    }
+
+    .document-page {
+        width: 210mm !important;
+        height: 297mm !important;
+        min-height: 297mm !important;
+        margin: 0 !important;
+        page-break-after: always;
+        break-after: page;
+        overflow: hidden;
+        position: relative;
+    }
+
+    .document-page:last-child {
+        page-break-after: auto;
+        break-after: auto;
+    }
+
+    .floating-sign-btn,
+    .modal,
+    .modal-backdrop {
+        display: none !important;
+    }
+
+    /* ✅ Reset padding-top body yang di-set oleh stepper */
+    body,
+    body.stepper-collapsed {
+        padding-top: 0 !important;
+    }
+}
 </style>
 @endsection
 
@@ -748,31 +750,7 @@ Pada hari ini <strong>
         <strong>{{ $contract->end_date?->translatedFormat('d F Y') ?? '................' }}</strong>
     </p>
 
-    <table class="paraf-table">
-    <tr>
-        <td colspan="2" class="paraf-title">Paraf</td>
-    </tr>
-    <tr>
-        <td class="paraf-title">Karyawan</td>
-        <td class="paraf-title">HRD</td>
-    </tr>
-    <tr>
-        <td class="paraf-box">
-            @if ($contract->employee_signature)
-                <img src="{{ asset('storage/' . $contract->employee_signature) }}"
-                     class="signature-image"
-                     alt="Employee Signature">
-            @endif
-        </td>
-        <td class="paraf-box">
-            @if ($contract->hrd_signature)
-                <img src="{{ asset('storage/' . $contract->hrd_signature) }}"
-                     class="signature-image"
-                     alt="HRD Signature">
-            @endif
-        </td>
-    </tr>
-</table>
+   
 
     @include('partials.document-footer')
 
@@ -822,31 +800,7 @@ Pada hari ini <strong>
 </p>
  <p class="indent">a. Sebanyak-banyaknya 6 (enam) hari kerja atau sesusi ketentuan PT. Bukaka Teknik Utama Tbk. cabang Balikpapan ditetapkan sebagai cuti bersama (cuti masal) pada setiap Idul Fitri.</p>
 
-    <table class="paraf-table">
-    <tr>
-        <td colspan="2" class="paraf-title">Paraf</td>
-    </tr>
-    <tr>
-        <td class="paraf-title">Karyawan</td>
-        <td class="paraf-title">HRD</td>
-    </tr>
-    <tr>
-        <td class="paraf-box">
-            @if ($contract->employee_signature)
-                <img src="{{ asset('storage/' . $contract->employee_signature) }}"
-                     class="signature-image"
-                     alt="Employee Signature">
-            @endif
-        </td>
-        <td class="paraf-box">
-            @if ($contract->hrd_signature)
-                <img src="{{ asset('storage/' . $contract->hrd_signature) }}"
-                     class="signature-image"
-                     alt="HRD Signature">
-            @endif
-        </td>
-    </tr>
-</table>
+   
 
 </div>
 

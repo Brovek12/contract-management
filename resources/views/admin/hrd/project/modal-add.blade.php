@@ -148,7 +148,7 @@
                 id: 'code',
                 errorId: 'codeError',
                 name: 'Kode'
-            }
+            },
             {
                 id: 'owner',
                 errorId: 'ownerError',
