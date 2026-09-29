@@ -27,6 +27,12 @@
                         </h3>
 
                         <div class="card-toolbar">
+                            <button type="button"
+        id="btnExportExcel"
+        class="btn btn-sm btn-light-success me-2">
+    <i class="ki-duotone ki-file-down fs-3"></i>
+    Export Excel
+</button>
                             @can('create-contracts')
                                 <div class="dropdown">
                                     <button
@@ -36,7 +42,7 @@
                                         aria-expanded="false"
                                     >
                                         <i class="ki-duotone ki-plus fs-3"></i>
-                                        Tambah
+                                        Add
                                     </button>
 
                                     <ul class="dropdown-menu dropdown-menu-end">
@@ -1027,5 +1033,17 @@
                 }
             });
         }
+        $('#btnExportExcel').on('click', function () {
+    var params = new URLSearchParams({
+        category:   $('#filterCategory').val() || '',
+        type:       $('#filterType').val() || '',
+        project:    $('#filterProject').val() || '',
+        status:     $('#filterStatus').val() || '',
+        start_date: $('#filterStartDate').val() || '',
+        end_date:   $('#filterEndDate').val() || '',
+    });
+
+    window.location.href = '{{ route("contracts.export") }}?' + params.toString();
+});
     </script>
 @endsection

@@ -66,6 +66,7 @@ Route::middleware('auth')->group(function () {
     |       SEBELUM Route::resource agar tidak dianggap sebagai {contract}.
     */
     Route::prefix('contracts')->name('contracts.')->group(function () {
+            Route::get('export', [ContractController::class, 'export'])->name('export');
 
         // -- Custom actions --
         Route::post('{contract}/send',         [ContractController::class, 'send'])->name('send');

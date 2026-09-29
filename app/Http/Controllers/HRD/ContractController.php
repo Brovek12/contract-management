@@ -9,6 +9,11 @@ use Illuminate\Support\Facades\Auth;
 use App\Models\Project\Project;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+use App\Exports\ContractsExport;
+use Maatwebsite\Excel\Facades\Excel;
+use Carbon\Carbon;
+
+
 
 class ContractController extends Controller
 {
@@ -798,6 +803,23 @@ private function allowanceRulesByType(string $type): array
 
         default => [],
     };
+}
+public function export(Request $request)
+{
+    Carbon::setLocale('id');
+    $filters = [
+        'category'   => $request->input('category'),
+        'type'       => $request->input('type'),
+        'project'    => $request->input('project'),
+        'status'     => $request->input('status'),
+        'start_date' => $request->input('start_date'),
+        'end_date'   => $request->input('end_date'),
+    ];
+
+    $tanggal  = now()->translatedFormat('d-M-Y'); // 19-Sep-2026
+$filename = "Laporan-Contract_{$tanggal}.xlsx";
+
+    return Excel::download(new ContractsExport($filters), $filename);
 }
 
 
