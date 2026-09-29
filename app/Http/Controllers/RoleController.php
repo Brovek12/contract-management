@@ -185,10 +185,10 @@ class RoleController extends Controller
                 app()[PermissionRegistrar::class]->forgetCachedPermissions();
                 return response()->json(['message' => 'Hak akses berhasil diperbarui']);
             } else {
-                return response()->json(['message' => 'Hak akses gagal diperbarui'], 404);
+                return response()->json(['message' => 'Hak akses gagal diperbarui'], 403);
             }
         } else {
-            abort(404);
+            abort(403);
         }
     }
 
@@ -210,10 +210,10 @@ class RoleController extends Controller
                 app()[PermissionRegistrar::class]->forgetCachedPermissions();
                 return response()->json(['message' => 'Hak akses berhasil ditambahkan']);
             } else {
-                return response()->json(['message' => 'Hak akses gagal ditambahkan'], 404);
+                return response()->json(['message' => 'Hak akses gagal ditambahkan'], 403);
             }
         } else {
-            abort(404);
+            abort(403);
         }
     }
 
@@ -235,10 +235,10 @@ class RoleController extends Controller
                 app()[PermissionRegistrar::class]->forgetCachedPermissions();
                 return response()->json(['message' => 'Hak akses berhasil dihapus']);
             } else {
-                return response()->json(['message' => 'Hak akses gagal dihapus'], 404);
+                return response()->json(['message' => 'Hak akses gagal dihapus'], 403);
             }
         } else {
-            abort(404);
+            abort(403);
         }
     }
 

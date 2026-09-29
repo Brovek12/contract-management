@@ -75,11 +75,11 @@ public function create(Request $request)
 
 
     if (!array_key_exists($category, $typesByCategory)) {
-        abort(404);
+        abort(403);
     }
 
     if (!in_array($type, $typesByCategory[$category])) {
-        abort(404);
+        abort(403);
     }
 
     $employees = User::whereNotNull('employee_number')
@@ -143,7 +143,7 @@ public function store(Request $request)
 
         if (!array_key_exists($category, $typesByCategory) ||
             !in_array($type, $typesByCategory[$category])) {
-            abort(404);
+            abort(403);
         }
 
 
