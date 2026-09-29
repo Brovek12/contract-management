@@ -85,29 +85,34 @@ Main capabilities:
 
 ## 🔄 Contract Workflow
 
-The contract follows the following workflow:
+The contract follows a structured approval and signing workflow:
 
-text
-                 ┌─────────┐
-                 │  Draft  │
-                 └────┬────┘
-                      │
-                      ▼
-                 ┌─────────┐
-                 │  Sent   │
-                 └────┬────┘
-                      │
-                      ▼
-                 ┌─────────┐
-                 │ Viewed  │
-                 └────┬────┘
-                      │
-                      ▼
-                 ┌─────────┐
-                 │ Signed  │
-                 └────┬────┘
-                      │
-                      ▼
-                 ┌─────────┐
-                 │ Expired │
-                 └─────────┘
+**Draft**
+↓
+**Sent**
+↓
+**Viewed**
+↓
+**Employee Signed**
+↓
+**HRD Approved**
+↓
+**Head of Branch Approved**
+↓
+**Completed**
+
+> **Expired** — A contract is marked as expired when its contract period has ended.
+
+### Workflow Overview
+
+| Status                      | Description                                               |
+| --------------------------- | --------------------------------------------------------- |
+| **Draft**                   | Contract is created and prepared by HRD                   |
+| **Sent**                    | Contract has been assigned to the employee                |
+| **Viewed**                  | Employee has opened the contract                          |
+| **Employee Signed**         | Employee has signed the contract                          |
+| **HRD Approved**            | HRD has reviewed and approved the signed contract         |
+| **Head of Branch Approved** | Head of Branch has completed the final approval           |
+| **Completed**               | All required signing and approval processes are completed |
+| **Expired**                 | Contract period has ended                                 |
+
