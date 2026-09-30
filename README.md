@@ -18,6 +18,11 @@
     <img src="https://img.shields.io/badge/MySQL-Database-blue" alt="MySQL">
     <img src="https://img.shields.io/badge/Bootstrap-UI-purple" alt="Bootstrap">
 </p>
+---
+
+> [!WARNING]
+> **This README only provides a project overview.**
+> For full documentation — installation, configuration, workflow, roles & permissions, and troubleshooting — please visit the **[`docs/`](docs/) folder**.
 
 ---
 
