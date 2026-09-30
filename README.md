@@ -116,3 +116,26 @@ The contract follows a structured approval and signing workflow:
 | **Completed**               | All required signing and approval processes are completed |
 | **Expired**                 | Contract period has ended                                 |
 
+
+- **Quick Start** singkat di README untuk yang mau langsung coba
+- **Link** ke `docs/installation.md` untuk yang butuh detail (troubleshooting, env lengkap, dsb)
+
+```markdown
+---
+
+## 🚀 Getting Started
+
+### Quick Start
+
+```bash
+git clone https://github.com/username/contract-management.git
+cd contract-management
+composer install
+npm install
+cp .env.example .env
+php artisan key:generate
+php artisan migrate --seed
+php artisan storage:link
+npm run dev
+php artisan serve
+
