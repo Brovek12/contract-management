@@ -2006,7 +2006,7 @@ Pada hari ini <strong>
         menyetujui seluruh isi Perjanjian Kerja ini.
     </p>
 
-    {{-- SIGNATURE --}}
+    
     <div class="signature-wrapper">
         <div class="signature-column">
 
@@ -2033,7 +2033,7 @@ Pada hari ini <strong>
 
         </div>
 
-        {{-- Kolom Head of Branch --}}
+    
         <div class="signature-column">
 
             <div><strong>PT BUKAKA TEKNIK UTAMA Tbk</strong></div>

@@ -927,7 +927,7 @@ private function generateQrForContract(Contract $contract, string $role): string
     $writer = new PngWriter();
     $result = $writer->write($qrCode);
 
-    // ✅ SANITIZE contract number → ganti karakter tidak aman jadi "-"
+    // safe file name so the path won't break
     $safeNumber = str_replace(['/', '\\', ' ', ':', '*', '?', '"', '<', '>', '|'], '-', $contract->contract_number);
 
     $qrPath = 'contracts/qr/' . $role . '/' . $safeNumber . '.png';
