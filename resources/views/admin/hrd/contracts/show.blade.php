@@ -890,9 +890,9 @@ Pada hari ini <strong>
         </td>
         <td class="paraf-box">
             @if ($contract->hrd_signature)
-                <img src="{{ asset('storage/' . $contract->hrd_signature) }}"
-                     class="signature-image"
-                     alt="HRD Signature">
+               <img src="{{ asset('images/hana-duharlan.jpeg') }}"
+                class="signature-image"
+                alt="HRD Signature">
             @endif
         </td>
     </tr>
@@ -964,10 +964,10 @@ Pada hari ini <strong>
             @endif
         </td>
         <td class="paraf-box">
-            @if ($contract->hrd_signature)
-                <img src="{{ asset('storage/' . $contract->hrd_signature) }}"
-                     class="signature-image"
-                     alt="HRD Signature">
+             @if ($contract->hrd_signature)
+               <img src="{{ asset('images/hana-duharlan.jpeg') }}"
+                class="signature-image"
+                alt="HRD Signature">
             @endif
         </td>
     </tr>
@@ -1050,10 +1050,10 @@ Pada hari ini <strong>
             @endif
         </td>
         <td class="paraf-box">
-            @if ($contract->hrd_signature)
-                <img src="{{ asset('storage/' . $contract->hrd_signature) }}"
-                     class="signature-image"
-                     alt="HRD Signature">
+             @if ($contract->hrd_signature)
+               <img src="{{ asset('images/hana-duharlan.jpeg') }}"
+                class="signature-image"
+                alt="HRD Signature">
             @endif
         </td>
     </tr>
@@ -1139,10 +1139,10 @@ Pada hari ini <strong>
             @endif
         </td>
         <td class="paraf-box">
-            @if ($contract->hrd_signature)
-                <img src="{{ asset('storage/' . $contract->hrd_signature) }}"
-                     class="signature-image"
-                     alt="HRD Signature">
+             @if ($contract->hrd_signature)
+               <img src="{{ asset('images/hana-duharlan.jpeg') }}"
+                class="signature-image"
+                alt="HRD Signature">
             @endif
         </td>
     </tr>
@@ -1232,10 +1232,10 @@ Pada hari ini <strong>
             @endif
         </td>
         <td class="paraf-box">
-            @if ($contract->hrd_signature)
-                <img src="{{ asset('storage/' . $contract->hrd_signature) }}"
-                     class="signature-image"
-                     alt="HRD Signature">
+             @if ($contract->hrd_signature)
+               <img src="{{ asset('images/hana-duharlan.jpeg') }}"
+                class="signature-image"
+                alt="HRD Signature">
             @endif
         </td>
     </tr>
@@ -1319,10 +1319,10 @@ Pada hari ini <strong>
             @endif
         </td>
         <td class="paraf-box">
-            @if ($contract->hrd_signature)
-                <img src="{{ asset('storage/' . $contract->hrd_signature) }}"
-                     class="signature-image"
-                     alt="HRD Signature">
+             @if ($contract->hrd_signature)
+               <img src="{{ asset('images/hana-duharlan.jpeg') }}"
+                class="signature-image"
+                alt="HRD Signature">
             @endif
         </td>
     </tr>
@@ -1406,10 +1406,10 @@ Pada hari ini <strong>
             @endif
         </td>
         <td class="paraf-box">
-            @if ($contract->hrd_signature)
-                <img src="{{ asset('storage/' . $contract->hrd_signature) }}"
-                     class="signature-image"
-                     alt="HRD Signature">
+             @if ($contract->hrd_signature)
+               <img src="{{ asset('images/hana-duharlan.jpeg') }}"
+                class="signature-image"
+                alt="HRD Signature">
             @endif
         </td>
     </tr>
@@ -1500,10 +1500,10 @@ Pada hari ini <strong>
             @endif
         </td>
         <td class="paraf-box">
-            @if ($contract->hrd_signature)
-                <img src="{{ asset('storage/' . $contract->hrd_signature) }}"
-                     class="signature-image"
-                     alt="HRD Signature">
+             @if ($contract->hrd_signature)
+               <img src="{{ asset('images/hana-duharlan.jpeg') }}"
+                class="signature-image"
+                alt="HRD Signature">
             @endif
         </td>
     </tr>
@@ -1597,10 +1597,10 @@ Pada hari ini <strong>
             @endif
         </td>
         <td class="paraf-box">
-            @if ($contract->hrd_signature)
-                <img src="{{ asset('storage/' . $contract->hrd_signature) }}"
-                     class="signature-image"
-                     alt="HRD Signature">
+             @if ($contract->hrd_signature)
+               <img src="{{ asset('images/hana-duharlan.jpeg') }}"
+                class="signature-image"
+                alt="HRD Signature">
             @endif
         </td>
     </tr>
@@ -1691,10 +1691,10 @@ Pada hari ini <strong>
             @endif
         </td>
         <td class="paraf-box">
-            @if ($contract->hrd_signature)
-                <img src="{{ asset('storage/' . $contract->hrd_signature) }}"
-                     class="signature-image"
-                     alt="HRD Signature">
+             @if ($contract->hrd_signature)
+               <img src="{{ asset('images/hana-duharlan.jpeg') }}"
+                class="signature-image"
+                alt="HRD Signature">
             @endif
         </td>
     </tr>
@@ -1793,10 +1793,10 @@ Pada hari ini <strong>
             @endif
         </td>
         <td class="paraf-box">
-            @if ($contract->hrd_signature)
-                <img src="{{ asset('storage/' . $contract->hrd_signature) }}"
-                     class="signature-image"
-                     alt="HRD Signature">
+             @if ($contract->hrd_signature)
+               <img src="{{ asset('images/hana-duharlan.jpeg') }}"
+                class="signature-image"
+                alt="HRD Signature">
             @endif
         </td>
     </tr>
@@ -1878,10 +1878,10 @@ Pada hari ini <strong>
             @endif
         </td>
         <td class="paraf-box">
-            @if ($contract->hrd_signature)
-                <img src="{{ asset('storage/' . $contract->hrd_signature) }}"
-                     class="signature-image"
-                     alt="HRD Signature">
+             @if ($contract->hrd_signature)
+               <img src="{{ asset('images/hana-duharlan.jpeg') }}"
+                class="signature-image"
+                alt="HRD Signature">
             @endif
         </td>
     </tr>
