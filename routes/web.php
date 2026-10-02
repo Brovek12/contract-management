@@ -14,17 +14,21 @@ use App\Http\Controllers\HRD\EmployeeController;
 use App\Http\Controllers\HRD\ContractController;
 use App\Http\Controllers\Employee\ContractController as EmployeeContractController;
 
+Route::get('verify/{token}', [ContractController::class, 'verify'])
+    ->name('contracts.verify');
+
 
 /*
 |--------------------------------------------------------------------------
 | Guest Routes
 |--------------------------------------------------------------------------
 */
-Route::get('verify/{token}', [ContractController::class, 'verify'])
-    ->name('contracts.verify');
+
 Route::middleware('guest')->group(function () {
     Route::get('/login',  [AuthController::class, 'loginPage'])->name('login');
-    Route::post('/login', [AuthController::class, 'login'])->name('login');
+       Route::post('/login', [AuthController::class, 'login'])
+        ->middleware('throttle:5,1')
+        ->name('login');
 });
 
 

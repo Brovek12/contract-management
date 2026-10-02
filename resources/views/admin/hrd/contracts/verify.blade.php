@@ -3,16 +3,24 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Verifikasi Contract — {{ $contract->contract_number }}</title>
+    <title>Bukaka - Verifikasi Contract</title>
 
-    {{-- Metronic CSS --}}
+    <link rel="shortcut icon" href="{{ asset('images/bukaka1.png') }}" />
+
     <link href="{{ asset('assets/plugins/global/plugins.bundle.css') }}" rel="stylesheet">
     <link href="{{ asset('assets/css/style.bundle.css') }}" rel="stylesheet">
 
     <style>
+        * {
+            box-sizing: border-box;
+        }
+
         body {
             background: #f5f8fa;
             min-height: 100vh;
+            margin: 0;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            color: #1f2937;
         }
 
         .verify-wrapper {
@@ -23,46 +31,98 @@
 
         .verify-card {
             background: #ffffff;
-            border-radius: 12px;
-            box-shadow: 0 4px 24px rgba(0, 0, 0, 0.06);
+            border-radius: 14px;
+            box-shadow: 0 4px 24px rgba(30, 108, 180, 0.08);
             overflow: hidden;
+            border: 1px solid #e8eef5;
         }
 
+        /* ============ BRAND BAR ============ */
+        .verify-brand-bar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 18px 28px;
+            border-bottom: 2px solid #e8eef5;
+            background: #ffffff;
+        }
+
+        .verify-brand {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            text-decoration: none;
+        }
+
+        .verify-brand img {
+            height: 32px;
+            width: auto;
+            object-fit: contain;
+        }
+
+        .verify-brand-name {
+            color: #1e6cb4;
+            font-weight: 700;
+            font-size: 18px;
+            letter-spacing: -0.01em;
+        }
+
+        .verify-brand-subtitle {
+            color: #94a3b8;
+            font-size: 12px;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+        }
+
+        /* ============ HEADER ============ */
         .verify-header {
             text-align: center;
-            padding: 48px 32px 32px;
-            background: linear-gradient(180deg, #f0fdf4 0%, #ffffff 100%);
+            padding: 36px 32px 28px;
+            background: linear-gradient(180deg, #f0f7ff 0%, #ffffff 100%);
         }
 
-        .verify-header .verify-icon {
+        .verify-icon {
             width: 80px;
             height: 80px;
             border-radius: 50%;
-            background: #d1fae5;
+            background: #dbeafe;
             display: inline-flex;
             align-items: center;
             justify-content: center;
             margin-bottom: 20px;
+            position: relative;
         }
 
-        .verify-header .verify-icon i {
+        .verify-icon::after {
+            content: '';
+            position: absolute;
+            inset: -6px;
+            border-radius: 50%;
+            border: 2px dashed #bfdbfe;
+            opacity: 0.6;
+        }
+
+        .verify-icon i {
             font-size: 40px;
-            color: #059669;
+            color: #1e6cb4;
         }
 
         .verify-header h1 {
             font-size: 24px;
             font-weight: 700;
-            color: #059669;
-            margin-bottom: 8px;
+            color: #1e6cb4;
+            margin: 0 0 8px;
+            letter-spacing: -0.01em;
         }
 
         .verify-header p {
-            color: #6b7280;
+            color: #64748b;
             font-size: 14px;
             margin: 0;
         }
 
+        /* ============ BODY ============ */
         .verify-body {
             padding: 32px;
         }
@@ -73,7 +133,7 @@
         }
 
         .info-table tr {
-            border-bottom: 1px solid #f3f4f6;
+            border-bottom: 1px solid #f1f5f9;
         }
 
         .info-table tr:last-child {
@@ -87,32 +147,36 @@
         }
 
         .info-table td:first-child {
-            color: #6b7280;
+            color: #64748b;
             width: 40%;
             font-weight: 500;
         }
 
         .info-table td:last-child {
-            color: #111827;
+            color: #0f172a;
             font-weight: 600;
         }
 
         .section-title {
-            font-size: 12px;
+            font-size: 11.5px;
             font-weight: 700;
             text-transform: uppercase;
-            letter-spacing: 0.05em;
-            color: #9ca3af;
+            letter-spacing: 0.08em;
+            color: #1e6cb4;
             margin: 32px 0 12px;
+            padding-left: 10px;
+            border-left: 3px solid #1e6cb4;
         }
 
+        /* ============ APPROVAL ITEM ============ */
         .approval-item {
             display: flex;
             align-items: flex-start;
             gap: 12px;
-            padding: 14px;
-            background: #f9fafb;
-            border-radius: 8px;
+            padding: 14px 16px;
+            background: #f8fbff;
+            border: 1px solid #e8eef5;
+            border-radius: 10px;
             margin-bottom: 10px;
         }
 
@@ -120,7 +184,7 @@
             width: 36px;
             height: 36px;
             border-radius: 50%;
-            background: #d1fae5;
+            background: #dbeafe;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -129,7 +193,7 @@
 
         .approval-item .icon i {
             font-size: 18px;
-            color: #059669;
+            color: #1e6cb4;
         }
 
         .approval-item .content {
@@ -138,45 +202,85 @@
 
         .approval-item .name {
             font-weight: 600;
-            color: #111827;
+            color: #0f172a;
             font-size: 14px;
             margin-bottom: 2px;
         }
 
         .approval-item .meta {
             font-size: 12px;
-            color: #6b7280;
+            color: #64748b;
         }
 
+        /* ============ FOOTER ============ */
         .verify-footer {
             text-align: center;
-            padding: 24px 32px 32px;
-            border-top: 1px solid #f3f4f6;
-            background: #fafbfc;
+            padding: 22px 32px 24px;
+            border-top: 1px solid #f1f5f9;
+            background: #fafcff;
         }
 
         .verify-footer .timestamp {
-            font-size: 13px;
-            color: #6b7280;
-            margin-bottom: 4px;
+            font-size: 12.5px;
+            color: #64748b;
+            margin-bottom: 6px;
+        }
+
+        .verify-footer .timestamp strong {
+            color: #0f172a;
         }
 
         .verify-footer .branding {
-            font-size: 12px;
-            color: #9ca3af;
+            font-size: 11.5px;
+            color: #94a3b8;
         }
 
+        .verify-footer .branding strong {
+            color: #1e6cb4;
+            font-weight: 600;
+        }
+
+        /* ============ HELP TEXT ============ */
+        .help-text {
+            text-align: center;
+            color: #94a3b8;
+            font-size: 12px;
+            margin-top: 22px;
+            line-height: 1.6;
+        }
+
+        /* ============ RESPONSIVE ============ */
         @media (max-width: 600px) {
             .verify-wrapper {
                 padding: 20px 12px;
             }
 
+            .verify-brand-bar {
+                padding: 14px 20px;
+            }
+
+            .verify-brand img {
+                height: 26px;
+            }
+
+            .verify-brand-name {
+                font-size: 15px;
+            }
+
+            .verify-brand-subtitle {
+                font-size: 10px;
+            }
+
             .verify-header {
-                padding: 32px 20px 24px;
+                padding: 28px 20px 22px;
             }
 
             .verify-body {
-                padding: 24px 20px;
+                padding: 22px 20px;
+            }
+
+            .verify-footer {
+                padding: 18px 20px;
             }
 
             .info-table td:first-child {
@@ -190,7 +294,20 @@
 <div class="verify-wrapper">
     <div class="verify-card">
 
-        {{-- Header --}}
+        {{-- ============ BRAND BAR ============ --}}
+        <div class="verify-brand-bar">
+            <a href="https://bukakablp.com" target="_blank" class="verify-brand">
+                <img src="{{ asset('assets/media/logos/bukaka1.png') }}"
+                     alt="Bukaka">
+                <span class="verify-brand-name">Bukaka</span>
+            </a>
+
+            <span class="verify-brand-subtitle">
+                Contract Verification
+            </span>
+        </div>
+
+        {{-- ============ HEADER ============ --}}
         <div class="verify-header">
             <div class="verify-icon">
                 <i class="ki-outline ki-shield-tick"></i>
@@ -200,7 +317,7 @@
             <p>Dokumen ini terdaftar dan sah di sistem kami.</p>
         </div>
 
-        {{-- Body --}}
+        {{-- ============ BODY ============ --}}
         <div class="verify-body">
 
             {{-- Info Contract --}}
@@ -277,12 +394,9 @@
             {{-- Approval History --}}
             <div class="section-title">Approval History</div>
 
-            {{-- Employee Signed --}}
             @if ($contract->employee_signed_at)
                 <div class="approval-item">
-                    <div class="icon">
-                        <i class="ki-outline ki-check"></i>
-                    </div>
+                    <div class="icon"><i class="ki-outline ki-check"></i></div>
                     <div class="content">
                         <div class="name">Signed by Employee</div>
                         <div class="meta">
@@ -294,16 +408,18 @@
                 </div>
             @endif
 
-            {{-- HRD Approved --}}
             @if ($contract->hrd_signed_at)
                 <div class="approval-item">
-                    <div class="icon">
-                        <i class="ki-outline ki-check"></i>
-                    </div>
+                    <div class="icon"><i class="ki-outline ki-check"></i></div>
                     <div class="content">
                         <div class="name">Approved by HRD</div>
                         <div class="meta">
-                            {{ $contract->hrd_signature ?? '-' }}
+                            @php
+                                $hrdUser = $contract->hrd_signature
+                                    ? \App\Models\User::find($contract->hrd_signature)
+                                    : null;
+                            @endphp
+                            {{ $hrdUser->name ?? '-' }}
                             &mdash;
                             {{ $contract->hrd_signed_at->format('d M Y, H:i') }}
                         </div>
@@ -311,16 +427,18 @@
                 </div>
             @endif
 
-            {{-- Head Approved --}}
             @if ($contract->head_signed_at)
                 <div class="approval-item">
-                    <div class="icon">
-                        <i class="ki-outline ki-check"></i>
-                    </div>
+                    <div class="icon"><i class="ki-outline ki-check"></i></div>
                     <div class="content">
                         <div class="name">Approved by Head of Branch</div>
                         <div class="meta">
-                            {{ $contract->head_signature ?? '-' }}
+                            @php
+                                $headUser = $contract->head_signature
+                                    ? \App\Models\User::find($contract->head_signature)
+                                    : null;
+                            @endphp
+                            {{ $headUser->name ?? '-' }}
                             &mdash;
                             {{ $contract->head_signed_at->format('d M Y, H:i') }}
                         </div>
@@ -328,8 +446,11 @@
                 </div>
             @endif
 
-            {{-- Kalau belum ada approval sama sekali --}}
-            @if (!$contract->employee_signed_at && !$contract->hrd_signed_at && !$contract->head_signed_at)
+            @if (
+                !$contract->employee_signed_at &&
+                !$contract->hrd_signed_at &&
+                !$contract->head_signed_at
+            )
                 <div class="text-muted text-center py-4 fs-7">
                     Belum ada riwayat approval.
                 </div>
@@ -337,23 +458,21 @@
 
         </div>
 
-        {{-- Footer --}}
+        {{-- ============ FOOTER ============ --}}
         <div class="verify-footer">
             <div class="timestamp">
                 Halaman ini diverifikasi pada:
                 <strong>{{ now()->format('d M Y, H:i:s') }} WIB</strong>
             </div>
             <div class="branding">
-                Powered by {{ config('app.name') }}
+                Powered by <strong>Bukaka Balikpapan Brench</strong>
             </div>
         </div>
 
     </div>
 
-    {{-- Bantuan --}}
-    <div class="text-center mt-6 text-muted fs-8">
-        Jika Anda memerlukan klarifikasi lebih lanjut,
-        silakan hubungi HRD kami.
+    <div class="help-text">
+        Jika Anda memerlukan klarifikasi lebih lanjut, silakan hubungi HRD kami.
     </div>
 </div>
 

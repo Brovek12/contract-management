@@ -12,7 +12,11 @@ use Illuminate\Support\Facades\Storage;
 use App\Exports\ContractsExport;
 use Maatwebsite\Excel\Facades\Excel;
 use Carbon\Carbon;
-
+use Endroid\QrCode\QrCode;
+use Endroid\QrCode\Writer\PngWriter;
+use Endroid\QrCode\Encoding\Encoding;
+use Endroid\QrCode\RoundBlockSizeMode;
+use Endroid\QrCode\ErrorCorrectionLevel;
 
 
 class ContractController extends Controller
@@ -557,39 +561,39 @@ public function send(Contract $contract)
 public function approveHRD(Contract $contract)
 {
     try {
+        $qrPath = $this->generateQrForContract($contract, 'hrd');
+
         $contract->update([
-            'status'         => 'signed-hrd',
-            'hrd_signature'  => auth()->id(),
-            'hrd_signed_at'  => now(),
+            'status'        => 'signed-hrd',
+            'hrd_signature' => auth()->id(),
+            'hrd_signed_at' => now(),
+            'hrd_qr_path'   => $qrPath,
+            'verify_token'  => $contract->verify_token,
         ]);
 
         return back()->with('OK', 'Kontrak Berhasil Disetujui Head HRD');
 
-    } catch (\Exception $e) {
-        return back()->with(
-            'ERR',
-            'Gagal Menyetujui Kontrak: ' . $e->getMessage()
-        );
+    } catch (\Exception $e) { 
+        return back()->with('ERR', 'Gagal Menyetujui Kontrak: ' . $e->getMessage());
     }
 }
 public function approveHead(Contract $contract)
 {
     try {
+        $qrPath = $this->generateQrForContract($contract, 'head');
 
         $contract->update([
-            'status' => 'signed-head',
+            'status'         => 'signed-head',
             'head_signature' => auth()->id(),
-            'head_signed_at' => now(),
+            'head_signed_at' => now(), 
+            'head_qr_path'   => $qrPath,
+            'verify_token'   => $contract->verify_token,
         ]);
 
         return back()->with('OK', 'Kontrak Berhasil Diselesaikan');
 
     } catch (\Exception $e) {
-
-        return back()->with(
-            'ERR',
-            'Gagal Menyelesaikan Kontrak: ' . $e->getMessage()
-        );
+        return back()->with('ERR', 'Gagal Menyelesaikan Kontrak: ' . $e->getMessage());
     }
 }
 
@@ -630,13 +634,22 @@ public function bulkApproveHRD(Request $request)
     try {
         $contracts = Contract::whereIn('id', $ids)->get();
 
-        // Validasi: semua harus signed
         $invalid = $contracts->where('status', '!=', 'signed');
         if ($invalid->isNotEmpty()) {
             return back()->with('ERR', 'Beberapa contract tidak berstatus Signed. Bulk approve HRD dibatalkan.');
         }
 
-        Contract::whereIn('id', $ids)->update(['status' => 'signed-hrd']);
+        foreach ($contracts as $contract) {
+            $qrPath = $this->generateQrForContract($contract, 'hrd');
+
+            $contract->update([
+                'status'        => 'signed-hrd',
+                'hrd_signature' => auth()->id(),
+                'hrd_signed_at' => now(),
+                'hrd_qr_path'   => $qrPath,
+                'verify_token'  => $contract->verify_token,
+            ]);
+        }
 
         return back()->with('OK', $contracts->count() . ' contract berhasil disetujui Head HRD.');
 
@@ -656,13 +669,22 @@ public function bulkApproveHead(Request $request)
     try {
         $contracts = Contract::whereIn('id', $ids)->get();
 
-        // Validasi: semua harus signed-hrd
         $invalid = $contracts->where('status', '!=', 'signed-hrd');
         if ($invalid->isNotEmpty()) {
             return back()->with('ERR', 'Beberapa contract tidak berstatus Signed-HRD. Bulk approve Head dibatalkan.');
         }
 
-        Contract::whereIn('id', $ids)->update(['status' => 'signed-head']);
+        foreach ($contracts as $contract) {
+            $qrPath = $this->generateQrForContract($contract, 'head');
+
+            $contract->update([
+                'status'         => 'signed-head',
+                'head_signature' => auth()->id(),
+                'head_signed_at' => now(),
+                'head_qr_path'   => $qrPath,
+                'verify_token'   => $contract->verify_token,
+            ]);
+        }
 
         return back()->with('OK', $contracts->count() . ' contract berhasil diselesaikan.');
 
@@ -869,5 +891,50 @@ public function allowanceFields(Request $request)
     return response()->json(['html' => $html]);
 }
 
+public function verify($token)
+{
+    $contract = Contract::with(['user', 'project', 'headUser'])
+        ->where('verify_token', $token)
+        ->first();
+
+    if (!$contract) {
+        return response()
+            ->view('admin.hrd.contracts.verify-invalid')
+            ->setStatusCode(404);
+    }
+
+    return view('admin.hrd.contracts.verify', compact('contract'));
+}
+
+
+private function generateQrForContract(Contract $contract, string $role): string
+{
+    if (empty($contract->verify_token)) {
+        $contract->verify_token = (string) \Illuminate\Support\Str::uuid();
+    }
+
+    $verifyUrl = route('contracts.verify', $contract->verify_token);
+
+    $qrCode = new QrCode(
+        data: $verifyUrl,
+        encoding: new Encoding('UTF-8'),
+        errorCorrectionLevel: ErrorCorrectionLevel::High,
+        size: 300,
+        margin: 10,
+        roundBlockSizeMode: RoundBlockSizeMode::Margin,
+    );
+
+    $writer = new PngWriter();
+    $result = $writer->write($qrCode);
+
+    // ✅ SANITIZE contract number → ganti karakter tidak aman jadi "-"
+    $safeNumber = str_replace(['/', '\\', ' ', ':', '*', '?', '"', '<', '>', '|'], '-', $contract->contract_number);
+
+    $qrPath = 'contracts/qr/' . $role . '/' . $safeNumber . '.png';
+
+    Storage::disk('public')->put($qrPath, $result->getString());
+
+    return $qrPath;
+}
 
 }

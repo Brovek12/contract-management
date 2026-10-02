@@ -190,6 +190,22 @@
         position: relative;
         overflow: visible;
     }
+    .signature-image-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+  min-height: 22mm;  
+    padding: 4px;
+}
+
+/* Gambar QR — persegi, cukup besar biar bisa di-scan */
+.signature-image-10 {
+    display: block;
+    width: 20mm;
+    height: 20mm;
+    object-fit: contain;
+}
 
     .signature-image {
         display: block;
@@ -213,7 +229,13 @@
         position: relative;
         z-index: 5;
     }
-
+.signature-image-3 {
+    display: inline-block;
+    width: 20mm;
+    height: 20mm;
+    object-fit: contain;
+    vertical-align: middle;
+}
     .signature-name-2 {
         font-weight: bold;
         text-decoration: underline;
@@ -224,7 +246,7 @@
         font-weight: bold;
         text-decoration: underline;
         min-height: 1.2em;
-        margin-top: -7mm;
+        margin-top: -1mm;
     }
 
     .signature-title {
@@ -286,6 +308,11 @@
         vertical-align: middle;
         text-align: center;
     }
+    .paraf-box-hrd {
+    text-align: center;
+    vertical-align: middle;
+    padding: 4px;
+}
 
     .paraf-table .paraf-box img {
         display: block;
@@ -888,12 +915,14 @@ Pada hari ini <strong>
                      alt="Employee Signature">
             @endif
         </td>
-        <td class="paraf-box">
-            @if ($contract->hrd_signature)
-               <img src="{{ asset('images/hana-duharlan.jpeg') }}"
-                class="signature-image"
-                alt="HRD Signature">
-            @endif
+        <td class="paraf-box-hrd">
+             @if ($contract->hrd_qr_path)
+    <img src="{{ asset('storage/' . $contract->hrd_qr_path) }}"
+         class="signature-image-3"
+         alt="QR HRD Approval">
+@else
+    <div class="text-muted fs-8">Belum di-approve</div>
+@endif
         </td>
     </tr>
 </table>
@@ -963,13 +992,15 @@ Pada hari ini <strong>
                      alt="Employee Signature">
             @endif
         </td>
-        <td class="paraf-box">
-             @if ($contract->hrd_signature)
-               <img src="{{ asset('images/hana-duharlan.jpeg') }}"
-                class="signature-image"
-                alt="HRD Signature">
-            @endif
-        </td>
+       <td class="paraf-box-hrd">
+ @if ($contract->hrd_qr_path)
+    <img src="{{ asset('storage/' . $contract->hrd_qr_path) }}"
+         class="signature-image-3"
+         alt="QR HRD Approval">
+@else
+    <div class="text-muted fs-8">Belum di-approve</div>
+@endif
+</td>
     </tr>
 </table>
 
@@ -1049,13 +1080,15 @@ Pada hari ini <strong>
                      alt="Employee Signature">
             @endif
         </td>
-        <td class="paraf-box">
-             @if ($contract->hrd_signature)
-               <img src="{{ asset('images/hana-duharlan.jpeg') }}"
-                class="signature-image"
-                alt="HRD Signature">
-            @endif
-        </td>
+       <td class="paraf-box-hrd">
+ @if ($contract->hrd_qr_path)
+    <img src="{{ asset('storage/' . $contract->hrd_qr_path) }}"
+         class="signature-image-3"
+         alt="QR HRD Approval">
+@else
+    <div class="text-muted fs-8">Belum di-approve</div>
+@endif
+</td>
     </tr>
 </table>
 
@@ -1119,8 +1152,7 @@ Pada hari ini <strong>
     <p class="indent">2. Perubahan nomor telepon dan/atau alamat surat elektronik (email);</p>
     <p class="indent">3. Perubahan status perkawinan;</p>
     <p class="indent">4. Kelahiran anak;</p>
-    <p class="indent">5. Kematian anggota keluarga inti;</p>
-    <p class="indent">6. Perubahan identitas kependudukan (ktp, kk, atau dokumen sejenis);</p>
+
 
     <table class="paraf-table">
     <tr>
@@ -1138,13 +1170,15 @@ Pada hari ini <strong>
                      alt="Employee Signature">
             @endif
         </td>
-        <td class="paraf-box">
-             @if ($contract->hrd_signature)
-               <img src="{{ asset('images/hana-duharlan.jpeg') }}"
-                class="signature-image"
-                alt="HRD Signature">
-            @endif
-        </td>
+       <td class="paraf-box-hrd">
+ @if ($contract->hrd_qr_path)
+    <img src="{{ asset('storage/' . $contract->hrd_qr_path) }}"
+         class="signature-image-3"
+         alt="QR HRD Approval">
+@else
+    <div class="text-muted fs-8">Belum di-approve</div>
+@endif
+</td>
     </tr>
 </table>
 
@@ -1158,6 +1192,8 @@ Pada hari ini <strong>
 
     @include('partials.document-header')
       <div class="page-number">7</div>
+          <p class="indent">5. Kematian anggota keluarga inti;</p>
+    <p class="indent">6. Perubahan identitas kependudukan (ktp, kk, atau dokumen sejenis);</p>
     <p class="indent">7. Perubahan data rekening bank untuk pembayaran upah;</p>
     <p class="indent">8. Perubahan pihak yang menjadi ahli waris atau penerima manfaat hak ketenagakerjaan.</p>
 
@@ -1212,8 +1248,7 @@ Pada hari ini <strong>
     <p class="indent">Kategori Pelanggaran: Sedang</p>
     <p class="indent">Sanksi:</p>
     <p class="indent-2">Pelanggaran ke-1: SP I</p>
-    <p class="indent-2">Pelanggaran ke-2: SP II</p>
-    <p class="indent-2">Pelanggaran ke-3: SP III atau Skorsing</p>
+  
 
     <table class="paraf-table">
     <tr>
@@ -1231,13 +1266,15 @@ Pada hari ini <strong>
                      alt="Employee Signature">
             @endif
         </td>
-        <td class="paraf-box">
-             @if ($contract->hrd_signature)
-               <img src="{{ asset('images/hana-duharlan.jpeg') }}"
-                class="signature-image"
-                alt="HRD Signature">
-            @endif
-        </td>
+       <td class="paraf-box-hrd">
+ @if ($contract->hrd_qr_path)
+    <img src="{{ asset('storage/' . $contract->hrd_qr_path) }}"
+         class="signature-image-3"
+         alt="QR HRD Approval">
+@else
+    <div class="text-muted fs-8">Belum di-approve</div>
+@endif
+</td>
     </tr>
 </table>
 
@@ -1254,6 +1291,8 @@ Pada hari ini <strong>
     @include('partials.document-header')
 
     <div class="page-number">8</div>
+      <p class="indent-2">Pelanggaran ke-2: SP II</p>
+    <p class="indent-2">Pelanggaran ke-3: SP III atau Skorsing</p>
      3. <strong>Insubordinasi:</strong> Pekerja dilarang menolak atau mengabaikan perintah atasan
         yang sah dan berkaitan langsung dengan pelaksanaan tugas pekerjaan.
     </p>
@@ -1318,13 +1357,15 @@ Pada hari ini <strong>
                      alt="Employee Signature">
             @endif
         </td>
-        <td class="paraf-box">
-             @if ($contract->hrd_signature)
-               <img src="{{ asset('images/hana-duharlan.jpeg') }}"
-                class="signature-image"
-                alt="HRD Signature">
-            @endif
-        </td>
+       <td class="paraf-box-hrd">
+ @if ($contract->hrd_qr_path)
+    <img src="{{ asset('storage/' . $contract->hrd_qr_path) }}"
+         class="signature-image-3"
+         alt="QR HRD Approval">
+@else
+    <div class="text-muted fs-8">Belum di-approve</div>
+@endif
+</td>
     </tr>
 </table>
 
@@ -1385,10 +1426,7 @@ Pada hari ini <strong>
         13. Merokok pada waktu jam istirahat di area yang dilarang merokok/area terbatas di wilayah User.
     </p>
     <p class="indent">Sanksi:</p>
-    <p class="indent-2">a. Tidak menyebabkan Kebakaran atau kerugian materil</p>
-    <p class="indent-2" style="margin-left:20mm !important;">Pelanggaran ke-1: Surat Peringatan Pertama dan Terakhir</p>
-    <p class="indent-2" style="margin-left:20mm !important;">Pelanggaran ke-2: PHK</p>
-
+    
     <table class="paraf-table">
     <tr>
         <td colspan="2" class="paraf-title">Paraf</td>
@@ -1405,13 +1443,15 @@ Pada hari ini <strong>
                      alt="Employee Signature">
             @endif
         </td>
-        <td class="paraf-box">
-             @if ($contract->hrd_signature)
-               <img src="{{ asset('images/hana-duharlan.jpeg') }}"
-                class="signature-image"
-                alt="HRD Signature">
-            @endif
-        </td>
+       <td class="paraf-box-hrd">
+ @if ($contract->hrd_qr_path)
+    <img src="{{ asset('storage/' . $contract->hrd_qr_path) }}"
+         class="signature-image-3"
+         alt="QR HRD Approval">
+@else
+    <div class="text-muted fs-8">Belum di-approve</div>
+@endif
+</td>
     </tr>
 </table>
 
@@ -1426,6 +1466,10 @@ Pada hari ini <strong>
     @include('partials.document-header')
 
     <div class="page-number">10</div>
+    <p class="indent-2">a. Tidak menyebabkan Kebakaran atau kerugian materil</p>
+    <p class="indent-2" style="margin-left:20mm !important;">Pelanggaran ke-1: Surat Peringatan Pertama dan Terakhir</p>
+    <p class="indent-2" style="margin-left:20mm !important;">Pelanggaran ke-2: PHK</p>
+
     <p class="indent-2">b. Menyebabkan Kebakaran atau kerugian materil besar : PHK</p>
 
     <p><strong>C. PERILAKU, ETIKA &amp; INFORMASI ELEKTRONIK</strong></p>
@@ -1475,13 +1519,7 @@ Pada hari ini <strong>
     <p class="indent-2">Pelanggaran ke-1: Surat Peringatan Pertama dan Terakhir</p>
     <p class="indent-2">Pelanggaran ke-2: PHK</p>
 
-    <p>
-        19. <strong>Vandalisme:</strong> Merusak atau mencoret fasilitas Perusahaan/User secara sengaja.
-    </p>
-    <p class="indent">Kategori Pelanggaran: Sedang</p>
-    <p class="indent">Sanksi:</p>
-    <p class="indent-2">Pelanggaran ke-1: Skorsing maksimal 1 (satu) minggu</p>
-    <p class="indent-2">Pelanggaran ke-2: PHK</p>
+   
 
     <table class="paraf-table">
     <tr>
@@ -1499,13 +1537,15 @@ Pada hari ini <strong>
                      alt="Employee Signature">
             @endif
         </td>
-        <td class="paraf-box">
-             @if ($contract->hrd_signature)
-               <img src="{{ asset('images/hana-duharlan.jpeg') }}"
-                class="signature-image"
-                alt="HRD Signature">
-            @endif
-        </td>
+       <td class="paraf-box-hrd">
+ @if ($contract->hrd_qr_path)
+    <img src="{{ asset('storage/' . $contract->hrd_qr_path) }}"
+         class="signature-image-3"
+         alt="QR HRD Approval">
+@else
+    <div class="text-muted fs-8">Belum di-approve</div>
+@endif
+</td>
     </tr>
 </table>
 
@@ -1521,6 +1561,14 @@ Pada hari ini <strong>
 
     <div class="page-number">11</div>
      <p>
+        19. <strong>Vandalisme:</strong> Merusak atau mencoret fasilitas Perusahaan/User secara sengaja.
+    </p>
+    <p class="indent">Kategori Pelanggaran: Sedang</p>
+    <p class="indent">Sanksi:</p>
+    <p class="indent-2">Pelanggaran ke-1: Skorsing maksimal 1 (satu) minggu</p>
+    <p class="indent-2">Pelanggaran ke-2: PHK</p>
+     <p>
+
         20. <strong>Intimidasi:</strong> Mengancam secara fisik atau psikis terhadap atasan, bawahan,
         rekan kerja, atau keluarganya.
     </p>
@@ -1568,17 +1616,9 @@ Pada hari ini <strong>
         atau kerugian bagi perusahaan.
     </p>
     <p class="indent">Kategori Pelanggaran: Berat</p>
-    <p class="indent">Sanksi:</p>
-    <p class="indent-2">Pelanggaran ke-1: Skorsing minimal 1 (satu) minggu</p>
-    <p class="indent-2">Pelanggaran ke-2: PHK</p>
+   
 
-      <p>
-        26. <strong>Pembangkangan Medis:</strong> Menolak perintah melakukan pemeriksaan kesehatan atau
-        MCU dan atau tidak mematuhi petunjuk dokter.
-    </p>
-    <p class="indent">Kategori Pelanggaran: Berat</p>
-    <p class="indent">Sanksi:</p>
-    <p class="indent-2">Pelanggaran ke-1: Surat Peringatan Pertama dan Terakhir</p>
+      
 
     <table class="paraf-table">
     <tr>
@@ -1596,13 +1636,15 @@ Pada hari ini <strong>
                      alt="Employee Signature">
             @endif
         </td>
-        <td class="paraf-box">
-             @if ($contract->hrd_signature)
-               <img src="{{ asset('images/hana-duharlan.jpeg') }}"
-                class="signature-image"
-                alt="HRD Signature">
-            @endif
-        </td>
+       <td class="paraf-box-hrd">
+ @if ($contract->hrd_qr_path)
+    <img src="{{ asset('storage/' . $contract->hrd_qr_path) }}"
+         class="signature-image-3"
+         alt="QR HRD Approval">
+@else
+    <div class="text-muted fs-8">Belum di-approve</div>
+@endif
+</td>
     </tr>
 </table>
 
@@ -1617,6 +1659,16 @@ Pada hari ini <strong>
     @include('partials.document-header')
 
     <div class="page-number">12</div>
+     <p class="indent">Sanksi:</p>
+    <p class="indent-2">Pelanggaran ke-1: Skorsing minimal 1 (satu) minggu</p>
+    <p class="indent-2">Pelanggaran ke-2: PHK</p>
+    <p>
+        26. <strong>Pembangkangan Medis:</strong> Menolak perintah melakukan pemeriksaan kesehatan atau
+        MCU dan atau tidak mematuhi petunjuk dokter.
+    </p>
+    <p class="indent">Kategori Pelanggaran: Berat</p>
+    <p class="indent">Sanksi:</p>
+    <p class="indent-2">Pelanggaran ke-1: Surat Peringatan Pertama dan Terakhir</p>
         <p class="indent-2">Pelanggaran ke-2: PHK</p>
     <p>
         27. <strong>Penyalahgunaan Atribut Kerja:</strong> Meminjamkan atau mengalihkan APD/seragam
@@ -1658,21 +1710,7 @@ Pada hari ini <strong>
     </p>
     <p class="indent">Kategori Pelanggaran: Mendesak</p>
     <p class="indent">Sanksi: PHK</p>
-<p><strong>E. LAIN-LAIN</strong></p>
 
-    <p>
-        32. <strong>Diskresi Perusahaan:</strong> Perbuatan atau tindakan Pekerja yang belum diatur
-        secara khusus dalam aturan perusahaan atau kontrak kerja ini, namun berdasarkan penilaian
-        objektif terbukti merusak citra dan atau merugikan Perusahaan, mengganggu operasional, melanggar
-        kepatutan kerja, atau menimbulkan risiko terhadap keselamatan, keamanan, dan ketertiban kerja.
-    </p>
-    <p class="indent">Kategori Pelanggaran: <strong>Ringan → Mendesak</strong></p>
-    <p class="indent">Sanksi:</p>
-    <p class="indent">
-        Surat Peringatan Pertama (SP I) sampai dengan Pemutusan Hubungan Kerja (PHK) ataupun PHK
-        Langsung (tanpa urutan SP -- pelanggaran mendesak), dengan memperhatikan tingkat kesalahan,
-        dampak yang ditimbulkan, dan ketentuan peraturan perundang-undangan yang berlaku.
-    </p>
 
     <table class="paraf-table">
     <tr>
@@ -1690,13 +1728,15 @@ Pada hari ini <strong>
                      alt="Employee Signature">
             @endif
         </td>
-        <td class="paraf-box">
-             @if ($contract->hrd_signature)
-               <img src="{{ asset('images/hana-duharlan.jpeg') }}"
-                class="signature-image"
-                alt="HRD Signature">
-            @endif
-        </td>
+       <td class="paraf-box-hrd">
+ @if ($contract->hrd_qr_path)
+    <img src="{{ asset('storage/' . $contract->hrd_qr_path) }}"
+         class="signature-image-3"
+         alt="QR HRD Approval">
+@else
+    <div class="text-muted fs-8">Belum di-approve</div>
+@endif
+</td>
     </tr>
 </table>
 
@@ -1707,6 +1747,21 @@ Pada hari ini <strong>
     @include('partials.document-header')
 
     <div class="page-number">13</div>
+    <p><strong>E. LAIN-LAIN</strong></p>
+
+    <p>
+        32. <strong>Diskresi Perusahaan:</strong> Perbuatan atau tindakan Pekerja yang belum diatur
+        secara khusus dalam aturan perusahaan atau kontrak kerja ini, namun berdasarkan penilaian
+        objektif terbukti merusak citra dan atau merugikan Perusahaan, mengganggu operasional, melanggar
+        kepatutan kerja, atau menimbulkan risiko terhadap keselamatan, keamanan, dan ketertiban kerja.
+    </p>
+    <p class="indent">Kategori Pelanggaran: <strong>Ringan → Mendesak</strong></p>
+    <p class="indent">Sanksi:</p>
+    <p class="indent">
+        Surat Peringatan Pertama (SP I) sampai dengan Pemutusan Hubungan Kerja (PHK) ataupun PHK
+        Langsung (tanpa urutan SP -- pelanggaran mendesak), dengan memperhatikan tingkat kesalahan,
+        dampak yang ditimbulkan, dan ketentuan peraturan perundang-undangan yang berlaku.
+    </p>
         <div class="pasal-title">PASAL 11</div>
     <div class="pasal-subtitle">ALIH TUGAS</div>
 
@@ -1760,21 +1815,7 @@ Pada hari ini <strong>
         telah dilaksanakan oleh Pekerja (sesuai poin 1).
     </p>
 
-    <p class="indent">
-        b. Pekerja membayar ganti rugi kepada Perusahaan sebesar Upah Pekerja sampai batas waktu
-        berakhirnya jangka waktu PKWT berdasarkan gaji pokok. (Sesuai Pasal 17 PP 35/2021).
-    </p>
-
-    <p class="indent">
-        c. Pembayaran Uang Kompensasi sebagaimana dimaksud pada butir (a) dapat diperhitungkan
-        (dikompensasikan) dengan kewajiban pembayaran ganti rugi oleh Pekerja kepada Perusahaan.
-    </p>
-
-    <p>
-        4. Pekerja tidak hadir selama 5 (Lima) hari dalam 1 (satu) bulan secara berturut -- turut, tanpa
-        izin atau tanpa alasan yang bisa dipertanggung jawabkan dan atau telah dipanggil secara patut dan
-        tertulis sebanyak 2 (dua) kali maka dapat di PHK karena mangkir (PP 35 pasal 51).
-    </p>
+   
 
     <table class="paraf-table">
     <tr>
@@ -1792,13 +1833,15 @@ Pada hari ini <strong>
                      alt="Employee Signature">
             @endif
         </td>
-        <td class="paraf-box">
-             @if ($contract->hrd_signature)
-               <img src="{{ asset('images/hana-duharlan.jpeg') }}"
-                class="signature-image"
-                alt="HRD Signature">
-            @endif
-        </td>
+       <td class="paraf-box-hrd">
+ @if ($contract->hrd_qr_path)
+    <img src="{{ asset('storage/' . $contract->hrd_qr_path) }}"
+         class="signature-image-3"
+         alt="QR HRD Approval">
+@else
+    <div class="text-muted fs-8">Belum di-approve</div>
+@endif
+</td>
     </tr>
 </table>
 
@@ -1809,6 +1852,21 @@ Pada hari ini <strong>
     @include('partials.document-header')
 
     <div class="page-number">14</div>
+     <p class="indent">
+        b. Pekerja membayar ganti rugi kepada Perusahaan sebesar Upah Pekerja sampai batas waktu
+        berakhirnya jangka waktu PKWT berdasarkan gaji pokok. (Sesuai Pasal 17 PP 35/2021).
+    </p>
+
+    <p class="indent">
+        c. Pembayaran Uang Kompensasi sebagaimana dimaksud pada butir (a) dapat diperhitungkan
+        (dikompensasikan) dengan kewajiban pembayaran ganti rugi oleh Pekerja kepada Perusahaan.
+    </p>
+
+    <p>
+        4. Pekerja tidak hadir selama 5 (Lima) hari dalam 1 (satu) bulan secara berturut -- turut, tanpa
+        izin atau tanpa alasan yang bisa dipertanggung jawabkan dan atau telah dipanggil secara patut dan
+        tertulis sebanyak 2 (dua) kali maka dapat di PHK karena mangkir (PP 35 pasal 51).
+    </p>
 
     <p>
         5. Pekerja tidak berhak menuntut ganti rugi kontrak dan hanya akan menerima pendapatan sampai
@@ -1877,13 +1935,15 @@ Pada hari ini <strong>
                      alt="Employee Signature">
             @endif
         </td>
-        <td class="paraf-box">
-             @if ($contract->hrd_signature)
-               <img src="{{ asset('images/hana-duharlan.jpeg') }}"
-                class="signature-image"
-                alt="HRD Signature">
-            @endif
-        </td>
+       <td class="paraf-box-hrd">
+ @if ($contract->hrd_qr_path)
+    <img src="{{ asset('storage/' . $contract->hrd_qr_path) }}"
+         class="signature-image-3"
+         alt="QR HRD Approval">
+@else
+    <div class="text-muted fs-8">Belum di-approve</div>
+@endif
+</td>
     </tr>
 </table>
 
@@ -1979,14 +2039,12 @@ Pada hari ini <strong>
             <div><strong>PT BUKAKA TEKNIK UTAMA Tbk</strong></div>
             <div><strong>Cabang Balikpapan</strong></div>
 
-            <div class="signature-space"></div>
-
             <div class="signature-image-wrapper">
-                @if ($contract->head_signature)
-                 <img src="{{ asset('images/muslimin-sanafi.jpeg') }}"
-                    class="signature-image"
-                    alt="Muslimin Sanafi">
-                @endif
+              @if ($contract->head_qr_path)
+    <img src="{{ asset('storage/' . $contract->head_qr_path) }}"
+         class="signature-image-10"
+         alt="QR Head Approval">
+@endif
             </div>
 
             <div class="signature-name">
