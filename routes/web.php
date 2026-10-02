@@ -20,6 +20,8 @@ use App\Http\Controllers\Employee\ContractController as EmployeeContractControll
 | Guest Routes
 |--------------------------------------------------------------------------
 */
+Route::get('verify/{token}', [ContractController::class, 'verify'])
+    ->name('contracts.verify');
 Route::middleware('guest')->group(function () {
     Route::get('/login',  [AuthController::class, 'loginPage'])->name('login');
     Route::post('/login', [AuthController::class, 'login'])->name('login');
@@ -72,6 +74,7 @@ Route::middleware('auth')->group(function () {
         Route::post('{contract}/send',         [ContractController::class, 'send'])->name('send');
         Route::post('{contract}/approve-hrd',  [ContractController::class, 'approveHRD'])->name('approve.hrd');
         Route::post('{contract}/approve-head', [ContractController::class, 'approveHead'])->name('approve.head');
+        Route::get('create-new-from-existing/{id}', [ContractController::class, 'createNewFromExisting'])->name('create-new-from-existing');
 
         // -- Bulk actions --
         Route::delete('bulk-delete',      [ContractController::class, 'bulkDelete'])->name('bulk-delete');
@@ -81,6 +84,9 @@ Route::middleware('auth')->group(function () {
     });
 
     // -- Resource (index, create, store, show, edit, update, destroy) --
+    Route::get('contracts/allowance-fields',
+    [ContractController::class, 'allowanceFields']
+)->name('contracts.allowance-fields');
     Route::resource('contracts', ContractController::class);
 
 

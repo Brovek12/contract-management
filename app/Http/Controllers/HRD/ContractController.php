@@ -822,5 +822,52 @@ $filename = "Laporan-Contract_{$tanggal}.xlsx";
     return Excel::download(new ContractsExport($filters), $filename);
 }
 
+public function createNewFromExisting($id)
+{
+    $source = Contract::with(['user', 'project', 'headUser'])
+        ->findOrFail($id);
+
+    // Employee candidates
+    $employees = User::role('Employee')->orderBy('name')->get();
+
+    // Head candidates (HRD Head + GM)
+    $heads = User::role(['HRD_Head', 'General_Manager'])->orderBy('name')->get();
+
+    // Projects
+    $projects = Project::orderBy('name')->get();
+
+    return view('admin.hrd.contracts.create-new-from-existing', [
+        'source'    => $source,
+        'type'      => $source->type,
+        'category'  => $source->category,
+        'employees' => $employees,
+        'heads'     => $heads,
+        'projects'  => $projects,
+    ]);
+}
+public function allowanceFields(Request $request)
+{
+    $type = $request->query('type');
+
+    $allowanceTypes = [
+        'all-in', 'gp-mahal-um-ut-fungsi', 'gp-um-ut-fungsi',
+        'security', 'ob', 'gp-um-ut-laut', 'gp-um-ut',
+        'gp-mahal-um-ut-fungsi-pls', 'gp-mahal-um-ut',
+        'pep-lokal-buny', 'elis-phkt-5-2', 'elis-phkt-6-1',
+        'eni-muara-bakau-lembur', 'eni-muara-bakau-all-in', 'ipfms-dobu',
+    ];
+
+    if (!in_array($type, $allowanceTypes)) {
+        return response()->json(['html' => '']);
+    }
+
+    $html = view('admin.hrd.contracts.partials.create-pasal5', [
+        'contract' => null, // mode create → field kosong
+        'type'     => $type,
+    ])->render();
+
+    return response()->json(['html' => $html]);
+}
+
 
 }

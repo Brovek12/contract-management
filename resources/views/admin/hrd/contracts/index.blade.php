@@ -451,6 +451,13 @@
                                                                         Edit Contract
                                                                     </a>
                                                                 </li>
+                                                                    <li>
+                                                                        <a class="dropdown-item"
+                                                                        href="{{ route('contracts.create-new-from-existing', $item->id) }}">
+                                                                            <i class="ki-outline ki-plus fs-4 me-2 text-success"></i>
+                                                                            Add New Contract
+                                                                        </a>
+                                                                    </li>
                                                             @endcan
 
                                                             {{-- Aksi status --}}
