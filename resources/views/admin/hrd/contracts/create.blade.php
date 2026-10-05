@@ -132,7 +132,7 @@
                     <div class="row g-5">
 
                         {{-- Employee --}}
-                        <div class="col-12">
+                        <div class="col-md-6">
                             <label class="required form-label fw-semibold">Employee</label>
                             <select name="user_id" id="employee-select" class="form-select"
                                     data-control="select2"
@@ -153,6 +153,29 @@
                                 @endforeach
                             </select>
                         </div>
+                        @if ($category === 'managerial' || $category === 'non-managerial')
+    <div class="col-md-6">
+        <label class="form-label">Golongan / Grade</label>
+        <select name="grade" id="grade-select" class="form-select"
+                data-control="select2"
+                data-placeholder="Pilih Grade" required>
+            <option value=""></option>
+
+            <optgroup label="Managerial">
+                <option value="M-1-2" {{ old('grade') == 'M-1-2' ? 'selected' : '' }}>M-1-2</option>
+                <option value="M-3-4" {{ old('grade') == 'M-3-4' ? 'selected' : '' }}>M-3-4</option>
+                <option value="M-5-6" {{ old('grade') == 'M-5-6' ? 'selected' : '' }}>M-5-6</option>
+                <option value="M-7-8" {{ old('grade') == 'M-7-8' ? 'selected' : '' }}>M-7-8</option>
+            </optgroup>
+
+            <optgroup label="Non-Managerial">
+                <option value="N-1-2" {{ old('grade') == 'NM-1-2' ? 'selected' : '' }}>NM-1-2</option>
+                <option value="NM-3-4" {{ old('grade') == 'NM-3-4' ? 'selected' : '' }}>NM-3-4</option>
+                <option value="NM-5-6" {{ old('grade') == 'NM-5-6' ? 'selected' : '' }}>NM-5-6</option>
+            </optgroup>
+        </select>
+    </div>
+@endif
 
                         {{-- Employee Name --}}
                         <div class="col-md-6">

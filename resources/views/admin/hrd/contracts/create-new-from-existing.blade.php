@@ -226,6 +226,16 @@
                                    class="form-control bg-light"
                                    value="{{ old('employee_name', $source->employee_name) }}" readonly>
                         </div>
+                         {{-- Grade: muncul untuk managerial & non-managerial, tidak untuk project --}}
+<div class="col-md-6" id="grade-wrapper"
+     style="{{ in_array($category, ['managerial', 'non-managerial']) ? '' : 'display: none;' }}">
+    <label class="form-label fw-semibold">Golongan / Grade</label>
+    <select name="grade" id="grade-select" class="form-select"
+            data-control="select2"
+            data-placeholder="Pilih Grade">
+        <option value=""></option>
+    </select>
+</div>
 
                         {{-- Department --}}
                         <div class="col-md-6">
@@ -564,6 +574,78 @@ $(document).ready(function () {
     // =========================================================
     // TYPE & CATEGORY — Dynamic Allowance Fields
     // =========================================================
+
+    // =========================================================
+// GRADE — Dynamic per Category
+// =========================================================
+
+// Data grade per kategori
+const GRADE_OPTIONS = {
+    'managerial': [
+        { value: 'M-1-2', label: 'M-1-2' },
+        { value: 'M-3-4', label: 'M-3-4' },
+        { value: 'M-5-6', label: 'M-5-6' },
+        { value: 'M-7-8', label: 'M-7-8' },
+    ],
+    'non-managerial': [
+        { value: 'NM-1-2', label: 'NM-1-2' },
+        { value: 'NM-3-4', label: 'NM-3-4' },
+        { value: 'NM-5-6', label: 'NM-5-6' },
+    ],
+};
+
+// Nilai grade tersimpan (untuk edit form)
+const SAVED_GRADE = @json(old('grade', $source->grade ?? ''));
+
+function renderGradeOptions() {
+    const category = $('#category-select').val();
+    const $wrapper = $('#grade-wrapper');
+    const $select  = $('#grade-select');
+
+    // Reset options
+    $select.html('<option value=""></option>');
+
+    // Kalau bukan managerial/non-managerial → sembunyikan
+    if (!category || !GRADE_OPTIONS[category]) {
+        $wrapper.hide();
+        $select.removeAttr('required');
+        $select.trigger('change.select2');
+        return;
+    }
+
+    // Tampilkan wrapper
+    $wrapper.show();
+    $select.attr('required', 'required');
+
+    // Tambahkan optgroup sesuai kategori
+    let groupLabel = category === 'managerial' ? 'Managerial' : 'Non-Managerial';
+    let $optgroup  = $('<optgroup>').attr('label', groupLabel);
+
+    GRADE_OPTIONS[category].forEach(function (g) {
+        let $opt = $('<option>')
+            .attr('value', g.value)
+            .text(g.label);
+
+        if (SAVED_GRADE === g.value) {
+            $opt.attr('selected', 'selected');
+        }
+
+        $optgroup.append($opt);
+    });
+
+    $select.append($optgroup);
+
+    // Refresh Select2
+    $select.trigger('change.select2');
+}
+
+// Panggil saat halaman load
+renderGradeOptions();
+
+// Panggil saat category berubah
+$('#category-select').on('change', function () {
+    renderGradeOptions();
+});
 
     // Aktif/nonaktifkan optgroup sesuai category
     function filterTypesByCategory() {

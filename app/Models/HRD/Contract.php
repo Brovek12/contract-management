@@ -58,6 +58,7 @@ class Contract extends Model
         // =====================================================
 
         'position',
+        'grade',
         'work_location',
         'domicile',
 

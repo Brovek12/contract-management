@@ -59,27 +59,13 @@ class ProjectSeeder extends Seeder
 
     // Existing projects
     Project::create([
-        'code' => 'PHSS',
-        'name' => 'PHSS',
+        'code' => 'BTU-BPN',
+        'name' => 'Bukaka Balikpapan Brench - Office',
         'location' => 'Balikpapan',
-        'owner' => 'PHSS',
+        'owner' => 'Bukaka',
         'is_active' => true,
     ]);
 
-    Project::create([
-        'code' => 'PHM',
-        'name' => 'PHM',
-        'location' => 'Balikpapan',
-        'owner' => 'PHM',
-        'is_active' => true,
-    ]);
-
-    Project::create([
-        'code' => 'PHKT',
-        'name' => 'PHKT',
-        'location' => 'Kalimantan Timur',
-        'owner' => 'PHKT',
-        'is_active' => true,
-    ]);
+   
 }
 }

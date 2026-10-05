@@ -179,6 +179,7 @@ public function store(Request $request)
             'age_at_contract' => 'nullable|integer|min:0|max:100',
             'gender'          => 'nullable|string|max:50',
             'address'         => 'nullable|string',
+            'grade'           => 'nullable|string|max:50',
 
             // Period
             'start_date'      => 'required|date',
@@ -263,7 +264,7 @@ public function store(Request $request)
             'age_at_contract' => $request->age_at_contract,
             'gender'          => $request->gender,
             'address'         => $request->address,
-
+            'grade'           => $request->grade,
             // Contract period
             'start_date'      => $request->start_date,
             'end_date'        => $request->end_date,
