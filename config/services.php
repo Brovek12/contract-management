@@ -27,6 +27,9 @@ return [
     'resend' => [
         'key' => env('RESEND_KEY'),
     ],
+    'fonnte' => [
+    'token' => env('FONNTE_TOKEN'),
+],
 
     'slack' => [
         'notifications' => [

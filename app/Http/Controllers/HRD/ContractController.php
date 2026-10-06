@@ -17,6 +17,8 @@ use Endroid\QrCode\Writer\PngWriter;
 use Endroid\QrCode\Encoding\Encoding;
 use Endroid\QrCode\RoundBlockSizeMode;
 use Endroid\QrCode\ErrorCorrectionLevel;
+use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Log;
 
 
 class ContractController extends Controller
@@ -317,10 +319,18 @@ public function store(Request $request)
 public function show(Contract $contract)
 {
      $user = Auth::user();
-    // ✅ Pengamanan: employee hanya boleh lihat kontrak miliknya
-    if (auth()->user()->hasRole('Employee') && $contract->user_id !== auth()->id()) {
+  if (auth()->user()->hasRole('Employee')) {
+
+    // 1. Cek ownership
+    if ($contract->user_id !== auth()->id()) {
         abort(403, 'Kontrak ini bukan milik Anda.');
     }
+
+    // 2. Cek status — employee tidak boleh lihat draft & expired
+    if (in_array($contract->status, ['draft', 'expired'])) {
+        abort(403, 'Kontrak ini belum/tidak dapat diakses.');
+    }
+}
 
     $contract->load([
         'user',
@@ -543,9 +553,13 @@ public function send(Contract $contract)
                 ->with('ERR', 'Contract tidak dapat dikirim karena status bukan Draft.');
         }
 
+        // Update status
         $contract->update([
             'status' => 'sent',
         ]);
+
+        // Kirim WA ke employee
+        $this->sendWaContractSent($contract);
 
         return redirect()
             ->back()
@@ -937,5 +951,85 @@ private function generateQrForContract(Contract $contract, string $role): string
 
     return $qrPath;
 }
+/**
+ * Kirim notifikasi WA ke employee setelah contract dikirim.
+ */
+private function sendWaContractSent(Contract $contract)
+{
+    $employee = $contract->user;
+
+    // Skip kalau tidak ada nomor telepon
+    if (!$employee || empty($employee->phone)) {
+        Log::warning('WA tidak dikirim: employee tidak punya nomor telepon', [
+            'contract_id' => $contract->id,
+        ]);
+        return;
+    }
+
+    // Susun pesan
+    $message = "*Contract Management*\n\n"
+        . "Halo {$employee->name},\n\n"
+        . "Anda menerima contract baru:\n\n"
+        . "No: *{$contract->contract_number}*\n"
+        . "Judul: {$contract->title}\n"
+        . "Periode: "
+        . optional($contract->start_date)->format('d M Y')
+        . " s/d "
+        . optional($contract->end_date)->format('d M Y')
+        . "\n\n"
+        . "Silakan cek dan tanda tangani melalui link berikut:\n"
+        . route('employee.contracts.show', $contract->id);
+
+    // Kirim
+    $this->sendFonnte($employee->phone, $message);
+}
+
+/**
+ * Helper generic untuk kirim WA via Fonnte.
+ */
+private function sendFonnte(string $target, string $message): bool
+{
+    try {
+
+        $token = config('services.fonnte.token');
+
+        if (empty($token)) {
+            Log::warning('Fonnte token belum diset di .env');
+            return false;
+        }
+
+        $response = Http::withoutVerifying()
+            ->withHeaders([
+                'Authorization' => $token,
+            ])
+            ->timeout(10)
+            ->post('https://api.fonnte.com/send', [
+                'target'  => $target,
+                'message' => $message,
+            ]);
+
+        if ($response->successful()) {
+            Log::info('WA terkirim', [
+                'target'   => $target,
+                'response' => $response->json(),
+            ]);
+            return true;
+        }
+
+        Log::warning('Gagal kirim WA', [
+            'target'   => $target,
+            'response' => $response->json(),
+        ]);
+        return false;
+
+    } catch (\Exception $e) {
+
+        Log::error('Error kirim WA: ' . $e->getMessage(), [
+            'target' => $target,
+        ]);
+        return false;
+    }
+}
+
 
 }

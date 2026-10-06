@@ -25,10 +25,9 @@ class UserController extends Controller
     {
         $user = Auth::user();
 
-        // if (!$user->hasPermissionTo('read-users')) {
-        //     abort(403, 'Unallowed.');
-        // }
-
+       if (!$user->hasPermissionTo('read-users')) {
+          abort(403);
+        }
         $roleId = $request->query('role');
 
         $usersQuery = User::query();
