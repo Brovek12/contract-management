@@ -1171,6 +1171,8 @@
     @include('partials.document-header')
 
     @if ($contract->category === 'non-managerial' || $contract->category === 'managerial')
+     <p class="indent-2">- Pelanggaran ketiga: Surat Peringatan Ketiga (SP III)</p>
+        <p>6. <strong>Kewajiban Pemutakhiran Data Pekerja</strong></p>
         <p class="indent">
             Pekerja wajib memberikan keterangan tertulis kepada Perusahaan mengenai setiap perubahan data
             pribadi dan/atau data keluarga paling lambat 7 (tujuh) hari kalender sejak terjadinya perubahan
@@ -1220,7 +1222,7 @@
         sebagaimana dimaksud dalam Pasal 62 Undang-Undang Nomor 13 Tahun 2003.
     </p>
 
-    <h3>Ketertiban dan Kepatuhan Kerja</h3>
+    <p><strong>A. Ketertiban dan Kepatuhan Kerja</strong></p>
 
     <p>
         1. <strong>Standar Penampilan:</strong> Pekerja pria dilarang berambut panjang, gondrong, atau
@@ -1616,7 +1618,7 @@
     <p class="indent-2">Pelanggaran ke-2: PHK</p>
 
     <p>31. <strong>Tindak Pidana:</strong> Pekerja dinyatakan bersalah melakukan tindak criminal/pidana berdasarkan putusan aparat penegak hukum.</p>
-   >
+
 
     <table class="paraf-table">
         <tr><td colspan="2" class="paraf-title">Paraf</td></tr>
