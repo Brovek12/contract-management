@@ -582,15 +582,15 @@ $(document).ready(function () {
 // Data grade per kategori
 const GRADE_OPTIONS = {
     'managerial': [
-        { value: 'M-1-2', label: 'M-1-2' },
-        { value: 'M-3-4', label: 'M-3-4' },
+        { value: 'M-8', label: 'M-8' },
+        { value: 'M-7', label: 'M-7' },
         { value: 'M-5-6', label: 'M-5-6' },
-        { value: 'M-7-8', label: 'M-7-8' },
+        { value: 'M-3-4', label: 'M-3-4' },
     ],
     'non-managerial': [
-        { value: 'NM-1-2', label: 'NM-1-2' },
-        { value: 'NM-3-4', label: 'NM-3-4' },
         { value: 'NM-5-6', label: 'NM-5-6' },
+        { value: 'NM-3-4', label: 'NM-3-4' },
+        { value: 'NM-1-2', label: 'NM-1-2' },
     ],
 };
 
