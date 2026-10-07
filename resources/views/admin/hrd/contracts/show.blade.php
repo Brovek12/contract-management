@@ -1,6 +1,6 @@
 @extends('layouts.document')
 
-@section('title', 'Perjanjian Kerja Waktu Tertentu')
+@section('title', $contract->title)
 
 @section('document-style')
 <style>
@@ -676,7 +676,7 @@
 <div class="document-page">
     @include('partials.document-header')
 
-    <div class="doc-title">PERJANJIAN KERJA WAKTU TERTENTU</div>
+    <div class="doc-title"> {{ $contract->title }}</div>
     <div class="doc-no"><strong>NO : {{ $contract->contract_number }}</strong></div>
 
     <p>
