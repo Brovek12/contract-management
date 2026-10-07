@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "7ed8d81a7699b222fe5fde79f7332600",
+    "content-hash": "8d34ae61a729cdd7b2702d1a74f37fd8",
     "packages": [
         {
             "name": "bacon/bacon-qr-code",
@@ -6809,6 +6809,66 @@
                 }
             ],
             "time": "2024-12-11T14:50:44+00:00"
+        },
+        {
+            "name": "codeseasy/xpos-laravel",
+            "version": "v1.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/CodesEasy/xpos-laravel.git",
+                "reference": "9b6169bd1cb628bf861197b8c1405082d8e11430"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/CodesEasy/xpos-laravel/zipball/9b6169bd1cb628bf861197b8c1405082d8e11430",
+                "reference": "9b6169bd1cb628bf861197b8c1405082d8e11430",
+                "shasum": ""
+            },
+            "require": {
+                "illuminate/console": "^10.0|^11.0|^12.0",
+                "illuminate/support": "^10.0|^11.0|^12.0",
+                "php": "^8.1",
+                "symfony/process": "^6.0|^7.0"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "CodesEasy\\Xpos\\XposServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "CodesEasy\\Xpos\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "CodesEasy",
+                    "email": "info@codeseasy.com",
+                    "homepage": "https://www.codeseasy.com"
+                }
+            ],
+            "description": "Instant public URLs for Laravel development - XPOS tunnel integration",
+            "keywords": [
+                "development",
+                "laravel",
+                "localhost",
+                "public-url",
+                "share",
+                "tunnel",
+                "xpos"
+            ],
+            "support": {
+                "issues": "https://github.com/CodesEasy/xpos-laravel/issues",
+                "source": "https://github.com/CodesEasy/xpos-laravel/tree/v1.0.0"
+            },
+            "time": "2025-12-24T19:08:34+00:00"
         },
         {
             "name": "doctrine/deprecations",
