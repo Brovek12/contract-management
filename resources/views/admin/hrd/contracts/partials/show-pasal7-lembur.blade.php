@@ -73,6 +73,25 @@
         kompensasi atas pelaksanaan pekerjaan sebagaimana dimaksud pada ayat (1) telah
         diperhitungkan dalam penghasilan (gaji all-in) yang diterima Pekerja.
     </p>
+    @elseif ($type === 'all-in')
+
+    {{-- ============================================ --}}
+    {{-- ALL-IN: KETENTUAN KOMPENSASI GAJI ALL-IN     --}}
+    {{-- ============================================ --}}
+    <div class="pasal-title">PASAL 7</div>
+    <div class="pasal-subtitle">KETENTUAN ALL-IN</div>
+
+    <p>
+       1. Karyawan bersedia untuk bekerja melebihi jam kerja yang telah ditetapkan bilamana Pengusaha memandang perlu berdasarkan perintah Pengusaha, demikian pula halnya Karyawan bersedia melaksanakan tugas pada hari-hari libur atau hari raya.
+    </p>
+
+    <p>
+       2.	Karyawan menyetujui bahwa Upah/Gaji bulanan yang diterima merupakan sistem upah All-In, di mana seluruh imbalan atas pelaksanaan kerja di luar jam kerja biasa, baik pada hari kerja, hari libur mingguan, maupun hari raya, telah masuk dan diperhitungkan secara menyeluruh ke dalam gaji bulanan Karyawan
+    </p>
+
+    <p>
+      3.	Berdasarkan sistem All-In tersebut, Pengusaha tidak membayarkan upah atau biaya tambahan per jam maupun per hari untuk kelebihan jam kerja yang dilakukan Karyawan.
+    </p>
 
 @else
 
