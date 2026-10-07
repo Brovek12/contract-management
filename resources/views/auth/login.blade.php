@@ -1,94 +1,110 @@
 @extends('layouts.app-auth')
+
 @section('title', 'Login')
-@section('style')
-    <style>
-        .input-group {
-            position: relative;
-        }
-
-        .input-group .btn {
-            z-index: 10;
-            background: transparent;
-        }
-
-        .input-group .form-control {
-            padding-right: 40px;
-        }
-    </style>
-@endsection
 
 @section('content')
 
-    <form action="{{ route('login') }}" method="POST" onsubmit="return validateForm()">
+    <div class="text-center mb-8">
+
+        {{-- Logo --}}
+        <img src="{{ asset('assets/media/logos/bukaka1.png') }}"
+             alt="Bukaka"
+             style="height: 60px; margin-bottom: 20px;">
+
+        {{-- Title --}}
+        <h1 style="font-size: 24px; font-weight: 700; color: #181c32; margin: 0 0 8px;">
+            Masuk
+        </h1>
+
+        {{-- Subtitle --}}
+        <p style="color: #a1a5b7; font-size: 14px; margin: 0;">
+            Silahkan masukkan username dan password anda.
+        </p>
+    </div>
+
+    <form action="{{ route('login') }}" method="POST">
         @csrf
-        <div class="pt-20 pb-20 mt-20 mb-20 d-flex flex-column">
-            <img alt="Logo" src="assets/media/logos/bukaka1.png" style="height: 80px; width: 80px" class="mt-12" />
-            <span class="mt-4 mb-2 text-gray-900 fs-2 fw-bold">Masuk</span>
 
-            <span class="text-gray-600 fs-5">Silahkan masukkan username dan password anda.</span>
-
-            @if (session('ERROR'))
-                <div class="mt-4 alert alert-danger d-flex align-items-center me-6" style="width: 97%;" role="alert">
-                    <i class="bi bi-exclamation-triangle-fill fs-2 me-2"></i>
-                    <div>
-                        {{ session('ERROR') }}
-                    </div>
-                </div>
-            @endif
-
-
-            <div class="mt-6 form-group">
-                {{-- <label class="mt-6 text-gray-700 form-label fs-4">Username</label> --}}
-                <input type="text" name="username" id="username" class="form-control form-control-solid me-6" style="width: 97%;" placeholder="Username">
-                @if ($errors->has('username'))
-                    <span class="help-block text-danger">
-                        <strong>{{ $errors->first('username') }}</strong>
-                    </span>
-                @endif
+        {{-- Error Alert --}}
+        @if (session('ERROR'))
+            <div class="alert alert-danger mb-5" role="alert">
+                <i class="bi bi-exclamation-triangle-fill me-2"></i>
+                {{ session('ERROR') }}
             </div>
+        @endif
 
-            <div class="mt-6 form-group">
-                {{-- <label class="mt-6 text-gray-700 form-label fs-4">Password</label> --}}
-                <div class="input-group me-6" style="width: 97%;">
-                    <input type="password" name="password" id="password" class="form-control form-control-solid" placeholder="Password">
-                    <button class="btn btn-default position-absolute top-50 end-0 translate-middle-y" tabindex="-1" type="button" onclick="togglePassword(this);">
-                        <i class="bi bi-eye fs-3"></i>
-                    </button>
-                </div>
-                @if ($errors->has('password'))
-                    <span class="help-block text-danger">
-                        <strong>{{ $errors->first('password') }}</strong>
-                    </span>
-                @endif
-            </div>
+        {{-- Username --}}
+        <div class="mb-4">
+            <input type="text"
+                   name="username"
+                   id="username"
+                   class="form-control form-control-solid"
+                   placeholder="Username"
+                   value="{{ old('username') }}"
+                   autocomplete="username"
+                   required
+                   style="padding: 14px 18px; font-size: 14px;">
 
-
-            <button class="w-full mt-10 mb-6 btn btn-primary" type="submit">Login</button>
-            <a href="#" class="m-3 text-center link-primary">Lupa Password?</a>
+            @error('username')
+                <span class="text-danger small d-block mt-1">{{ $message }}</span>
+            @enderror
         </div>
+
+        {{-- Password --}}
+        <div class="mb-6 position-relative">
+            <input type="password"
+                   name="password"
+                   id="password"
+                   class="form-control form-control-solid"
+                   placeholder="Password"
+                   autocomplete="current-password"
+                   required
+                   style="padding: 14px 18px; font-size: 14px; padding-right: 48px;">
+
+            <button type="button"
+                    onclick="togglePassword(this)"
+                    style="position: absolute; top: 50%; right: 12px; transform: translateY(-50%); background: none; border: none; color: #a1a5b7; cursor: pointer;">
+                <i class="bi bi-eye fs-5"></i>
+            </button>
+
+            @error('password')
+                <span class="text-danger small d-block mt-1">{{ $message }}</span>
+            @enderror
+        </div>
+
+        {{-- Submit --}}
+        <button type="submit"
+                class="btn btn-primary w-100"
+                style="padding: 14px; font-size: 15px; font-weight: 600; border-radius: 10px;">
+            Login
+        </button>
+
+        {{-- Forgot Password --}}
+        <div class="text-center mt-5">
+            <a href="#" style="color: #009ef7; font-size: 14px; text-decoration: none;">
+                Lupa Password?
+            </a>
+        </div>
+
     </form>
-
-
 
 @endsection
 
 @section('script')
-
     <script>
         function togglePassword(button) {
-            const passwordField = button.parentElement.querySelector('input');
-            const icon = button.querySelector('i');
+            const input = button.parentElement.querySelector('input');
+            const icon  = button.querySelector('i');
 
-            if (passwordField.type === 'password') {
-                passwordField.type = 'text';
+            if (input.type === 'password') {
+                input.type = 'text';
                 icon.classList.remove('bi-eye');
                 icon.classList.add('bi-eye-fill');
             } else {
-                passwordField.type = 'password';
+                input.type = 'password';
                 icon.classList.remove('bi-eye-fill');
                 icon.classList.add('bi-eye');
             }
         }
     </script>
-
 @endsection

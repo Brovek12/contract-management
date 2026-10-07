@@ -495,16 +495,16 @@
     }
 
     /* =========================================================
-       SIGNATURE PAD
+       SIGNATURE PAD — FINAL
     ========================================================= */
     .signature-pad-wrapper {
         position: relative;
         width: 100%;
-        background: #f8f9fa;
-        border: 1px dashed #b5b5c3;
-        border-radius: 8px;
+        background: #f8fafc;
+        border: 2px dashed #cbd5e1;
+        border-radius: 12px;
         overflow: hidden;
-        margin-bottom: 4px;
+        margin-bottom: 12px;
     }
 
     .signature-pad-canvas {
@@ -520,56 +520,145 @@
 
     .signature-clear-btn {
         position: absolute;
-        top: 8px;
-        right: 8px;
+        top: 10px;
+        right: 10px;
         z-index: 10;
-        padding: 4px 10px;
+        padding: 5px 12px;
         font-size: 12px;
-        border-radius: 6px;
+        font-weight: 600;
+        border-radius: 8px;
+        background: #ffffff;
+        border: 1px solid #e4e6ef;
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.06);
+        transition: all 0.2s ease;
     }
 
-    /* =========================================================
-       MODAL SIGN
-    ========================================================= */
-    #kt_modal_sign .modal-dialog {
-        max-width: 600px;
-        width: calc(100% - 32px);
-        margin: 1.75rem auto;
+    .signature-clear-btn:hover {
+        background: #fff5f8;
+        border-color: #f1416c;
+        color: #f1416c;
     }
+
+    /* =====================================================
+       MODAL SIGN — BASE
+       ===================================================== */
 
     #kt_modal_sign .modal-content {
-        border-radius: 12px;
+        border-radius: 16px;
         border: none;
-        box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
+        box-shadow: 0 10px 40px rgba(0, 0, 0, 0.12);
         overflow: hidden;
     }
 
+    #kt_modal_sign .modal-dialog {
+        margin: 1.5rem auto;
+        max-width: 500px;
+        width: calc(100% - 2rem);
+    }
+
     #kt_modal_sign .modal-header {
-        padding: 16px 20px;
-        border-bottom: 1px solid #e4e6ef;
-        background: #f8f9fa;
-        flex-shrink: 0;
+        padding: 20px 24px;
+        border-bottom: 1px solid #f1f5f9;
+        align-items: center;
     }
 
     #kt_modal_sign .modal-title {
-        font-family: "Arial Narrow", Arial, sans-serif;
         font-size: 16px;
         font-weight: 700;
         color: #181c32;
     }
 
     #kt_modal_sign .modal-body {
-        padding: 20px;
-        font-family: "Arial Narrow", Arial, sans-serif;
-        overflow-y: auto;
+        padding: 24px;
     }
 
     #kt_modal_sign .modal-footer {
-        padding: 14px 20px;
-        border-top: 1px solid #e4e6ef;
-        background: #f8f9fa;
+        padding: 16px 24px;
+        border-top: 1px solid #f1f5f9;
         gap: 8px;
+        display: flex;
+        justify-content: flex-end;
+    }
+
+    /* =====================================================
+       MODAL SIGN — RESPONSIVE MOBILE (BOTTOM SHEET)
+       ===================================================== */
+    @media (max-width: 576px) {
+
+    /* ============ MODAL CONTAINER ============ */
+    #kt_modal_sign.modal {
+        padding: 0 !important;
+        overflow-x: hidden;
+    }
+
+    /* ============ MODAL DIALOG ============ */
+
+     #kt_modal_sign .modal-dialog {
+        margin-top: auto !important;      /* dorong ke bawah */
+        margin-bottom: 500px !important;   /* jarak dari bawah */
+        display: flex;
+       
+    }
+
+    /* ============ MODAL CONTENT ============ */
+    #kt_modal_sign .modal-content {
+        border-radius: 20px 20px 0 0 !important;
+        max-height: 92vh;
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+    }
+
+    /* ============ HEADER ============ */
+    #kt_modal_sign .modal-header {
+        padding: 18px 22px 14px;
         flex-shrink: 0;
+    }
+
+    #kt_modal_sign .modal-title {
+        font-size: 15px;
+    }
+
+    /* ============ BODY ============ */
+    #kt_modal_sign .modal-body {
+        padding: 20px 22px;
+        overflow-y: auto;
+        flex: 1;
+    }
+
+    /* ============ FOOTER ============ */
+    #kt_modal_sign .modal-footer {
+        padding: 14px 22px 20px;
+        flex-direction: column-reverse;
+        flex-shrink: 0;
+        border-top: 1px solid #f1f5f9;
+    }
+
+    #kt_modal_sign .modal-footer .btn {
+        width: 100%;
+        padding: 12px;
+        font-weight: 600;
+    }
+
+    /* ============ CANVAS ============ */
+    .signature-pad-canvas {
+        height: 160px;
+    }
+
+    .signature-clear-btn {
+        top: 8px;
+        right: 8px;
+        font-size: 11px;
+        padding: 4px 10px;
+    }
+}   
+
+    /* Tablet */
+    @media (min-width: 577px) and (max-width: 768px) {
+
+        #kt_modal_sign .modal-dialog {
+            max-width: 480px;
+        }
     }
 
     /* =========================================================
@@ -1936,6 +2025,11 @@
 {{-- =========================================================
     SIGNATURE MODAL
 ========================================================= --}}
+
+
+
+@push('scripts')
+<script src="https://cdn.jsdelivr.net/npm/signature_pad@4.1.7/dist/signature_pad.umd.min.js"></script>
 @if ($canSign)
 <div class="modal fade" id="kt_modal_sign" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
@@ -1986,10 +2080,6 @@
     </div>
 </div>
 @endif
-
-
-@push('scripts')
-<script src="https://cdn.jsdelivr.net/npm/signature_pad@4.1.7/dist/signature_pad.umd.min.js"></script>
 <script>
 document.addEventListener('DOMContentLoaded', function () {
     const canvas = document.getElementById('signature-pad');
