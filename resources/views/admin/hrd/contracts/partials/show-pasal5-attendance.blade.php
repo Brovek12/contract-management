@@ -90,7 +90,7 @@
         6.	Gaji dan tunjangan dibayarkan setiap tanggal 25 setiap bulannya,ketentuan tanggal pembayaran Upah adalah sebagai berikut: </p>
         <p class="indent"> a. Apabila tanggal 25 jatuh pada hari Sabtu/Libur resmi, maka Upah akan dibayarkan pada tanggal 24 (hari sebelumnya).</p>
         <p class="indent"> b. Apabila tanggal 25 jatuh pada hari Minggu, maka Upah akan dibayarkan pada tanggal 26 (hari Senin).</p>
-        <p>7. Ketentuan tanggal pembayaran Upah adalah sebagai berikut:</p>
+        <p>7. Pajak pendapatan (Pph Pasal 21) ditanggung sepenuhnya oleh perusahaan untuk kemudian disetorkan ke Kas Negara.</p>
 {{-- ========================================================= --}}
 {{-- KATEGORI: NON-MANAGERIAL --}}
 {{-- ========================================================= --}}
