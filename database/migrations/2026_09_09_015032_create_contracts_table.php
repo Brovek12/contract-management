@@ -159,6 +159,7 @@ return new class extends Migration
                 ->constrained('users')
                 ->restrictOnDelete();
 
+            $table->softDeletes();
             $table->timestamps();
         });
     }

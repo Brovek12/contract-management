@@ -7,9 +7,11 @@ use App\Models\User;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Support\Str;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Contract extends Model
 {
+    use SoftDeletes;
     protected $fillable = [
 
         // =====================================================
@@ -127,6 +129,7 @@ class Contract extends Model
 
 
     protected $casts = [
+        'deleted_at' => 'datetime',
 
         'contract_date' => 'date',
         'birth_date'    => 'date',

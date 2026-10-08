@@ -162,6 +162,18 @@ class PermissionSeeder extends Seeder
                 'group' => 'Manajemen Contract',
                 'display_name' => 'Kirim Contract',
             ],
+              [
+                'name' => 'approve-contracts-hrd',
+                'guard_name' => 'web',
+                'group' => 'Manajemen Contract',
+                'display_name' => 'Setujui Contract HRD',
+            ],
+                 [
+                'name' => 'approve-contracts-head',
+                'guard_name' => 'web',
+                'group' => 'Manajemen Contract',
+                'display_name' => 'Setujui Contract Head',
+            ],
 
 
             /*
@@ -170,6 +182,7 @@ class PermissionSeeder extends Seeder
             |--------------------------------------------------------------------------
             */
 
+          
             [
                 'name' => 'read-my-contracts',
                 'guard_name' => 'web',

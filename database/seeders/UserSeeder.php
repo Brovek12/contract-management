@@ -42,10 +42,10 @@ class UserSeeder extends Seeder
                 'projects_id'     => '2',
             ],
             [
-                'name'            => 'Hana Duharlan',
-                'email'           => 'hana@example.com',
+                'name'            => 'Kepala HRD',
+                'email'           => 'kepalahrd@example.com',
                 'phone'           => '08123456789',
-                'username'        => 'hanaduharlan',
+                'username'        => 'kepalahrd',
                 'employee_number' => 'HRD-BPN-HEAD-001',
                 'password'        => Hash::make('123123'),
                 'role'            => 'HRD_Head',
@@ -65,20 +65,7 @@ class UserSeeder extends Seeder
             // ============================
             // Employee (existing)
             // ============================
-            [
-                'name'            => 'Om Karyawan',
-                'email'           => 'karyawan@example.com',
-                'phone'           => '08123456789',
-                'username'        => 'karyawanbukaka',
-                'password'        => Hash::make('123123'),
-                'role'            => 'Employee',
-                'employee_number' => 'EMP-PHSS-RIG-002',
-                'projects_id'     => '1',
-            ],
 
-            // ============================
-            // Employee (tambahan 5 orang)
-            // ============================
             [
                 'name'            => 'Budi Santoso',
                 'email'           => 'budi@example.com',
@@ -89,36 +76,7 @@ class UserSeeder extends Seeder
                 'employee_number' => 'EMP-PHSS-RIG-003',
                 'projects_id'     => '1',
             ],
-            [
-                'name'            => 'Siti Aminah',
-                'email'           => 'siti@example.com',
-                'phone'           => '08123456702',
-                'username'        => 'sitiaminah',
-                'password'        => Hash::make('123123'),
-                'role'            => 'Employee',
-                'employee_number' => 'EMP-PHSS-RIG-004',
-                'projects_id'     => '1',
-            ],
-            [
-                'name'            => 'Andi Pratama',
-                'email'           => 'andi@example.com',
-                'phone'           => '08123456703',
-                'username'        => 'andipratama',
-                'password'        => Hash::make('123123'),
-                'role'            => 'Employee',
-                'employee_number' => 'EMP-PHM-OFF-005',
-                'projects_id'     => '2',
-            ],
-            [
-                'name'            => 'Rina Melati',
-                'email'           => 'rina@example.com',
-                'phone'           => '08123456704',
-                'username'        => 'rinamelati',
-                'password'        => Hash::make('123123'),
-                'role'            => 'Employee',
-                'employee_number' => 'EMP-PHKT-OFF-006',
-                'projects_id'     => '3',
-            ],
+          
             [
                 'name'            => 'Joko Widodo',
                 'email'           => 'joko@example.com',
