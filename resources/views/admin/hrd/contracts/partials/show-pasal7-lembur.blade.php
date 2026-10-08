@@ -7,7 +7,13 @@
     $type     = $type     ?? ($contract->type     ?? null);
 @endphp
 
-@if ($category === 'managerial')
+@if ($category === 'managerial' && $type !== 'all-in')
+
+    {{-- ============================= --}}
+    {{-- MANAGERIAL: KETENTUAN ALL-IN  --}}
+
+    {{-- ============================= --}}
+    {{-- MANAGERIAL: KETENTUAN LEMBUR  --}}
 
     {{-- ============================= --}}
     {{-- MANAGERIAL: KETENTUAN PIKET  --}}

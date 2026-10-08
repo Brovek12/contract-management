@@ -80,15 +80,15 @@
                                     <option value="gp-um-ut-fungsi"       {{ $type === 'gp-um-ut-fungsi' ? 'selected' : '' }}>GP + UM + UT + Fungsional</option>
                                 </optgroup>
 
-                                <optgroup label="Non-Managerial" data-category="non-managerial">
-                                    <option value="security"                  {{ $type === 'security' ? 'selected' : '' }}>Security</option>
-                                    <option value="ob"                        {{ $type === 'ob' ? 'selected' : '' }}>OB</option>
-                                    <option value="gp-um-ut-laut"             {{ $type === 'gp-um-ut-laut' ? 'selected' : '' }}>GP + UM + UT + Laut</option>
-                                    <option value="gp-um-ut"                  {{ $type === 'gp-um-ut' ? 'selected' : '' }}>GP + UM + UT</option>
+                              <optgroup label="Non-Managerial" data-category="non-managerial">
+                                    <option value="security" {{ $type === 'security' ? 'selected' : '' }}>Security</option>
+                                    <option value="ob" {{ $type === 'ob' ? 'selected' : '' }}>OB</option>
+                                    <option value="gp-um-ut-laut" {{ $type === 'gp-um-ut-laut' ? 'selected' : '' }}>GP + UM + UT + Laut</option>
+                                    <option value="gp-um-ut" {{ $type === 'gp-um-ut' ? 'selected' : '' }}>GP + UM + UT</option>
+                                    <option value="gp-mahal-um-ut-fungsi" {{ $type === 'gp-mahal-um-ut-fungsi' ? 'selected' : '' }}>GP + Kemahalan + UM + UT + Fungsional</option>
                                     <option value="gp-mahal-um-ut-fungsi-pls" {{ $type === 'gp-mahal-um-ut-fungsi-pls' ? 'selected' : '' }}>GP + Kemahalan + UM + UT + Fungsional + Pulsa</option>
-                                    <option value="gp-mahal-um-ut"            {{ $type === 'gp-mahal-um-ut' ? 'selected' : '' }}>GP + Kemahalan + UM + UT</option>
+                                    <option value="gp-mahal-um-ut" {{ $type === 'gp-mahal-um-ut' ? 'selected' : '' }}>GP + Kemahalan + UM + UT</option>
                                 </optgroup>
-
                                 <optgroup label="Project" data-category="project">
                                     <option value="pep-lokal-buny"          {{ $type === 'pep-lokal-buny' ? 'selected' : '' }}>PEP Lokal Bunyu</option>
                                     <option value="elis-phkt-5-2"           {{ $type === 'elis-phkt-5-2' ? 'selected' : '' }}>ELIS PHKT 5.2</option>
