@@ -157,7 +157,7 @@
     <div class="col-md-6">
         <label class="form-label">Golongan / Grade</label>
         <select name="grade" id="grade-select" class="form-select"
-                data-control="sele8t2"
+                data-control="select2"
                 data-placeholder="Pilih Grade" required>
             <option value=""></option>
 

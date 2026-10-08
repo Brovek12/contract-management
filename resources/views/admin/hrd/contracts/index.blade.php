@@ -27,42 +27,36 @@
                         </h3>
 
                         <div class="card-toolbar">
-                            <button type="button"
-        id="btnExportExcel"
-        class="btn btn-sm btn-light-success me-2">
-    <i class="ki-duotone ki-file-down fs-3"></i>
-    Export Excel
-</button>
+                            <button type="button" id="btnExportExcel" class="btn btn-sm btn-light-success me-2">
+                                <i class="ki-duotone ki-file-down fs-3"></i>
+                                Export Excel
+                            </button>
                             @can('create-contracts')
                                 <div class="dropdown">
-                                    <button
-                                        class="btn btn-sm btn-primary dropdown-toggle"
-                                        type="button"
-                                        data-bs-toggle="dropdown"
-                                        aria-expanded="false"
-                                    >
+                                    <button class="btn btn-sm btn-primary dropdown-toggle" type="button"
+                                        data-bs-toggle="dropdown" aria-expanded="false">
                                         <i class="ki-duotone ki-plus fs-3"></i>
                                         Add
                                     </button>
 
                                     <ul class="dropdown-menu dropdown-menu-end">
                                         <li>
-                                            <a class="dropdown-item" href="#"
-                                               data-bs-toggle="modal" data-bs-target="#modalManajerial">
+                                            <a class="dropdown-item" href="#" data-bs-toggle="modal"
+                                                data-bs-target="#modalManajerial">
                                                 <i class="ki-duotone ki-briefcase fs-3 me-2"></i>
                                                 Manajerial
                                             </a>
                                         </li>
                                         <li>
-                                            <a class="dropdown-item" href="#"
-                                               data-bs-toggle="modal" data-bs-target="#modalNonManajerial">
+                                            <a class="dropdown-item" href="#" data-bs-toggle="modal"
+                                                data-bs-target="#modalNonManajerial">
                                                 <i class="ki-duotone ki-people fs-3 me-2"></i>
                                                 Non-Manajerial
                                             </a>
                                         </li>
                                         <li>
-                                            <a class="dropdown-item" href="#"
-                                               data-bs-toggle="modal" data-bs-target="#modalProject">
+                                            <a class="dropdown-item" href="#" data-bs-toggle="modal"
+                                                data-bs-target="#modalProject">
                                                 <i class="ki-duotone ki-project fs-3 me-2"></i>
                                                 Project
                                             </a>
@@ -87,23 +81,18 @@
                             <div class="col-md-3">
                                 <label class="form-label fw-semibold fs-7 mb-2">Search</label>
                                 <div class="position-relative">
-                                    <i class="ki-outline ki-magnifier fs-3 position-absolute ms-4 top-50 translate-middle-y"></i>
-                                    <input type="text"
-                                           id="filterSearch"
-                                           data-kt-docs-table-filter="search"
-                                           class="form-control form-control-solid ps-12"
-                                           placeholder="Cari Contract...">
+                                    <i
+                                        class="ki-outline ki-magnifier fs-3 position-absolute ms-4 top-50 translate-middle-y"></i>
+                                    <input type="text" id="filterSearch" data-kt-docs-table-filter="search"
+                                        class="form-control form-control-solid ps-12" placeholder="Cari Contract...">
                                 </div>
                             </div>
 
                             {{-- Category --}}
                             <div class="col-md-2">
                                 <label class="form-label fw-semibold fs-7 mb-2">Category</label>
-                                <select id="filterCategory"
-                                        data-control="select2"
-                                        data-placeholder="All Category"
-                                        data-allow-clear="true"
-                                        class="form-select form-select-solid">
+                                <select id="filterCategory" data-control="select2" data-placeholder="All Category"
+                                    data-allow-clear="true" class="form-select form-select-solid">
                                     <option value=""></option>
                                     <option value="managerial">Managerial</option>
                                     <option value="non-managerial">Non-Managerial</option>
@@ -114,11 +103,8 @@
                             {{-- Type --}}
                             <div class="col-md-2">
                                 <label class="form-label fw-semibold fs-7 mb-2">Type</label>
-                                <select id="filterType"
-                                        data-control="select2"
-                                        data-placeholder="All Type"
-                                        data-allow-clear="true"
-                                        class="form-select form-select-solid">
+                                <select id="filterType" data-control="select2" data-placeholder="All Type"
+                                    data-allow-clear="true" class="form-select form-select-solid">
                                     <option value=""></option>
 
                                     {{-- MANAGERIAL --}}
@@ -153,11 +139,8 @@
                             {{-- Project --}}
                             <div class="col-md-2">
                                 <label class="form-label fw-semibold fs-7 mb-2">Project</label>
-                                <select id="filterProject"
-                                        data-control="select2"
-                                        data-placeholder="Semua Project"
-                                        data-allow-clear="true"
-                                        class="form-select form-select-solid">
+                                <select id="filterProject" data-control="select2" data-placeholder="Semua Project"
+                                    data-allow-clear="true" class="form-select form-select-solid">
                                     <option value=""></option>
                                     @foreach ($projects as $project)
                                         <option value="{{ $project->name }}">{{ $project->name }}</option>
@@ -168,11 +151,8 @@
                             {{-- Status --}}
                             <div class="col-md-2">
                                 <label class="form-label fw-semibold fs-7 mb-2">Status</label>
-                                <select id="filterStatus"
-                                        data-control="select2"
-                                        data-placeholder="Semua Status"
-                                        data-allow-clear="true"
-                                        class="form-select form-select-solid">
+                                <select id="filterStatus" data-control="select2" data-placeholder="Semua Status"
+                                    data-allow-clear="true" class="form-select form-select-solid">
                                     <option value=""></option>
                                     <option value="draft">Draft</option>
                                     <option value="sent">Sent</option>
@@ -187,25 +167,18 @@
                             {{-- Start Date From --}}
                             <div class="col-md-2">
                                 <label class="form-label fw-semibold fs-7 mb-2">Start Date From</label>
-                                <input type="date"
-                                       id="filterStartDate"
-                                       class="form-control form-control-solid">
+                                <input type="date" id="filterStartDate" class="form-control form-control-solid">
                             </div>
 
                             {{-- Start Date To --}}
                             <div class="col-md-2">
                                 <label class="form-label fw-semibold fs-7 mb-2">Start Date To</label>
-                                <input type="date"
-                                       id="filterEndDate"
-                                       class="form-control form-control-solid">
+                                <input type="date" id="filterEndDate" class="form-control form-control-solid">
                             </div>
 
                             {{-- Reset --}}
                             <div class="col-md-1">
-                                <button type="button"
-                                        id="resetFilter"
-                                        class="btn btn-light w-100"
-                                        title="Reset Filter">
+                                <button type="button" id="resetFilter" class="btn btn-light w-100" title="Reset Filter">
                                     <i class="ki-outline ki-arrows-circle fs-2"></i>
                                 </button>
                             </div>
@@ -219,7 +192,7 @@
 
                         <!--begin::Bulk Action Bar-->
                         <div id="bulkActionBar"
-                             class="d-none alert bg-light-primary border border-primary border-dashed d-flex flex-column flex-sm-row w-100 p-5 mb-5">
+                            class="d-none alert bg-light-primary border border-primary border-dashed d-flex flex-column flex-sm-row w-100 p-5 mb-5">
                             <i class="ki-outline ki-information-5 fs-2hx text-primary me-4 mb-5 mb-sm-0"></i>
 
                             <div class="d-flex flex-column pe-0 pe-sm-10">
@@ -231,21 +204,23 @@
                                 </span>
                             </div>
 
-                            <div class="d-flex flex-row-fluid justify-content-end gap-2 ms-sm-5 mt-3 mt-sm-0" id="bulkActionButtons">
+                            <div class="d-flex flex-row-fluid justify-content-end gap-2 ms-sm-5 mt-3 mt-sm-0"
+                                id="bulkActionButtons">
                                 {{-- Tombol bulk akan dirender oleh JavaScript --}}
                             </div>
                         </div>
                         <!--end::Bulk Action Bar-->
 
                         <div class="table-responsive">
-                            <table class="table table-row-bordered table-row-gray-300 align-middle gs-0 gy-4 datatable-custom"
-                                   style="font-size: 10px;"
-                                   id="contractTable">
+                            <table
+                                class="table table-row-bordered table-row-gray-300 align-middle gs-0 gy-4 datatable-custom"
+                                style="font-size: 10px;" id="contractTable">
                                 <thead>
                                     <tr class="fw-bold text-muted bg-light">
                                         {{-- CHECK ALL --}}
                                         <th class="text-center min-w-30px">
-                                            <div class="form-check form-check-sm form-check-custom form-check-solid d-flex justify-content-center">
+                                            <div
+                                                class="form-check form-check-sm form-check-custom form-check-solid d-flex justify-content-center">
                                                 <input class="form-check-input" type="checkbox" id="checkAll" />
                                             </div>
                                         </th>
@@ -267,44 +242,43 @@
                                 <tbody>
                                     @php
                                         $typeCategoryMap = [
-                                            'gp-um-ut-fungsi'           => 'managerial',
-                                            'gp-mahal-um-ut-fungsi'     => 'managerial',
-                                            'all-in'                    => 'managerial',
-                                            'security'                  => 'non-managerial',
-                                            'ob'                        => 'non-managerial',
-                                            'gp-um-ut-laut'             => 'non-managerial',
-                                            'gp-um-ut'                  => 'non-managerial',
+                                            'gp-um-ut-fungsi' => 'managerial',
+                                            'gp-mahal-um-ut-fungsi' => 'managerial',
+                                            'all-in' => 'managerial',
+                                            'security' => 'non-managerial',
+                                            'ob' => 'non-managerial',
+                                            'gp-um-ut-laut' => 'non-managerial',
+                                            'gp-um-ut' => 'non-managerial',
                                             'gp-mahal-um-ut-fungsi-pls' => 'non-managerial',
-                                            'gp-mahal-um-ut'            => 'non-managerial',
-                                            'pep-lokal-buny'            => 'project',
-                                            'elis-phkt-5-2'             => 'project',
-                                            'elis-phkt-6-1'             => 'project',
-                                            'eni-muara-bakau-lembur'    => 'project',
-                                            'eni-muara-bakau-all-in'    => 'project',
-                                            'ipfms-dobu'                => 'project',
+                                            'gp-mahal-um-ut' => 'non-managerial',
+                                            'pep-lokal-buny' => 'project',
+                                            'elis-phkt-5-2' => 'project',
+                                            'elis-phkt-6-1' => 'project',
+                                            'eni-muara-bakau-lembur' => 'project',
+                                            'eni-muara-bakau-all-in' => 'project',
+                                            'ipfms-dobu' => 'project',
                                         ];
 
                                         $categoryBadgeMap = [
-                                            'managerial'     => ['badge-light-primary', 'Managerial'],
+                                            'managerial' => ['badge-light-primary', 'Managerial'],
                                             'non-managerial' => ['badge-light-success', 'Non-Managerial'],
-                                            'project'        => ['badge-light-warning', 'Project'],
+                                            'project' => ['badge-light-warning', 'Project'],
                                         ];
                                     @endphp
 
                                     @foreach ($data as $index => $item)
                                         @php
-                                            $rowType     = $item->type ?? '';
+                                            $rowType = $item->type ?? '';
                                             $rowCategory = $item->category ?? ($typeCategoryMap[$rowType] ?? '');
                                             [$catBadgeClass, $catBadgeLabel] = $categoryBadgeMap[$rowCategory] ?? ['badge-light-secondary', $rowCategory ?: '-'];
                                         @endphp
                                         <tr>
                                             {{-- CHECK PER ROW --}}
                                             <td class="text-center">
-                                                <div class="form-check form-check-sm form-check-custom form-check-solid d-flex justify-content-center">
-                                                    <input class="form-check-input row-checkbox"
-                                                           type="checkbox"
-                                                           value="{{ $item->id }}"
-                                                           data-status="{{ $item->status }}" />
+                                                <div
+                                                    class="form-check form-check-sm form-check-custom form-check-solid d-flex justify-content-center">
+                                                    <input class="form-check-input row-checkbox" type="checkbox"
+                                                        value="{{ $item->id }}" data-status="{{ $item->status }}" />
                                                 </div>
                                             </td>
 
@@ -315,16 +289,14 @@
                                             </td>
 
                                             {{-- CATEGORY --}}
-                                            <td class="text-center"
-                                                data-category="{{ $rowCategory }}">
+                                            <td class="text-center" data-category="{{ $rowCategory }}">
                                                 <span class="badge {{ $catBadgeClass }}">
                                                     {{ $catBadgeLabel }}
                                                 </span>
                                             </td>
 
                                             {{-- TYPE --}}
-                                            <td class="text-center"
-                                                data-type="{{ $rowType }}">
+                                            <td class="text-center" data-type="{{ $rowType }}">
                                                 <span class="badge badge-light-primary">
                                                     {{ $rowType ?: '-' }}
                                                 </span>
@@ -351,14 +323,12 @@
                                             </td>
 
                                             {{-- Start Date --}}
-                                            <td class="text-center"
-                                                data-order="{{ $item->start_date?->format('Y-m-d') }}">
+                                            <td class="text-center" data-order="{{ $item->start_date?->format('Y-m-d') }}">
                                                 {{ $item->start_date?->format('d M Y') ?? '-' }}
                                             </td>
 
                                             {{-- End Date --}}
-                                            <td class="text-center"
-                                                data-order="{{ $item->end_date?->format('Y-m-d') }}">
+                                            <td class="text-center" data-order="{{ $item->end_date?->format('Y-m-d') }}">
                                                 {{ $item->end_date?->format('d M Y') ?? '-' }}
                                             </td>
 
@@ -366,13 +336,13 @@
                                             <td class="text-center">
                                                 @php
                                                     $statusMap = [
-                                                        'draft'       => ['badge-light-secondary', 'Draft'],
-                                                        'sent'        => ['badge-light-warning', 'Sent'],
-                                                        'viewed'      => ['badge-light-info', 'Viewed'],
-                                                        'signed'      => ['badge-light-info', 'Need Head HRD Approval'],
-                                                        'signed-hrd'  => ['badge-light-info', 'Need Head Approval'],
+                                                        'draft' => ['badge-light-secondary', 'Draft'],
+                                                        'sent' => ['badge-light-warning', 'Sent'],
+                                                        'viewed' => ['badge-light-info', 'Viewed'],
+                                                        'signed' => ['badge-light-info', 'Need Head HRD Approval'],
+                                                        'signed-hrd' => ['badge-light-info', 'Need Head Approval'],
                                                         'signed-head' => ['badge-light-success', 'Complete'],
-                                                        'expired'     => ['badge-light-danger', 'Expired'],
+                                                        'expired' => ['badge-light-danger', 'Expired'],
                                                     ];
                                                     [$badgeClass, $badgeLabel] = $statusMap[$item->status] ?? ['badge-light-secondary', ucfirst($item->status)];
                                                 @endphp
@@ -384,48 +354,48 @@
                                                 @php
                                                     $statusAction = null;
 
-                                                    if ($item->status === 'draft') {
+                                                    if ($item->status === 'draft' && auth()->user()->can('edit-contracts')) {
                                                         $statusAction = [
-                                                            'route'   => route('contracts.send', $item->id),
-                                                            'formId'  => "send-form-{$item->id}",
+                                                            'route' => route('contracts.send', $item->id),
+                                                            'formId' => "send-form-{$item->id}",
                                                             'onclick' => "confirmSend({$item->id})",
-                                                            'icon'    => 'ki-send',
-                                                            'label'   => 'Send Contract',
-                                                            'color'   => 'text-primary',
+                                                            'icon' => 'ki-send',
+                                                            'label' => 'Send Contract',
+                                                            'color' => 'text-primary',
                                                         ];
-                                                    } elseif ($item->status === 'signed') {
+                                                    } elseif ($item->status === 'signed' && auth()->user()->can('approve-contracts-hrd')) {
                                                         $statusAction = [
-                                                            'route'   => route('contracts.approve.hrd', $item->id),
-                                                            'formId'  => "approve-hrd-form-{$item->id}",
+                                                            'route' => route('contracts.approve.hrd', $item->id),
+                                                            'formId' => "approve-hrd-form-{$item->id}",
                                                             'onclick' => "confirmApproveHRD({$item->id})",
-                                                            'icon'    => 'ki-check-circle',
-                                                            'label'   => 'Approve HRD',
-                                                            'color'   => 'text-success',
+                                                            'icon' => 'ki-check-circle',
+                                                            'label' => 'Approve HRD',
+                                                            'color' => 'text-success',
                                                         ];
-                                                    } elseif ($item->status === 'signed-hrd') {
+                                                    } elseif ($item->status === 'signed-hrd' && auth()->user()->can('approve-contracts-head')) {
                                                         $statusAction = [
-                                                            'route'   => route('contracts.approve.head', $item->id),
-                                                            'formId'  => "approve-head-form-{$item->id}",
+                                                            'route' => route('contracts.approve.head', $item->id),
+                                                            'formId' => "approve-head-form-{$item->id}",
                                                             'onclick' => "confirmApproveHead({$item->id})",
-                                                            'icon'    => 'ki-check-circle',
-                                                            'label'   => 'Approve Head',
-                                                            'color'   => 'text-success',
+                                                            'icon' => 'ki-check-circle',
+                                                            'label' => 'Approve Head',
+                                                            'color' => 'text-success',
                                                         ];
                                                     }
                                                 @endphp
 
                                                 @if (
-                                                    auth()->user()->can('read-contracts') ||
-                                                    auth()->user()->can('edit-contracts') ||
-                                                    auth()->user()->can('delete-contracts')
-                                                )
+                                                        auth()->user()->can('read-contracts') ||
+                                                        auth()->user()->can('edit-contracts') ||
+                                                        auth()->user()->can('delete-contracts') ||
+                                                        auth()->user()->can('approve-contracts-hrd') ||
+                                                        auth()->user()->can('approve-contracts-head')
+                                                    )
                                                     <div class="dropdown" data-bs-strategy="fixed">
                                                         <button type="button"
-                                                                class="btn btn-sm btn-icon btn-light btn-active-light-primary"
-                                                                data-bs-toggle="dropdown"
-                                                                data-bs-strategy="fixed"
-                                                                aria-expanded="false"
-                                                                title="Aksi">
+                                                            class="btn btn-sm btn-icon btn-light btn-active-light-primary"
+                                                            data-bs-toggle="dropdown" data-bs-strategy="fixed" aria-expanded="false"
+                                                            title="Aksi">
                                                             <i class="ki-outline ki-dots-vertical fs-4"></i>
                                                         </button>
 
@@ -435,7 +405,7 @@
                                                             @can('read-contracts')
                                                                 <li>
                                                                     <a class="dropdown-item"
-                                                                       href="{{ route('contracts.show', $item->id) }}">
+                                                                        href="{{ route('contracts.show', $item->id) }}">
                                                                         <i class="ki-outline ki-eye fs-4 me-2 text-primary"></i>
                                                                         Lihat Detail
                                                                     </a>
@@ -446,27 +416,27 @@
                                                             @can('edit-contracts')
                                                                 <li>
                                                                     <a class="dropdown-item"
-                                                                       href="{{ route('contracts.edit', $item->id) }}">
+                                                                        href="{{ route('contracts.edit', $item->id) }}">
                                                                         <i class="ki-outline ki-pencil fs-4 me-2 text-warning"></i>
                                                                         Edit Contract
                                                                     </a>
                                                                 </li>
-                                                                    <li>
-                                                                        <a class="dropdown-item"
-                                                                        href="{{ route('contracts.create-new-from-existing', $item->id) }}">
-                                                                            <i class="ki-outline ki-plus fs-4 me-2 text-success"></i>
-                                                                            Add New Contract
-                                                                        </a>
-                                                                    </li>
-                                                            @endcan
-
-                                                            {{-- Aksi status --}}
-                                                            @if ($statusAction && auth()->user()->can('edit-contracts'))
                                                                 <li>
                                                                     <a class="dropdown-item"
-                                                                       href="javascript:void(0)"
-                                                                       onclick="{{ $statusAction['onclick'] }}">
-                                                                        <i class="ki-outline {{ $statusAction['icon'] }} fs-4 me-2 {{ $statusAction['color'] }}"></i>
+                                                                        href="{{ route('contracts.create-new-from-existing', $item->id) }}">
+                                                                        <i class="ki-outline ki-plus fs-4 me-2 text-success"></i>
+                                                                        Add New Contract
+                                                                    </a>
+                                                                </li>
+                                                            @endcan
+
+                                                            {{-- Aksi status (Send / Approve HRD / Approve Head) --}}
+                                                            @if ($statusAction)
+                                                                <li>
+                                                                    <a class="dropdown-item" href="javascript:void(0)"
+                                                                        onclick="{{ $statusAction['onclick'] }}">
+                                                                        <i
+                                                                            class="ki-outline {{ $statusAction['icon'] }} fs-4 me-2 {{ $statusAction['color'] }}"></i>
                                                                         {{ $statusAction['label'] }}
                                                                     </a>
                                                                 </li>
@@ -474,11 +444,12 @@
 
                                                             {{-- Delete --}}
                                                             @can('delete-contracts')
-                                                                <li><hr class="dropdown-divider"></li>
                                                                 <li>
-                                                                    <a class="dropdown-item text-danger"
-                                                                       href="javascript:void(0)"
-                                                                       onclick="confirmDelete({{ $item->id }})">
+                                                                    <hr class="dropdown-divider">
+                                                                </li>
+                                                                <li>
+                                                                    <a class="dropdown-item text-danger" href="javascript:void(0)"
+                                                                        onclick="confirmDelete({{ $item->id }})">
                                                                         <i class="ki-outline ki-trash fs-4 me-2"></i>
                                                                         Hapus Contract
                                                                     </a>
@@ -490,11 +461,9 @@
                                                 @endif
 
                                                 {{-- Form tersembunyi untuk aksi status --}}
-                                                @if ($statusAction && auth()->user()->can('edit-contracts'))
-                                                    <form id="{{ $statusAction['formId'] }}"
-                                                          action="{{ $statusAction['route'] }}"
-                                                          method="POST"
-                                                          style="display:none;">
+                                                @if ($statusAction)
+                                                    <form id="{{ $statusAction['formId'] }}" action="{{ $statusAction['route'] }}"
+                                                        method="POST" style="display:none;">
                                                         @csrf
                                                     </form>
                                                 @endif
@@ -502,9 +471,8 @@
                                                 {{-- Form tersembunyi delete --}}
                                                 @can('delete-contracts')
                                                     <form id="delete-form-{{ $item->id }}"
-                                                          action="{{ route('contracts.destroy', $item->id) }}"
-                                                          method="POST"
-                                                          style="display:none;">
+                                                        action="{{ route('contracts.destroy', $item->id) }}" method="POST"
+                                                        style="display:none;">
                                                         @csrf
                                                         @method('DELETE')
                                                     </form>
@@ -539,21 +507,21 @@
         // ============================================
         const COL = {
             CHECKBOX: 0,
-            NO:       1,
+            NO: 1,
             CATEGORY: 3,
-            TYPE:     4,
-            PROJECT:  6,
-            START:    9,
-            END:      10,
-            STATUS:   11,
-            ACTION:   12,
+            TYPE: 4,
+            PROJECT: 6,
+            START: 9,
+            END: 10,
+            STATUS: 11,
+            ACTION: 12,
         };
 
         // ============================================
         // Permission flags dari Blade
         // ============================================
         const PERMISSIONS = {
-            canEdit:   @json(auth()->user()->can('edit-contracts')),
+            canEdit: @json(auth()->user()->can('edit-contracts')),
             canDelete: @json(auth()->user()->can('delete-contracts')),
         };
 
@@ -562,31 +530,31 @@
         // ============================================
         const BULK_ACTIONS = {
             'draft': {
-                label:     'Send Semua',
-                icon:      'ki-send',
-                btnClass:  'btn-primary',
-                route:     '{{ route("contracts.bulk-send") }}',
+                label: 'Send Semua',
+                icon: 'ki-send',
+                btnClass: 'btn-primary',
+                route: '{{ route("contracts.bulk-send") }}',
                 confirmTitle: 'Kirim Semua Contract?',
-                confirmText:  'Semua contract draft yang dipilih akan dikirim ke employee.',
-                confirmBtn:   'Ya, kirim!',
+                confirmText: 'Semua contract draft yang dipilih akan dikirim ke employee.',
+                confirmBtn: 'Ya, kirim!',
             },
             'signed': {
-                label:     'Approve HRD Semua',
-                icon:      'ki-check-circle',
-                btnClass:  'btn-primary',
-                route:     '{{ route("contracts.bulk-approve-hrd") }}',
+                label: 'Approve HRD Semua',
+                icon: 'ki-check-circle',
+                btnClass: 'btn-primary',
+                route: '{{ route("contracts.bulk-approve-hrd") }}',
                 confirmTitle: 'Approve HRD Semua?',
-                confirmText:  'Semua contract yang dipilih akan disetujui oleh Head HRD.',
-                confirmBtn:   'Ya, approve!',
+                confirmText: 'Semua contract yang dipilih akan disetujui oleh Head HRD.',
+                confirmBtn: 'Ya, approve!',
             },
             'signed-hrd': {
-                label:     'Approve Head Semua',
-                icon:      'ki-check-circle',
-                btnClass:  'btn-primary',
-                route:     '{{ route("contracts.bulk-approve-head") }}',
+                label: 'Approve Head Semua',
+                icon: 'ki-check-circle',
+                btnClass: 'btn-primary',
+                route: '{{ route("contracts.bulk-approve-head") }}',
                 confirmTitle: 'Approve Head Semua?',
-                confirmText:  'Semua contract yang dipilih akan diselesaikan setelah approval Head.',
-                confirmBtn:   'Ya, approve!',
+                confirmText: 'Semua contract yang dipilih akan diselesaikan setelah approval Head.',
+                confirmBtn: 'Ya, approve!',
             },
         };
 
@@ -624,10 +592,10 @@
             // DATE RANGE FILTER
             // ============================================
             DataTableHelper.registerDateRangeFilter({
-                table:        table,
-                startInput:   '#filterStartDate',
-                endInput:     '#filterEndDate',
-                columnIndex:  COL.START,
+                table: table,
+                startInput: '#filterStartDate',
+                endInput: '#filterEndDate',
+                columnIndex: COL.START,
                 useDataOrder: true
             });
 
@@ -645,7 +613,7 @@
                 if (settings.nTable.id !== 'contractTable') return true;
 
                 var selectedCategory = $('#filterCategory').val();
-                var selectedType     = $('#filterType').val();
+                var selectedType = $('#filterType').val();
 
                 if (!selectedCategory && !selectedType) return true;
 
@@ -681,13 +649,13 @@
             $('#filterStatus').on('change', function () {
                 var val = this.value;
                 var labelMap = {
-                    'draft':       'Draft',
-                    'sent':        'Sent',
-                    'viewed':      'Viewed',
-                    'signed':      'Need Head HRD Approval',
-                    'signed-hrd':  'Need Head Approval',
+                    'draft': 'Draft',
+                    'sent': 'Sent',
+                    'viewed': 'Viewed',
+                    'signed': 'Need Head HRD Approval',
+                    'signed-hrd': 'Need Head Approval',
                     'signed-head': 'Complete',
-                    'expired':     'Expired'
+                    'expired': 'Expired'
                 };
                 table.column(COL.STATUS).search(val ? labelMap[val] : '', true, false).draw();
             });
@@ -788,7 +756,7 @@
                 $('#bulkActionBar').removeClass('d-none');
 
                 var $container = $('#bulkActionButtons');
-                var $info      = $('#bulkActionInfo');
+                var $info = $('#bulkActionInfo');
 
                 $container.empty();
 
@@ -1041,16 +1009,16 @@
             });
         }
         $('#btnExportExcel').on('click', function () {
-    var params = new URLSearchParams({
-        category:   $('#filterCategory').val() || '',
-        type:       $('#filterType').val() || '',
-        project:    $('#filterProject').val() || '',
-        status:     $('#filterStatus').val() || '',
-        start_date: $('#filterStartDate').val() || '',
-        end_date:   $('#filterEndDate').val() || '',
-    });
+            var params = new URLSearchParams({
+                category: $('#filterCategory').val() || '',
+                type: $('#filterType').val() || '',
+                project: $('#filterProject').val() || '',
+                status: $('#filterStatus').val() || '',
+                start_date: $('#filterStartDate').val() || '',
+                end_date: $('#filterEndDate').val() || '',
+            });
 
-    window.location.href = '{{ route("contracts.export") }}?' + params.toString();
-});
+            window.location.href = '{{ route("contracts.export") }}?' + params.toString();
+        });
     </script>
 @endsection
