@@ -50,7 +50,7 @@
 {{-- ========================================================= --}}
 {{-- KATEGORI: MANAGERIAL --}}
 {{-- ========================================================= --}}
-@elseif ($contract->category === 'managerial')
+@elseif ($contract->category === 'managerial' && $contract->type !== 'all-in')
 
     <p>
         6. Gaji, Tunjangan dan Piket (bila ada) dibayarkan setiap tanggal 25 setiap bulannya.
@@ -58,11 +58,6 @@
         dan
 
         @switch($contract->type)
-
-            @case('all-in')
-                Tunjangan Projek
-                @break
-
             @case('gp-mahal-um-ut-fungsi')
                 Tunjangan Kemahalan, Uang Makan, Uang Transportasi, Uang Tunjangan Fungsional
                 @break
@@ -89,6 +84,13 @@
         ke Kas Negara.
     </p>
 
+
+    @elseif ($contract->type === 'all-in')
+    <p>
+        6.	Gaji dan tunjangan dibayarkan setiap tanggal 25 setiap bulannya,ketentuan tanggal pembayaran Upah adalah sebagai berikut: </p>
+        <p class="indent"> a. Apabila tanggal 25 jatuh pada hari Sabtu/Libur resmi, maka Upah akan dibayarkan pada tanggal 24 (hari sebelumnya).</p>
+        <p class="indent"> b. Apabila tanggal 25 jatuh pada hari Minggu, maka Upah akan dibayarkan pada tanggal 26 (hari Senin).</p>
+        <p>7. Ketentuan tanggal pembayaran Upah adalah sebagai berikut:</p>
 {{-- ========================================================= --}}
 {{-- KATEGORI: NON-MANAGERIAL --}}
 {{-- ========================================================= --}}
