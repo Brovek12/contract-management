@@ -89,14 +89,48 @@
                                     <option value="gp-mahal-um-ut-fungsi-pls" {{ $type === 'gp-mahal-um-ut-fungsi-pls' ? 'selected' : '' }}>GP + Kemahalan + UM + UT + Fungsional + Pulsa</option>
                                     <option value="gp-mahal-um-ut" {{ $type === 'gp-mahal-um-ut' ? 'selected' : '' }}>GP + Kemahalan + UM + UT</option>
                                 </optgroup>
-                                <optgroup label="Project" data-category="project">
-                                    <option value="pep-lokal-buny"          {{ $type === 'pep-lokal-buny' ? 'selected' : '' }}>PEP Lokal Bunyu</option>
-                                    <option value="elis-phkt-5-2"           {{ $type === 'elis-phkt-5-2' ? 'selected' : '' }}>ELIS PHKT 5.2</option>
-                                    <option value="elis-phkt-6-1"           {{ $type === 'elis-phkt-6-1' ? 'selected' : '' }}>ELIS PHKT 6.1</option>
-                                    <option value="eni-muara-bakau-lembur"  {{ $type === 'eni-muara-bakau-lembur' ? 'selected' : '' }}>ENI Muara Bakau (Lembur)</option>
-                                    <option value="eni-muara-bakau-all-in"  {{ $type === 'eni-muara-bakau-all-in' ? 'selected' : '' }}>ENI Muara Bakau (All In)</option>
-                                    <option value="ipfms-dobu"              {{ $type === 'ipfms-dobu' ? 'selected' : '' }}>IPFMS Dobu</option>
-                                </optgroup>
+                               <optgroup label="Project — ENI" data-category="project">
+    <option value="eni-civil-all-in"          {{ $type === 'eni-civil-all-in' ? 'selected' : '' }}>ENI Civil (All In)</option>
+    <option value="eni-civil-reguler"         {{ $type === 'eni-civil-reguler' ? 'selected' : '' }}>ENI Civil (Reguler)</option>
+    <option value="eni-smallcapital-all-in"   {{ $type === 'eni-smallcapital-all-in' ? 'selected' : '' }}>ENI Small Capital (All In)</option>
+    <option value="eni-smallcapital-reguler"  {{ $type === 'eni-smallcapital-reguler' ? 'selected' : '' }}>ENI Small Capital (Reguler)</option>
+    <option value="eni-muara-bakau-lembur"    {{ $type === 'eni-muara-bakau-lembur' ? 'selected' : '' }}>ENI Muara Bakau (Lembur)</option>
+    <option value="eni-muara-bakau-all-in"    {{ $type === 'eni-muara-bakau-all-in' ? 'selected' : '' }}>ENI Muara Bakau (All In)</option>
+</optgroup>
+
+<optgroup label="Project — Warlok / Medco" data-category="project">
+    <option value="warlok-all-in"             {{ $type === 'warlok-all-in' ? 'selected' : '' }}>Warlok Medco (All In)</option>
+    <option value="warlok-lembur"             {{ $type === 'warlok-lembur' ? 'selected' : '' }}>Warlok Medco (Lembur)</option>
+    <option value="warlok-security"           {{ $type === 'warlok-security' ? 'selected' : '' }}>Warlok Medco (Security)</option>
+</optgroup>
+
+<optgroup label="Project — ELIS PHKT" data-category="project">
+    <option value="elis-phkt-5-2"             {{ $type === 'elis-phkt-5-2' ? 'selected' : '' }}>ELIS PHKT 5.2</option>
+    <option value="elis-phkt-6-1"             {{ $type === 'elis-phkt-6-1' ? 'selected' : '' }}>ELIS PHKT 6.1</option>
+</optgroup>
+
+<optgroup label="Project — PHSS Major" data-category="project">
+    <option value="phss-major-ai-1"           {{ $type === 'phss-major-ai-1' ? 'selected' : '' }}>PHSS Major (All In Type 1)</option>
+    <option value="phss-major-ai-2"           {{ $type === 'phss-major-ai-2' ? 'selected' : '' }}>PHSS Major (All In Type 2)</option>
+    <option value="phss-major-ai-3"           {{ $type === 'phss-major-ai-3' ? 'selected' : '' }}>PHSS Major (All In Type 3)</option>
+    <option value="phss-driver"               {{ $type === 'phss-driver' ? 'selected' : '' }}>PHSS Major (Driver)</option>
+    <option value="phss-humas"                {{ $type === 'phss-humas' ? 'selected' : '' }}>PHSS Major (Humas)</option>
+    <option value="phss-reguler"              {{ $type === 'phss-reguler' ? 'selected' : '' }}>PHSS Major (Reguler)</option>
+    <option value="phss-security"             {{ $type === 'phss-security' ? 'selected' : '' }}>PHSS Major (Security)</option>
+</optgroup>
+
+<optgroup label="Project — Sand Monitoring" data-category="project">
+    <option value="sandmon-teknisi-1"         {{ $type === 'sandmon-teknisi-1' ? 'selected' : '' }}>Sand Monitoring (Teknisi 1)</option>
+    <option value="sandmon-teknisi-2"         {{ $type === 'sandmon-teknisi-2' ? 'selected' : '' }}>Sand Monitoring (Teknisi 2)</option>
+</optgroup>
+
+<optgroup label="Project — Lain-lain" data-category="project">
+    <option value="pep-lokal-buny"            {{ $type === 'pep-lokal-buny' ? 'selected' : '' }}>PEP Lokal Bunyu</option>
+    <option value="sched-5-2"                 {{ $type === 'sched-5-2' ? 'selected' : '' }}>Schedule 5-2 Rev. 2026</option>
+    <option value="lawe-lawe-reguler"         {{ $type === 'lawe-lawe-reguler' ? 'selected' : '' }}>LAWE LAWE (Reguler)</option>
+    <option value="lawe-lawe-all-in"          {{ $type === 'lawe-lawe-all-in' ? 'selected' : '' }}>LAWE LAWE (All In)</option>
+    <option value="ipfms-dobu"                {{ $type === 'ipfms-dobu' ? 'selected' : '' }}>IPFMS Dobu</option>
+</optgroup>
                             </select>
                         </div>
 
@@ -393,25 +427,76 @@
             {{-- ================================================== --}}
             {{-- TUNJANGAN (dynamic container) --}}
             {{-- ================================================== --}}
-            @php
-                $allowanceTypes = [
-                    'all-in',
-                    'gp-mahal-um-ut-fungsi',
-                    'gp-um-ut-fungsi',
-                    'security',
-                    'ob',
-                    'gp-um-ut-laut',
-                    'gp-um-ut',
-                    'gp-mahal-um-ut-fungsi-pls',
-                    'gp-mahal-um-ut',
-                    'pep-lokal-buny',
-                    'elis-phkt-5-2',
-                    'elis-phkt-6-1',
-                    'eni-muara-bakau-lembur',
-                    'eni-muara-bakau-all-in',
-                    'ipfms-dobu',
-                ];
-            @endphp
+           @php
+    // Semua tipe yang punya blok tunjangan
+    $allowanceTypes = [
+        // =====================
+        // Managerial
+        // =====================
+        'all-in',
+        'gp-mahal-um-ut-fungsi',
+        'gp-um-ut-fungsi',
+
+        // =====================
+        // Non-Managerial
+        // =====================
+        'security',
+        'ob',
+        'gp-um-ut-laut',
+        'gp-um-ut',
+        'gp-mahal-um-ut-fungsi-pls',
+        'gp-mahal-um-ut',
+
+        // =====================
+        // Project — ENI
+        // =====================
+        'eni-civil-all-in',
+        'eni-civil-reguler',
+        'eni-smallcapital-all-in',
+        'eni-smallcapital-reguler',
+        'eni-muara-bakau-lembur',
+        'eni-muara-bakau-all-in',
+
+        // =====================
+        // Project — Warlok / Medco
+        // =====================
+        'warlok-all-in',
+        'warlok-lembur',
+        'warlok-security',
+
+        // =====================
+        // Project — ELIS PHKT
+        // =====================
+        'elis-phkt-5-2',
+        'elis-phkt-6-1',
+
+        // =====================
+        // Project — PHSS Major
+        // =====================
+        'phss-major-ai-1',
+        'phss-major-ai-2',
+        'phss-major-ai-3',
+        'phss-driver',
+        'phss-humas',
+        'phss-reguler',
+        'phss-security',
+
+        // =====================
+        // Project — Sand Monitoring
+        // =====================
+        'sandmon-teknisi-1',
+        'sandmon-teknisi-2',
+
+        // =====================
+        // Project — Lain-lain
+        // =====================
+        'pep-lokal-buny',
+        'sched-5-2',
+        'lawe-lawe-reguler',
+        'lawe-lawe-all-in',
+        'ipfms-dobu',
+    ];
+@endphp
 
             <div id="allowance-section">
                 @if (in_array($type, $allowanceTypes))

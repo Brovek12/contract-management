@@ -12,6 +12,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class Contract extends Model
 {
     use SoftDeletes;
+
     protected $fillable = [
 
         // =====================================================
@@ -19,7 +20,7 @@ class Contract extends Model
         // =====================================================
 
         'contract_number',
-        'verify_token',     // ← TAMBAH INI
+        'verify_token',
         'contract_date',
         'title',
         'category',
@@ -71,7 +72,7 @@ class Contract extends Model
         'basic_salary',
 
         // =====================================================
-        // ALLOWANCES
+        // ALLOWANCES — EXISTING
         // =====================================================
 
         'project_allowance',
@@ -84,6 +85,17 @@ class Contract extends Model
         'sea_allowance',
         'pulse_allowance',
         'attendance_allowance',
+
+        // =====================================================
+        // ALLOWANCES — NEW (Project)
+        // =====================================================
+
+        'position_allowance',         // ← Tunj. Jabatan (3 type All In)
+        'housing_allowance',          // ← Sand Monitoring
+        'ewhc_allowance',             // ← Sand Monitoring
+        'daily_allowance',            // ← Sand Monitoring
+        'annual_leave_allowance',     // ← Sand Monitoring
+        'severance_allowance',        // ← Sand Monitoring
 
         // =====================================================
         // FILE
@@ -142,7 +154,10 @@ class Contract extends Model
 
         'basic_salary' => 'decimal:2',
 
-        // Allowances
+        // =====================================================
+        // ALLOWANCES — EXISTING
+        // =====================================================
+
         'project_allowance'     => 'decimal:2',
         'cost_allowance'        => 'decimal:2',
         'meal_allowance'        => 'decimal:2',
@@ -153,6 +168,17 @@ class Contract extends Model
         'sea_allowance'         => 'decimal:2',
         'pulse_allowance'       => 'decimal:2',
         'attendance_allowance'  => 'decimal:2',
+
+        // =====================================================
+        // ALLOWANCES — NEW (Project)
+        // =====================================================
+
+        'position_allowance'      => 'decimal:2',
+        'housing_allowance'       => 'decimal:2',
+        'ewhc_allowance'          => 'decimal:2',
+        'daily_allowance'         => 'decimal:2',
+        'annual_leave_allowance'  => 'decimal:2',
+        'severance_allowance'     => 'decimal:2',
     ];
 
 

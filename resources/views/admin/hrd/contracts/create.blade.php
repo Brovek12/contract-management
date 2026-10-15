@@ -359,17 +359,55 @@
         'gp-mahal-um-ut',
 
         // =====================
-        // Project
+        // Project — ENI
         // =====================
-        'pep-lokal-buny',
-        'elis-phkt-5-2',
-        'elis-phkt-6-1',
+        'eni-civil-all-in',
+        'eni-civil-reguler',
+        'eni-smallcapital-all-in',
+        'eni-smallcapital-reguler',
         'eni-muara-bakau-lembur',
         'eni-muara-bakau-all-in',
+
+        // =====================
+        // Project — Warlok / Medco
+        // =====================
+        'warlok-all-in',
+        'warlok-lembur',
+        'warlok-security',
+
+        // =====================
+        // Project — ELIS PHKT
+        // =====================
+        'elis-phkt-5-2',
+        'elis-phkt-6-1',
+
+        // =====================
+        // Project — PHSS Major
+        // =====================
+        'phss-major-ai-1',
+        'phss-major-ai-2',
+        'phss-major-ai-3',
+        'phss-driver',
+        'phss-humas',
+        'phss-reguler',
+        'phss-security',
+
+        // =====================
+        // Project — Sand Monitoring
+        // =====================
+        'sandmon-teknisi-1',
+        'sandmon-teknisi-2',
+
+        // =====================
+        // Project — Lain-lain
+        // =====================
+        'pep-lokal-buny',
+        'sched-5-2',
+        'lawe-lawe-reguler',
+        'lawe-lawe-all-in',
         'ipfms-dobu',
     ];
 @endphp
-
 @if (in_array($type, $allowanceTypes))
     <div class="card mb-5">
         <div class="card-header">

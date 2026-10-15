@@ -54,10 +54,117 @@ class ContractController extends Controller
         ));
     }
 
-    public function create(Request $request)
-    {
-        $type     = $request->get('type');
-        $category = $request->get('category');
+   public function create(Request $request)
+{
+    $type     = $request->get('type');
+    $category = $request->get('category');
+
+    $typesByCategory = [
+        'managerial' => [
+            'gp-um-ut-fungsi',
+            'gp-mahal-um-ut-fungsi',
+            'all-in',
+        ],
+        'non-managerial' => [
+            'security',
+            'ob',
+            'gp-um-ut-laut',
+            'gp-um-ut',
+            'gp-mahal-um-ut-fungsi',
+            'gp-mahal-um-ut-fungsi-pls',
+            'gp-mahal-um-ut',
+        ],
+        'project' => [
+
+            // =====================
+            // ENI
+            // =====================
+            'eni-civil-all-in',
+            'eni-civil-reguler',
+            'eni-smallcapital-all-in',
+            'eni-smallcapital-reguler',
+            'eni-muara-bakau-lembur',
+            'eni-muara-bakau-all-in',
+
+            // =====================
+            // WARLOK / MEDCO
+            // =====================
+            'warlok-all-in',
+            'warlok-lembur',
+            'warlok-security',
+
+            // =====================
+            // ELIS PHKT
+            // =====================
+            'elis-phkt-5-2',
+            'elis-phkt-6-1',
+
+            // =====================
+            // PHSS MAJOR
+            // =====================
+            'phss-major-ai-1',
+            'phss-major-ai-2',
+            'phss-major-ai-3',
+            'phss-driver',
+            'phss-humas',
+            'phss-reguler',
+            'phss-security',
+
+            // =====================
+            // SAND MONITORING
+            // =====================
+            'sandmon-teknisi-1',
+            'sandmon-teknisi-2',
+
+            // =====================
+            // LAIN-LAIN
+            // =====================
+            'pep-lokal-buny',
+            'sched-5-2',
+            'lawe-lawe-reguler',
+            'lawe-lawe-all-in',
+            'ipfms-dobu',
+        ],
+    ];
+
+    if (!array_key_exists($category, $typesByCategory)) {
+        abort(403);
+    }
+
+    if (!in_array($type, $typesByCategory[$category])) {
+        abort(403);
+    }
+
+    $employees = User::whereNotNull('employee_number')
+        ->orderBy('name')
+        ->get();
+
+    $projects = Project::where('is_active', 1)
+        ->orderBy('name')
+        ->get();
+
+    $heads = User::whereNotNull('employee_number')
+        ->orderBy('name')
+        ->get();
+
+    return view('admin.hrd.contracts.create', compact(
+        'employees',
+        'projects',
+        'heads',
+        'type',
+        'category'
+    ));
+}
+
+   public function store(Request $request)
+{
+    try {
+
+        /*
+        |--------------------------------------------------------------------------
+        | 1. VALIDASI CATEGORY & TYPE
+        |--------------------------------------------------------------------------
+        */
 
         $typesByCategory = [
             'managerial' => [
@@ -75,284 +182,311 @@ class ContractController extends Controller
                 'gp-mahal-um-ut',
             ],
             'project' => [
-                'pep-lokal-buny',
-                'elis-phkt-5-2',
-                'elis-phkt-6-1',
+
+                // =====================
+                // ENI
+                // =====================
+                'eni-civil-all-in',
+                'eni-civil-reguler',
+                'eni-smallcapital-all-in',
+                'eni-smallcapital-reguler',
                 'eni-muara-bakau-lembur',
                 'eni-muara-bakau-all-in',
+
+                // =====================
+                // WARLOK / MEDCO
+                // =====================
+                'warlok-all-in',
+                'warlok-lembur',
+                'warlok-security',
+
+                // =====================
+                // ELIS PHKT
+                // =====================
+                'elis-phkt-5-2',
+                'elis-phkt-6-1',
+
+                // =====================
+                // PHSS MAJOR
+                // =====================
+                'phss-major-ai-1',
+                'phss-major-ai-2',
+                'phss-major-ai-3',
+                'phss-driver',
+                'phss-humas',
+                'phss-reguler',
+                'phss-security',
+
+                // =====================
+                // SAND MONITORING
+                // =====================
+                'sandmon-teknisi-1',
+                'sandmon-teknisi-2',
+
+                // =====================
+                // LAIN-LAIN
+                // =====================
+                'pep-lokal-buny',
+                'sched-5-2',
+                'lawe-lawe-reguler',
+                'lawe-lawe-all-in',
                 'ipfms-dobu',
             ],
         ];
 
+        $category = $request->input('category');
+        $type     = $request->input('type');
 
-        if (!array_key_exists($category, $typesByCategory)) {
+        if (
+            !array_key_exists($category, $typesByCategory) ||
+            !in_array($type, $typesByCategory[$category])
+        ) {
             abort(403);
         }
 
-        if (!in_array($type, $typesByCategory[$category])) {
-            abort(403);
-        }
 
-        $employees = User::whereNotNull('employee_number')
-            ->orderBy('name')
-            ->get();
-
-        $projects = Project::where('is_active', 1)
-            ->orderBy('name')
-            ->get();
-
-        $heads = User::whereNotNull('employee_number')
-            ->orderBy('name')
-            ->get();
-
-        return view('admin.hrd.contracts.create', compact(
-            'employees',
-            'projects',
-            'heads',
-            'type',
-            'category'
-        ));
-    }
-
-    public function store(Request $request)
-    {
-        try {
-
-            /*
-        |--------------------------------------------------------------------------
-        | 1. VALIDASI CATEGORY & TYPE
-        |--------------------------------------------------------------------------
-        */
-
-            $typesByCategory = [
-                'managerial' => [
-                    'gp-um-ut-fungsi',
-                    'gp-mahal-um-ut-fungsi',
-                    'all-in',
-                ],
-                'non-managerial' => [
-                    'security',
-                    'ob',
-                    'gp-um-ut-laut',
-                    'gp-um-ut',
-                    'gp-mahal-um-ut-fungsi',
-                    'gp-mahal-um-ut-fungsi-pls',
-                    'gp-mahal-um-ut',
-                ],
-                'project' => [
-                    'pep-lokal-buny',
-                    'elis-phkt-5-2',
-                    'elis-phkt-6-1',
-                    'eni-muara-bakau-lembur',
-                    'eni-muara-bakau-all-in',
-                    'ipfms-dobu',
-                ],
-            ];
-
-            $category = $request->input('category');
-            $type     = $request->input('type');
-
-            if (
-                !array_key_exists($category, $typesByCategory) ||
-                !in_array($type, $typesByCategory[$category])
-            ) {
-                abort(403);
-            }
-
-
-            /*
+        /*
         |--------------------------------------------------------------------------
         | 2. VALIDASI UMUM
         |--------------------------------------------------------------------------
         */
 
-            $request->validate([
-                // Contract
-                'contract_number' => 'required|string|max:255|unique:contracts,contract_number',
-                'contract_date'   => 'required|date',
-                'title'           => 'required|string|max:255',
+        $request->validate([
+            // Contract
+            'contract_number' => 'required|string|max:255|unique:contracts,contract_number',
+            'contract_date'   => 'required|date',
+            'title'           => 'required|string|max:255',
 
-                // Employee
-                'user_id'         => 'required|exists:users,id',
-                'employee_name'   => 'required|string|max:255',
-                'department'      => 'nullable|string|max:255',
-                'nik'             => 'nullable|string|max:50',
-                'ktp_number'      => 'nullable|string|max:50',
-                'birth_place'     => 'nullable|string|max:255',
-                'birth_date'      => 'nullable|date',
-                'age_at_contract' => 'nullable|integer|min:0|max:100',
-                'gender'          => 'nullable|string|max:50',
-                'address'         => 'nullable|string',
-                'grade'           => 'nullable|string|max:50',
+            // Employee
+            'user_id'         => 'required|exists:users,id',
+            'employee_name'   => 'required|string|max:255',
+            'department'      => 'nullable|string|max:255',
+            'nik'             => 'nullable|string|max:50',
+            'ktp_number'      => 'nullable|string|max:50',
+            'birth_place'     => 'nullable|string|max:255',
+            'birth_date'      => 'nullable|date',
+            'age_at_contract' => 'nullable|integer|min:0|max:100',
+            'gender'          => 'nullable|string|max:50',
+            'address'         => 'nullable|string',
+            'grade'           => 'nullable|string|max:50',
 
-                // Period
-                'start_date'      => 'required|date',
-                'end_date'        => 'required|date|after_or_equal:start_date',
+            // Period
+            'start_date'      => 'required|date',
+            'end_date'        => 'required|date|after_or_equal:start_date',
 
-                // Placement
-                'project_id'      => 'nullable|exists:projects,id',
-                'head_user_id'    => 'nullable|exists:users,id',
-                'position'        => 'required|string|max:255',
-                'work_location'   => 'required|string|max:255',
-                'domicile'        => 'required|string|max:255',
+            // Placement
+            'project_id'      => 'nullable|exists:projects,id',
+            'head_user_id'    => 'nullable|exists:users,id',
+            'position'        => 'required|string|max:255',
+            'work_location'   => 'required|string|max:255',
+            'domicile'        => 'required|string|max:255',
 
-                // Salary
-                'basic_salary'    => 'required|numeric|min:0',
-            ]);
+            // Salary
+            'basic_salary'    => 'required|numeric|min:0',
+        ]);
 
 
-            /*
+        /*
         |--------------------------------------------------------------------------
         | 3. VALIDASI TUNJANGAN SESUAI TYPE
         |--------------------------------------------------------------------------
         */
 
-            $allowanceRules = $this->allowanceRulesByType($type);
+        $allowanceRules = $this->allowanceRulesByType($type);
 
-            if (!empty($allowanceRules)) {
-                $request->validate($allowanceRules);
-            }
+        if (!empty($allowanceRules)) {
+            $request->validate($allowanceRules);
+        }
 
 
-            /*
+        /*
         |--------------------------------------------------------------------------
         | 4. AMBIL NILAI TUNJANGAN (default 0 kalau tidak ada)
         |--------------------------------------------------------------------------
         */
 
-            $allowances = [
-                'project_allowance'      => null,
-                'cost_allowance'         => null,
-                'meal_allowance'         => null,
-                'transport_allowance'    => null,
-                'functional_allowance'   => null,
-                'security_incentive'     => null,
-                'night_shift_allowance'  => null,
-                'sea_allowance'          => null,
-                'pulse_allowance'        => null,
-                'attendance_allowance'   => null,   // ← baru
-            ];
+        $allowances = [
+            // Existing
+            'project_allowance'      => null,
+            'cost_allowance'         => null,
+            'meal_allowance'         => null,
+            'transport_allowance'    => null,
+            'functional_allowance'   => null,
+            'security_incentive'     => null,
+            'night_shift_allowance'  => null,
+            'sea_allowance'          => null,
+            'pulse_allowance'        => null,
+            'attendance_allowance'   => null,
 
-            foreach (array_keys($allowanceRules) as $field) {
-                $allowances[$field] = $request->input($field, 0);
-            }
+            // NEW — Project
+            'position_allowance'      => null,
+            'housing_allowance'       => null,
+            'ewhc_allowance'          => null,
+            'daily_allowance'         => null,
+            'annual_leave_allowance'  => null,
+            'severance_allowance'     => null,
+        ];
+
+        foreach (array_keys($allowanceRules) as $field) {
+            $allowances[$field] = $request->input($field, 0);
+        }
 
 
-            /*
+        /*
         |--------------------------------------------------------------------------
         | 5. SIMPAN CONTRACT
         |--------------------------------------------------------------------------
         */
 
-            Contract::create([
+        Contract::create([
 
-                // Contract information
-                'contract_number' => $request->contract_number,
-                'contract_date'   => $request->contract_date,
-                'category'        => $category,
-                'type'            => $type,
-                'title'           => $request->title,
+            // Contract information
+            'contract_number' => $request->contract_number,
+            'contract_date'   => $request->contract_date,
+            'category'        => $category,
+            'type'            => $type,
+            'title'           => $request->title,
 
-                // Relation
-                'user_id'         => $request->user_id,
-                'project_id'      => $request->project_id,
-                'head_user_id'    => $request->head_user_id,
+            // Relation
+            'user_id'         => $request->user_id,
+            'project_id'      => $request->project_id,
+            'head_user_id'    => $request->head_user_id,
 
-                // Employee snapshot
-                'employee_name'   => $request->employee_name,
-                'department'      => $request->department,
-                'nik'             => $request->nik,
-                'ktp_number'      => $request->ktp_number,
-                'birth_place'     => $request->birth_place,
-                'birth_date'      => $request->birth_date,
-                'age_at_contract' => $request->age_at_contract,
-                'gender'          => $request->gender,
-                'address'         => $request->address,
-                'grade'           => $request->grade,
-                // Contract period
-                'start_date'      => $request->start_date,
-                'end_date'        => $request->end_date,
+            // Employee snapshot
+            'employee_name'   => $request->employee_name,
+            'department'      => $request->department,
+            'nik'             => $request->nik,
+            'ktp_number'      => $request->ktp_number,
+            'birth_place'     => $request->birth_place,
+            'birth_date'      => $request->birth_date,
+            'age_at_contract' => $request->age_at_contract,
+            'gender'          => $request->gender,
+            'address'         => $request->address,
+            'grade'           => $request->grade,
 
-                // Placement
-                'position'        => $request->position,
-                'work_location'   => $request->work_location,
-                'domicile'        => $request->domicile,
+            // Contract period
+            'start_date'      => $request->start_date,
+            'end_date'        => $request->end_date,
 
-                // Salary
-                'basic_salary'    => $request->basic_salary,
+            // Placement
+            'position'        => $request->position,
+            'work_location'   => $request->work_location,
+            'domicile'        => $request->domicile,
 
-                // Allowances (sesuai type)
-                'project_allowance'      => $allowances['project_allowance'],
-                'cost_allowance'         => $allowances['cost_allowance'],
-                'meal_allowance'         => $allowances['meal_allowance'],
-                'transport_allowance'    => $allowances['transport_allowance'],
-                'functional_allowance'   => $allowances['functional_allowance'],
-                'security_incentive'     => $allowances['security_incentive'],
-                'night_shift_allowance'  => $allowances['night_shift_allowance'],
-                'sea_allowance'          => $allowances['sea_allowance'],
-                'pulse_allowance'        => $allowances['pulse_allowance'],
-                'attendance_allowance'   => $allowances['attendance_allowance'],   // ← baru
+            // Salary
+            'basic_salary'    => $request->basic_salary,
 
-                // Initial status
-                'status'          => 'draft',
+            // Allowances — EXISTING
+            'project_allowance'      => $allowances['project_allowance'],
+            'cost_allowance'         => $allowances['cost_allowance'],
+            'meal_allowance'         => $allowances['meal_allowance'],
+            'transport_allowance'    => $allowances['transport_allowance'],
+            'functional_allowance'   => $allowances['functional_allowance'],
+            'security_incentive'     => $allowances['security_incentive'],
+            'night_shift_allowance'  => $allowances['night_shift_allowance'],
+            'sea_allowance'          => $allowances['sea_allowance'],
+            'pulse_allowance'        => $allowances['pulse_allowance'],
+            'attendance_allowance'   => $allowances['attendance_allowance'],
 
-                // Created by
-                'created_by'      => auth()->id(),
-            ]);
+            // Allowances — NEW (Project)
+            'position_allowance'      => $allowances['position_allowance'],
+            'housing_allowance'       => $allowances['housing_allowance'],
+            'ewhc_allowance'          => $allowances['ewhc_allowance'],
+            'daily_allowance'         => $allowances['daily_allowance'],
+            'annual_leave_allowance'  => $allowances['annual_leave_allowance'],
+            'severance_allowance'     => $allowances['severance_allowance'],
+
+            // Initial status
+            'status'          => 'draft',
+
+            // Created by
+            'created_by'      => auth()->id(),
+        ]);
 
 
-            return redirect()
-                ->route('contracts.index')
-                ->with('OK', 'Contract Berhasil Dibuat');
-        } catch (\Exception $e) {
+        return redirect()
+            ->route('contracts.index')
+            ->with('OK', 'Contract Berhasil Dibuat');
 
-            return redirect()
-                ->back()
-                ->withInput()
-                ->with(
-                    'ERR',
-                    'Gagal Membuat Contract: ' . $e->getMessage()
-                );
+    } catch (\Exception $e) {
+
+        return redirect()
+            ->back()
+            ->withInput()
+            ->with(
+                'ERR',
+                'Gagal Membuat Contract: ' . $e->getMessage()
+            );
+    }
+}
+    public function show(Contract $contract)
+{
+    $user = Auth::user();
+
+    // =========================================================
+    // GUARD — Employee
+    // =========================================================
+    if ($user->hasRole('Employee')) {
+
+        // 1. Cek ownership
+        if ($contract->user_id !== auth()->id()) {
+            abort(403, 'Kontrak ini bukan milik Anda.');
+        }
+
+        // 2. Cek status — employee tidak boleh lihat draft & expired
+        if (in_array($contract->status, ['draft', 'expired'])) {
+            abort(403, 'Kontrak ini belum/tidak dapat diakses.');
         }
     }
 
-    public function show(Contract $contract)
-    {
-        $user = Auth::user();
-        if (auth()->user()->hasRole('Employee')) {
+    // =========================================================
+    // LOAD RELATIONS
+    // =========================================================
+    $contract->load([
+        'user',
+        'project',
+        'creator',
+        'headUser',
+    ]);
 
-            // 1. Cek ownership
-            if ($contract->user_id !== auth()->id()) {
-                abort(403, 'Kontrak ini bukan milik Anda.');
-            }
+    // =========================================================
+    // ROUTING VIEW — berdasarkan type & category
+    // =========================================================
 
-            // 2. Cek status — employee tidak boleh lihat draft & expired
-            if (in_array($contract->status, ['draft', 'expired'])) {
-                abort(403, 'Kontrak ini belum/tidak dapat diakses.');
-            }
-        }
-
-        $contract->load([
-            'user',
-            'project',
-            'creator',
-            'headUser',
-        ]);
-
-        if ($contract->type === 'ipfms-dobu') {
-            return view('admin.hrd.contracts.show-dobu', [
-                'contract' => $contract,
-                'type'     => $contract->type,
-                'category' => $contract->category,
-            ]);
-        }
-
-        return view('admin.hrd.contracts.show', [
+    // 1. Khusus IPFMS-DOBU (existing)
+    if ($contract->type === 'ipfms-dobu') {
+        return view('admin.hrd.contracts.show-dobu', [
             'contract' => $contract,
             'type'     => $contract->type,
             'category' => $contract->category,
         ]);
     }
+
+    // 2. Khusus Sand Monitoring → view sandmon
+    if (in_array($contract->type, ['sandmon-teknisi-1', 'sandmon-teknisi-2'])) {
+        return view('admin.hrd.contracts.show-project-sandmon', [
+            'contract' => $contract,
+            'type'     => $contract->type,
+            'category' => $contract->category,
+        ]);
+    }
+
+    // 3. Category PROJECT → view project
+    if ($contract->category === 'project') {
+        return view('admin.hrd.contracts.show-project', [
+            'contract' => $contract,
+            'type'     => $contract->type,
+            'category' => $contract->category,
+        ]);
+    }
+
+    // 4. Managerial & Non-Managerial → view existing
+    return view('admin.hrd.contracts.show', [
+        'contract' => $contract,
+        'type'     => $contract->type,
+        'category' => $contract->category,
+    ]);
+}
 
     public function edit(Contract $contract)
     {
@@ -376,167 +510,186 @@ class ContractController extends Controller
         ));
     }
 
-    public function update(Request $request, Contract $contract)
-    {
-        try {
+   public function update(Request $request, Contract $contract)
+{
+    try {
 
-            /*
+        /*
         |--------------------------------------------------------------------------
         | 1. AMBIL TYPE & CATEGORY DARI CONTRACT (TIDAK BOLEH DIUBAH)
         |--------------------------------------------------------------------------
         */
 
-            $type     = $contract->type;
-            $category = $contract->category;
+        $type     = $contract->type;
+        $category = $contract->category;
 
 
-            /*
+        /*
         |--------------------------------------------------------------------------
         | 2. VALIDASI UMUM
         |--------------------------------------------------------------------------
         */
 
-            $request->validate([
-                // Contract
-                'contract_number' => 'required|string|max:255|unique:contracts,contract_number,' . $contract->id,
-                'contract_date'   => 'required|date',
-                'title'           => 'required|string|max:255',
+        $request->validate([
+            // Contract
+            'contract_number' => 'required|string|max:255|unique:contracts,contract_number,' . $contract->id,
+            'contract_date'   => 'required|date',
+            'title'           => 'required|string|max:255',
 
-                // Employee
-                'user_id'         => 'required|exists:users,id',
-                'employee_name'   => 'required|string|max:255',
-                'department'      => 'nullable|string|max:255',
-                'nik'             => 'nullable|string|max:50',
-                'ktp_number'      => 'nullable|string|max:50',
-                'birth_place'     => 'nullable|string|max:255',
-                'birth_date'      => 'nullable|date',
-                'age_at_contract' => 'nullable|integer|min:0|max:100',
-                'gender'          => 'nullable|string|max:50',
-                'address'         => 'nullable|string',
+            // Employee
+            'user_id'         => 'required|exists:users,id',
+            'employee_name'   => 'required|string|max:255',
+            'department'      => 'nullable|string|max:255',
+            'nik'             => 'nullable|string|max:50',
+            'ktp_number'      => 'nullable|string|max:50',
+            'birth_place'     => 'nullable|string|max:255',
+            'birth_date'      => 'nullable|date',
+            'age_at_contract' => 'nullable|integer|min:0|max:100',
+            'gender'          => 'nullable|string|max:50',
+            'address'         => 'nullable|string',
+            'grade'           => 'nullable|string|max:50',
 
-                // Period
-                'start_date'      => 'required|date',
-                'end_date'        => 'required|date|after_or_equal:start_date',
+            // Period
+            'start_date'      => 'required|date',
+            'end_date'        => 'required|date|after_or_equal:start_date',
 
-                // Placement
-                'project_id'      => 'nullable|exists:projects,id',
-                'head_user_id'    => 'nullable|exists:users,id',
-                'position'        => 'required|string|max:255',
-                'work_location'   => 'required|string|max:255',
-                'domicile'        => 'required|string|max:255',
+            // Placement
+            'project_id'      => 'nullable|exists:projects,id',
+            'head_user_id'    => 'nullable|exists:users,id',
+            'position'        => 'required|string|max:255',
+            'work_location'   => 'required|string|max:255',
+            'domicile'        => 'required|string|max:255',
 
-                // Salary
-                'basic_salary'    => 'required|numeric|min:0',
-            ]);
+            // Salary
+            'basic_salary'    => 'required|numeric|min:0',
+        ]);
 
 
-            /*
+        /*
         |--------------------------------------------------------------------------
         | 3. VALIDASI TUNJANGAN SESUAI TYPE
         |--------------------------------------------------------------------------
         */
 
-            $allowanceRules = $this->allowanceRulesByType($type);
+        $allowanceRules = $this->allowanceRulesByType($type);
 
-            if (!empty($allowanceRules)) {
-                $request->validate($allowanceRules);
-            }
+        if (!empty($allowanceRules)) {
+            $request->validate($allowanceRules);
+        }
 
 
-            /*
+        /*
         |--------------------------------------------------------------------------
         | 4. AMBIL NILAI TUNJANGAN (default 0 kalau tidak ada)
         |--------------------------------------------------------------------------
         */
 
-            $allowances = [
-                'project_allowance'      => null,
-                'cost_allowance'         => null,
-                'meal_allowance'         => null,
-                'transport_allowance'    => null,
-                'functional_allowance'   => null,
-                'security_incentive'     => null,
-                'night_shift_allowance'  => null,
-                'sea_allowance'          => null,
-                'pulse_allowance'        => null,
-                'attendance_allowance'   => null,
-            ];
+        $allowances = [
+            // Existing
+            'project_allowance'      => null,
+            'cost_allowance'         => null,
+            'meal_allowance'         => null,
+            'transport_allowance'    => null,
+            'functional_allowance'   => null,
+            'security_incentive'     => null,
+            'night_shift_allowance'  => null,
+            'sea_allowance'          => null,
+            'pulse_allowance'        => null,
+            'attendance_allowance'   => null,
 
-            foreach (array_keys($allowanceRules) as $field) {
-                $allowances[$field] = $request->input($field, 0);
-            }
+            // NEW — Project
+            'position_allowance'      => null,
+            'housing_allowance'       => null,
+            'ewhc_allowance'          => null,
+            'daily_allowance'         => null,
+            'annual_leave_allowance'  => null,
+            'severance_allowance'     => null,
+        ];
+
+        foreach (array_keys($allowanceRules) as $field) {
+            $allowances[$field] = $request->input($field, 0);
+        }
 
 
-            /*
+        /*
         |--------------------------------------------------------------------------
         | 5. UPDATE CONTRACT
         |--------------------------------------------------------------------------
         */
 
-            $contract->update([
+        $contract->update([
 
-                // Contract information
-                'contract_number' => $request->contract_number,
-                'contract_date'   => $request->contract_date,
-                'title'           => $request->title,
+            // Contract information
+            'contract_number' => $request->contract_number,
+            'contract_date'   => $request->contract_date,
+            'title'           => $request->title,
 
-                // Relation
-                'user_id'         => $request->user_id,
-                'project_id'      => $request->project_id,
-                'head_user_id'    => $request->head_user_id,
+            // Relation
+            'user_id'         => $request->user_id,
+            'project_id'      => $request->project_id,
+            'head_user_id'    => $request->head_user_id,
 
-                // Employee snapshot
-                'employee_name'   => $request->employee_name,
-                'department'      => $request->department,
-                'nik'             => $request->nik,
-                'ktp_number'      => $request->ktp_number,
-                'birth_place'     => $request->birth_place,
-                'birth_date'      => $request->birth_date,
-                'age_at_contract' => $request->age_at_contract,
-                'gender'          => $request->gender,
-                'address'         => $request->address,
+            // Employee snapshot
+            'employee_name'   => $request->employee_name,
+            'department'      => $request->department,
+            'nik'             => $request->nik,
+            'ktp_number'      => $request->ktp_number,
+            'birth_place'     => $request->birth_place,
+            'birth_date'      => $request->birth_date,
+            'age_at_contract' => $request->age_at_contract,
+            'gender'          => $request->gender,
+            'address'         => $request->address,
+            'grade'           => $request->grade,
 
-                // Contract period
-                'start_date'      => $request->start_date,
-                'end_date'        => $request->end_date,
+            // Contract period
+            'start_date'      => $request->start_date,
+            'end_date'        => $request->end_date,
 
-                // Placement
-                'position'        => $request->position,
-                'work_location'   => $request->work_location,
-                'domicile'        => $request->domicile,
+            // Placement
+            'position'        => $request->position,
+            'work_location'   => $request->work_location,
+            'domicile'        => $request->domicile,
 
-                // Salary
-                'basic_salary'    => $request->basic_salary,
+            // Salary
+            'basic_salary'    => $request->basic_salary,
 
-                // Allowances (sesuai type)
-                'project_allowance'      => $allowances['project_allowance'],
-                'cost_allowance'         => $allowances['cost_allowance'],
-                'meal_allowance'         => $allowances['meal_allowance'],
-                'transport_allowance'    => $allowances['transport_allowance'],
-                'functional_allowance'   => $allowances['functional_allowance'],
-                'security_incentive'     => $allowances['security_incentive'],
-                'night_shift_allowance'  => $allowances['night_shift_allowance'],
-                'sea_allowance'          => $allowances['sea_allowance'],
-                'pulse_allowance'        => $allowances['pulse_allowance'],
-                'attendance_allowance'   => $allowances['attendance_allowance'],
-            ]);
+            // Allowances — EXISTING
+            'project_allowance'      => $allowances['project_allowance'],
+            'cost_allowance'         => $allowances['cost_allowance'],
+            'meal_allowance'         => $allowances['meal_allowance'],
+            'transport_allowance'    => $allowances['transport_allowance'],
+            'functional_allowance'   => $allowances['functional_allowance'],
+            'security_incentive'     => $allowances['security_incentive'],
+            'night_shift_allowance'  => $allowances['night_shift_allowance'],
+            'sea_allowance'          => $allowances['sea_allowance'],
+            'pulse_allowance'        => $allowances['pulse_allowance'],
+            'attendance_allowance'   => $allowances['attendance_allowance'],
+
+            // Allowances — NEW (Project)
+            'position_allowance'      => $allowances['position_allowance'],
+            'housing_allowance'       => $allowances['housing_allowance'],
+            'ewhc_allowance'          => $allowances['ewhc_allowance'],
+            'daily_allowance'         => $allowances['daily_allowance'],
+            'annual_leave_allowance'  => $allowances['annual_leave_allowance'],
+            'severance_allowance'     => $allowances['severance_allowance'],
+        ]);
 
 
-            return redirect()
-                ->route('contracts.index')
-                ->with('OK', 'Contract Berhasil Diupdate');
-        } catch (\Exception $e) {
+        return redirect()
+            ->route('contracts.index')
+            ->with('OK', 'Contract Berhasil Diupdate');
 
-            return redirect()
-                ->back()
-                ->withInput()
-                ->with(
-                    'ERR',
-                    'Gagal Mengupdate Contract: ' . $e->getMessage()
-                );
-        }
+    } catch (\Exception $e) {
+
+        return redirect()
+            ->back()
+            ->withInput()
+            ->with(
+                'ERR',
+                'Gagal Mengupdate Contract: ' . $e->getMessage()
+            );
     }
-
+}
     public function destroy(Contract $contract)
     {
         $contract->delete(); // soft delete
@@ -720,122 +873,275 @@ class ContractController extends Controller
             return back()->with('ERR', 'Gagal menghapus contract: ' . $e->getMessage());
         }
     }
-    private function allowanceRulesByType(string $type): array
-    {
-        return match ($type) {
+   private function allowanceRulesByType(string $type): array
+{
+    return match ($type) {
 
-            // =====================================================
-            // MANAGERIAL
-            // =====================================================
+        // =====================================================
+        // MANAGERIAL
+        // =====================================================
 
-            'all-in' => [
-                'project_allowance' => 'nullable|numeric|min:0',
-            ],
+        'all-in' => [
+            'project_allowance' => 'nullable|numeric|min:0',
+        ],
 
-            'gp-mahal-um-ut-fungsi' => [
-                'cost_allowance'       => 'nullable|numeric|min:0',
-                'meal_allowance'       => 'nullable|numeric|min:0',
-                'transport_allowance'  => 'nullable|numeric|min:0',
-                'functional_allowance' => 'nullable|numeric|min:0',
-            ],
+        'gp-mahal-um-ut-fungsi' => [
+            'cost_allowance'       => 'nullable|numeric|min:0',
+            'meal_allowance'       => 'nullable|numeric|min:0',
+            'transport_allowance'  => 'nullable|numeric|min:0',
+            'functional_allowance' => 'nullable|numeric|min:0',
+        ],
 
-            'gp-um-ut-fungsi' => [
-                'meal_allowance'       => 'nullable|numeric|min:0',
-                'transport_allowance'  => 'nullable|numeric|min:0',
-                'functional_allowance' => 'nullable|numeric|min:0',
-            ],
-
-
-            // =====================================================
-            // NON-MANAGERIAL
-            // =====================================================
-
-            'security' => [
-                'cost_allowance'         => 'nullable|numeric|min:0',
-                'meal_allowance'         => 'nullable|numeric|min:0',
-                'transport_allowance'    => 'nullable|numeric|min:0',
-                'security_incentive'     => 'nullable|numeric|min:0',
-                'night_shift_allowance'  => 'nullable|numeric|min:0',
-            ],
-
-            'ob' => [
-                'cost_allowance'      => 'nullable|numeric|min:0',
-                'meal_allowance'      => 'nullable|numeric|min:0',
-                'transport_allowance' => 'nullable|numeric|min:0',
-            ],
-
-            'gp-um-ut-laut' => [
-                'meal_allowance'      => 'nullable|numeric|min:0',
-                'transport_allowance' => 'nullable|numeric|min:0',
-                'sea_allowance'       => 'nullable|numeric|min:0',
-            ],
-
-            'gp-um-ut' => [
-                'meal_allowance'      => 'nullable|numeric|min:0',
-                'transport_allowance' => 'nullable|numeric|min:0',
-            ],
-
-            'gp-mahal-um-ut-fungsi-pls' => [
-                'cost_allowance'       => 'nullable|numeric|min:0',
-                'meal_allowance'       => 'nullable|numeric|min:0',
-                'transport_allowance'  => 'nullable|numeric|min:0',
-                'functional_allowance' => 'nullable|numeric|min:0',
-                'pulse_allowance'      => 'nullable|numeric|min:0',
-            ],
-
-            'gp-mahal-um-ut' => [
-                'cost_allowance'       => 'nullable|numeric|min:0',
-                'meal_allowance'       => 'nullable|numeric|min:0',
-                'transport_allowance'  => 'nullable|numeric|min:0',
-                'functional_allowance' => 'nullable|numeric|min:0',
-            ],
+        'gp-um-ut-fungsi' => [
+            'meal_allowance'       => 'nullable|numeric|min:0',
+            'transport_allowance'  => 'nullable|numeric|min:0',
+            'functional_allowance' => 'nullable|numeric|min:0',
+        ],
 
 
-            // =====================================================
-            // PROJECT
-            // =====================================================
+        // =====================================================
+        // NON-MANAGERIAL
+        // =====================================================
 
-            // D1: PEP Lokal Bunyu
-            'pep-lokal-buny' => [
-                // hanya Gaji Pokok, tidak ada tunjangan
-            ],
+        'security' => [
+            'cost_allowance'         => 'nullable|numeric|min:0',
+            'meal_allowance'         => 'nullable|numeric|min:0',
+            'transport_allowance'    => 'nullable|numeric|min:0',
+            'security_incentive'     => 'nullable|numeric|min:0',
+            'night_shift_allowance'  => 'nullable|numeric|min:0',
+        ],
 
-            // D2: ELIS PHKT 5.2
-            'elis-phkt-5-2' => [
-                'meal_allowance'      => 'nullable|numeric|min:0',
-                'transport_allowance' => 'nullable|numeric|min:0',
-                'sea_allowance'       => 'nullable|numeric|min:0',
-            ],
+        'ob' => [
+            'cost_allowance'      => 'nullable|numeric|min:0',
+            'meal_allowance'      => 'nullable|numeric|min:0',
+            'transport_allowance' => 'nullable|numeric|min:0',
+        ],
 
-            // D3: ELIS PHKT 6.1
-            'elis-phkt-6-1' => [
-                // hanya Gaji Pokok, tidak ada tunjangan
-            ],
+        'gp-um-ut-laut' => [
+            'meal_allowance'      => 'nullable|numeric|min:0',
+            'transport_allowance' => 'nullable|numeric|min:0',
+            'sea_allowance'       => 'nullable|numeric|min:0',
+        ],
 
-            // D4: ENI Muara Bakau (LEMBUR)
-            'eni-muara-bakau-lembur' => [
-                'attendance_allowance' => 'nullable|numeric|min:0',
-            ],
+        'gp-um-ut' => [
+            'meal_allowance'      => 'nullable|numeric|min:0',
+            'transport_allowance' => 'nullable|numeric|min:0',
+        ],
 
-            // D5: ENI Muara Bakau (All-in)
-            'eni-muara-bakau-all-in' => [
-                'meal_allowance'       => 'nullable|numeric|min:0',
-                'transport_allowance'  => 'nullable|numeric|min:0',
-                'pulse_allowance'      => 'nullable|numeric|min:0',
-                'functional_allowance' => 'nullable|numeric|min:0',
-            ],
+        'gp-mahal-um-ut-fungsi-pls' => [
+            'cost_allowance'       => 'nullable|numeric|min:0',
+            'meal_allowance'       => 'nullable|numeric|min:0',
+            'transport_allowance'  => 'nullable|numeric|min:0',
+            'functional_allowance' => 'nullable|numeric|min:0',
+            'pulse_allowance'      => 'nullable|numeric|min:0',
+        ],
 
-            // D6: IPFMS-DOBU
-            'ipfms-dobu' => [
-                'meal_allowance'      => 'nullable|numeric|min:0',
-                'transport_allowance' => 'nullable|numeric|min:0',
-                'sea_allowance'       => 'nullable|numeric|min:0',
-            ],
+        'gp-mahal-um-ut' => [
+            'cost_allowance'       => 'nullable|numeric|min:0',
+            'meal_allowance'       => 'nullable|numeric|min:0',
+            'transport_allowance'  => 'nullable|numeric|min:0',
+            'functional_allowance' => 'nullable|numeric|min:0',
+        ],
 
 
-            default => [],
-        };
-    }
+        // =====================================================
+        // PROJECT — EXISTING
+        // =====================================================
+
+        // PEP Lokal Bunyu — hanya Gaji Pokok
+        'pep-lokal-buny' => [],
+
+        // ELIS PHKT 5.2
+        'elis-phkt-5-2' => [
+            'meal_allowance'      => 'nullable|numeric|min:0',
+            'transport_allowance' => 'nullable|numeric|min:0',
+            'sea_allowance'       => 'nullable|numeric|min:0',
+        ],
+
+        // ELIS PHKT 6.1 — hanya Gaji Pokok
+        'elis-phkt-6-1' => [],
+
+        // ENI Muara Bakau (Lembur)
+        'eni-muara-bakau-lembur' => [
+            'attendance_allowance' => 'nullable|numeric|min:0',
+        ],
+
+        // ENI Muara Bakau (All-In)
+        'eni-muara-bakau-all-in' => [
+            'meal_allowance'       => 'nullable|numeric|min:0',
+            'transport_allowance'  => 'nullable|numeric|min:0',
+            'pulse_allowance'      => 'nullable|numeric|min:0',
+            'functional_allowance' => 'nullable|numeric|min:0',
+        ],
+
+        // IPFMS-DOBU
+        'ipfms-dobu' => [
+            'meal_allowance'      => 'nullable|numeric|min:0',
+            'transport_allowance' => 'nullable|numeric|min:0',
+            'sea_allowance'       => 'nullable|numeric|min:0',
+        ],
+
+
+        // =====================================================
+        // PROJECT — NEW: ENI
+        // =====================================================
+
+        // ENI Civil — All In (Gaji 25)
+        // Gaji Pokok + Tunj. Fungsional
+        'eni-civil-all-in' => [
+            'functional_allowance' => 'nullable|numeric|min:0',
+        ],
+
+        // ENI Civil — Reguler (Gaji 09)
+        // Gaji Pokok + Tunj. Kemahalan + UM + UT + Fungsi
+        'eni-civil-reguler' => [
+            'cost_allowance'       => 'nullable|numeric|min:0',
+            'meal_allowance'       => 'nullable|numeric|min:0',
+            'transport_allowance'  => 'nullable|numeric|min:0',
+            'functional_allowance' => 'nullable|numeric|min:0',
+        ],
+
+        // ENI Small Capital — All In
+        // Gaji Pokok + Tunj. Jabatan (keduanya All-In)
+        'eni-smallcapital-all-in' => [
+            'position_allowance' => 'nullable|numeric|min:0',
+        ],
+
+        // ENI Small Capital — Reguler
+        // Gaji Pokok + Uang Kehadiran (Makan & Transport)
+        'eni-smallcapital-reguler' => [
+            'attendance_allowance' => 'nullable|numeric|min:0',
+        ],
+
+
+        // =====================================================
+        // PROJECT — NEW: WARLOK MEDCO
+        // =====================================================
+
+        // Warlok Medco — All In
+        // Gaji Pokok + Tunj. Jabatan
+        'warlok-all-in' => [
+            'position_allowance' => 'nullable|numeric|min:0',
+        ],
+
+        // Warlok Medco — Lembur (Reguler)
+        // Gaji Pokok + Uang Kehadiran
+        'warlok-lembur' => [
+            'attendance_allowance' => 'nullable|numeric|min:0',
+        ],
+
+        // Warlok Medco — Security
+        // Gaji Pokok + Tunj. Kehadiran + Insentif Khusus
+        'warlok-security' => [
+            'attendance_allowance' => 'nullable|numeric|min:0',
+            'security_incentive'   => 'nullable|numeric|min:0',
+        ],
+
+
+        // =====================================================
+        // PROJECT — NEW: PHSS MAJOR
+        // =====================================================
+
+        // PHSS Major — All In Type 1
+        // Gaji Pokok + Tunj. Fungsional
+        'phss-major-ai-1' => [
+            'functional_allowance' => 'nullable|numeric|min:0',
+        ],
+
+        // PHSS Major — All In Type 2
+        // Gaji Pokok + Tunj. Fungsional + Tunj. Makan & Transport
+        'phss-major-ai-2' => [
+            'functional_allowance' => 'nullable|numeric|min:0',
+            'meal_allowance'       => 'nullable|numeric|min:0',
+            'transport_allowance'  => 'nullable|numeric|min:0',
+        ],
+
+        // PHSS Major — All In Type 3 (On/Off Duty)
+        // Hanya Gaji Pokok
+        'phss-major-ai-3' => [],
+
+        // PHSS Major — Driver BPN
+        // Gaji Pokok + Uang Kehadiran
+        'phss-driver' => [
+            'attendance_allowance' => 'nullable|numeric|min:0',
+        ],
+
+        // PHSS Major — Humas
+        // Gaji Pokok + Tunj. Fungsional
+        'phss-humas' => [
+            'functional_allowance' => 'nullable|numeric|min:0',
+        ],
+
+        // PHSS Major — Reguler
+        // Gaji Pokok + Uang Kehadiran
+        'phss-reguler' => [
+            'attendance_allowance' => 'nullable|numeric|min:0',
+        ],
+
+        // PHSS Major — Security WS
+        // Gaji Pokok + Tunj. Kehadiran + Insentif Khusus
+        'phss-security' => [
+            'attendance_allowance' => 'nullable|numeric|min:0',
+            'security_incentive'   => 'nullable|numeric|min:0',
+        ],
+
+
+        // =====================================================
+        // PROJECT — NEW: SAND MONITORING
+        // =====================================================
+
+        // Sand Monitoring — Teknisi 1
+        // Skema kompleks: Basic + Housing + Transport + EWHC
+        // + Daily + Annual Leave + Severance
+        'sandmon-teknisi-1' => [
+            'housing_allowance'      => 'nullable|numeric|min:0',
+            'transport_allowance'    => 'nullable|numeric|min:0',
+            'ewhc_allowance'         => 'nullable|numeric|min:0',
+            'daily_allowance'        => 'nullable|numeric|min:0',
+            'annual_leave_allowance' => 'nullable|numeric|min:0',
+            'severance_allowance'    => 'nullable|numeric|min:0',
+        ],
+
+        // Sand Monitoring — Teknisi 2
+        // Sama dengan Teknisi 1, hanya beda nominal
+        'sandmon-teknisi-2' => [
+            'housing_allowance'      => 'nullable|numeric|min:0',
+            'transport_allowance'    => 'nullable|numeric|min:0',
+            'ewhc_allowance'         => 'nullable|numeric|min:0',
+            'daily_allowance'        => 'nullable|numeric|min:0',
+            'annual_leave_allowance' => 'nullable|numeric|min:0',
+            'severance_allowance'    => 'nullable|numeric|min:0',
+        ],
+
+
+        // =====================================================
+        // PROJECT — NEW: LAIN-LAIN
+        // =====================================================
+
+        // Schedule 5-2 Rev. 2026 (Gaji 09)
+        // Hanya Gaji Pokok
+        'sched-5-2' => [],
+
+        // LAWE LAWE — Reguler
+        // Gaji Pokok + Uang Kehadiran
+        'lawe-lawe-reguler' => [
+            'attendance_allowance' => 'nullable|numeric|min:0',
+        ],
+
+        // LAWE LAWE — All In
+        // Gaji Pokok + Tunj. Jabatan
+        'lawe-lawe-all-in' => [
+            'position_allowance' => 'nullable|numeric|min:0',
+        ],
+
+
+        // =====================================================
+        // DEFAULT
+        // =====================================================
+
+        default => [],
+    };
+}
     public function export(Request $request)
     {
         Carbon::setLocale('id');
@@ -854,29 +1160,35 @@ class ContractController extends Controller
         return Excel::download(new ContractsExport($filters), $filename);
     }
 
-    public function createNewFromExisting($id)
-    {
-        $source = Contract::with(['user', 'project', 'headUser'])
-            ->findOrFail($id);
+   public function createNewFromExisting($id)
+{
+    $source = Contract::with(['user', 'project', 'headUser'])
+        ->findOrFail($id);
 
-        // Employee candidates
-        $employees = User::role('Employee')->orderBy('name')->get();
+    // Employee candidates — SAMAKAN dengan create()
+    $employees = User::whereNotNull('employee_number')
+        ->orderBy('name')
+        ->get();
 
-        // Head candidates (HRD Head + GM)
-        $heads = User::role(['HRD_Head', 'General_Manager'])->orderBy('name')->get();
+    // Head candidates — SAMAKAN dengan create()
+    $heads = User::whereNotNull('employee_number')
+        ->orderBy('name')
+        ->get();
 
-        // Projects
-        $projects = Project::orderBy('name')->get();
+    // Projects — hanya active
+    $projects = Project::where('is_active', 1)
+        ->orderBy('name')
+        ->get();
 
-        return view('admin.hrd.contracts.create-new-from-existing', [
-            'source'    => $source,
-            'type'      => $source->type,
-            'category'  => $source->category,
-            'employees' => $employees,
-            'heads'     => $heads,
-            'projects'  => $projects,
-        ]);
-    }
+    return view('admin.hrd.contracts.create-new-from-existing', [
+        'source'    => $source,
+        'type'      => $source->type,
+        'category'  => $source->category,
+        'employees' => $employees,
+        'heads'     => $heads,
+        'projects'  => $projects,
+    ]);
+}
     public function allowanceFields(Request $request)
     {
         $type = $request->query('type');

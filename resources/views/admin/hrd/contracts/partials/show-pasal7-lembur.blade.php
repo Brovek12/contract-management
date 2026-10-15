@@ -51,34 +51,6 @@
         sama dengan perhitungan Piket pada Hari Libur
     </p>
 
-@elseif ($type === 'eni-muara-bakau-all-in')
-
-    {{-- ============================================ --}}
-    {{-- ALL-IN: KETENTUAN KOMPENSASI GAJI ALL-IN     --}}
-    {{-- ============================================ --}}
-    <div class="pasal-title">PASAL 7</div>
-    <div class="pasal-subtitle">KETENTUAN KOMPENSASI GAJI ALL-IN</div>
-
-    <p>
-        1. Pekerja bersedia untuk bekerja melebihi jam kerja sebagaimana dimaksud dalam
-        Pasal 2 ayat (1) apabila diperlukan oleh Perusahaan berdasarkan penugasan atau
-        perintah Perusahaan, termasuk bekerja pada hari istirahat mingguan, hari libur
-        resmi, dan/atau hari libur nasional sesuai dengan kebutuhan operasional Perusahaan.
-    </p>
-
-    <p>
-        2. Para Pihak sepakat bahwa penghasilan yang diterima Pekerja merupakan gaji
-        all-in sebagaimana dimaksud dalam Pasal 5 ayat (1), yang telah memperhitungkan
-        kompensasi atas pelaksanaan pekerjaan di luar jam kerja, termasuk pekerjaan pada
-        hari istirahat mingguan, hari libur resmi, dan/atau hari libur nasional.
-    </p>
-
-    <p>
-        3. Dengan ditandatanganinya Perjanjian Kerja ini, Pekerja memahami dan menyetujui
-        bahwa Perusahaan tidak melakukan pembayaran upah lembur secara terpisah karena
-        kompensasi atas pelaksanaan pekerjaan sebagaimana dimaksud pada ayat (1) telah
-        diperhitungkan dalam penghasilan (gaji all-in) yang diterima Pekerja.
-    </p>
     @elseif ($type === 'all-in')
 
     {{-- ============================================ --}}
