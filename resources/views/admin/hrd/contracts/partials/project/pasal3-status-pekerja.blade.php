@@ -13,11 +13,11 @@
     // Mapping type → varian kalimat
     $statusTexts = [
         // =====================
-        // Varian A — Onshore/Offshore Generik
+        // Varian A — Tanpa Klausul Onshore/Offshore (ENI Civil)
         // =====================
-        'eni-civil-all-in' => 'Perusahaan dengan ini menugaskan Pekerja untuk menjalankan tugasnya sebagai ' . ($c->position ?? '................') . ' di PT Bukaka Teknik Utama Tbk cabang Balikpapan dan bersedia ditempatkan diseluruh lokasi Onshore / Offshore yang ditentukan oleh User / Perusahaan.',
+        'eni-civil-all-in' => 'Perusahaan dengan ini menugaskan Pekerja untuk menjalankan tugasnya sebagai ' . ($c->position ?? '................') . ' di PT. Bukaka Teknik Utama tbk. cabang Balikpapan.',
 
-        'eni-civil-reguler' => 'Perusahaan dengan ini menugaskan Pekerja untuk menjalankan tugasnya sebagai ' . ($c->position ?? '................') . ' di PT Bukaka Teknik Utama Tbk cabang Balikpapan dan bersedia ditempatkan diseluruh lokasi Onshore / Offshore yang ditentukan oleh User / Perusahaan.',
+        'eni-civil-reguler' => 'Perusahaan dengan ini menugaskan Pekerja untuk menjalankan tugasnya sebagai ' . ($c->position ?? '................') . ' di PT. Bukaka Teknik Utama tbk. cabang Balikpapan.',
 
         // =====================
         // Varian B — Site ENI Small Capital

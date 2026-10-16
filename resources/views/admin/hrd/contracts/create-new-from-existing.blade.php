@@ -80,57 +80,58 @@
                                     <option value="gp-um-ut-fungsi"       {{ $type === 'gp-um-ut-fungsi' ? 'selected' : '' }}>GP + UM + UT + Fungsional</option>
                                 </optgroup>
 
-                              <optgroup label="Non-Managerial" data-category="non-managerial">
-                                    <option value="security" {{ $type === 'security' ? 'selected' : '' }}>Security</option>
-                                    <option value="ob" {{ $type === 'ob' ? 'selected' : '' }}>OB</option>
-                                    <option value="gp-um-ut-laut" {{ $type === 'gp-um-ut-laut' ? 'selected' : '' }}>GP + UM + UT + Laut</option>
-                                    <option value="gp-um-ut" {{ $type === 'gp-um-ut' ? 'selected' : '' }}>GP + UM + UT</option>
-                                    <option value="gp-mahal-um-ut-fungsi" {{ $type === 'gp-mahal-um-ut-fungsi' ? 'selected' : '' }}>GP + Kemahalan + UM + UT + Fungsional</option>
+                                <optgroup label="Non-Managerial" data-category="non-managerial">
+                                    <option value="security"                  {{ $type === 'security' ? 'selected' : '' }}>Security</option>
+                                    <option value="ob"                        {{ $type === 'ob' ? 'selected' : '' }}>OB</option>
+                                    <option value="gp-um-ut-laut"             {{ $type === 'gp-um-ut-laut' ? 'selected' : '' }}>GP + UM + UT + Laut</option>
+                                    <option value="gp-um-ut"                  {{ $type === 'gp-um-ut' ? 'selected' : '' }}>GP + UM + UT</option>
+                                    <option value="gp-mahal-um-ut-fungsi"     {{ $type === 'gp-mahal-um-ut-fungsi' ? 'selected' : '' }}>GP + Kemahalan + UM + UT + Fungsional</option>
                                     <option value="gp-mahal-um-ut-fungsi-pls" {{ $type === 'gp-mahal-um-ut-fungsi-pls' ? 'selected' : '' }}>GP + Kemahalan + UM + UT + Fungsional + Pulsa</option>
-                                    <option value="gp-mahal-um-ut" {{ $type === 'gp-mahal-um-ut' ? 'selected' : '' }}>GP + Kemahalan + UM + UT</option>
+                                    <option value="gp-mahal-um-ut"            {{ $type === 'gp-mahal-um-ut' ? 'selected' : '' }}>GP + Kemahalan + UM + UT</option>
                                 </optgroup>
-                               <optgroup label="Project — ENI" data-category="project">
-    <option value="eni-civil-all-in"          {{ $type === 'eni-civil-all-in' ? 'selected' : '' }}>ENI Civil (All In)</option>
-    <option value="eni-civil-reguler"         {{ $type === 'eni-civil-reguler' ? 'selected' : '' }}>ENI Civil (Reguler)</option>
-    <option value="eni-smallcapital-all-in"   {{ $type === 'eni-smallcapital-all-in' ? 'selected' : '' }}>ENI Small Capital (All In)</option>
-    <option value="eni-smallcapital-reguler"  {{ $type === 'eni-smallcapital-reguler' ? 'selected' : '' }}>ENI Small Capital (Reguler)</option>
-    <option value="eni-muara-bakau-lembur"    {{ $type === 'eni-muara-bakau-lembur' ? 'selected' : '' }}>ENI Muara Bakau (Lembur)</option>
-    <option value="eni-muara-bakau-all-in"    {{ $type === 'eni-muara-bakau-all-in' ? 'selected' : '' }}>ENI Muara Bakau (All In)</option>
-</optgroup>
 
-<optgroup label="Project — Warlok / Medco" data-category="project">
-    <option value="warlok-all-in"             {{ $type === 'warlok-all-in' ? 'selected' : '' }}>Warlok Medco (All In)</option>
-    <option value="warlok-lembur"             {{ $type === 'warlok-lembur' ? 'selected' : '' }}>Warlok Medco (Lembur)</option>
-    <option value="warlok-security"           {{ $type === 'warlok-security' ? 'selected' : '' }}>Warlok Medco (Security)</option>
-</optgroup>
+                                <optgroup label="Project — ENI" data-category="project">
+                                    <option value="eni-civil-all-in"          {{ $type === 'eni-civil-all-in' ? 'selected' : '' }}>ENI Civil (All In)</option>
+                                    <option value="eni-civil-reguler"         {{ $type === 'eni-civil-reguler' ? 'selected' : '' }}>ENI Civil (Reguler)</option>
+                                    <option value="eni-smallcapital-all-in"   {{ $type === 'eni-smallcapital-all-in' ? 'selected' : '' }}>ENI Small Capital (All In)</option>
+                                    <option value="eni-smallcapital-reguler"  {{ $type === 'eni-smallcapital-reguler' ? 'selected' : '' }}>ENI Small Capital (Reguler)</option>
+                                    <option value="eni-muara-bakau-lembur"    {{ $type === 'eni-muara-bakau-lembur' ? 'selected' : '' }}>ENI Muara Bakau (Lembur)</option>
+                                    <option value="eni-muara-bakau-all-in"    {{ $type === 'eni-muara-bakau-all-in' ? 'selected' : '' }}>ENI Muara Bakau (All In)</option>
+                                </optgroup>
 
-<optgroup label="Project — ELIS PHKT" data-category="project">
-    <option value="elis-phkt-5-2"             {{ $type === 'elis-phkt-5-2' ? 'selected' : '' }}>ELIS PHKT 5.2</option>
-    <option value="elis-phkt-6-1"             {{ $type === 'elis-phkt-6-1' ? 'selected' : '' }}>ELIS PHKT 6.1</option>
-</optgroup>
+                                <optgroup label="Project — Warlok / Medco" data-category="project">
+                                    <option value="warlok-all-in"             {{ $type === 'warlok-all-in' ? 'selected' : '' }}>Warlok Medco (All In)</option>
+                                    <option value="warlok-lembur"             {{ $type === 'warlok-lembur' ? 'selected' : '' }}>Warlok Medco (Lembur)</option>
+                                    <option value="warlok-security"           {{ $type === 'warlok-security' ? 'selected' : '' }}>Warlok Medco (Security)</option>
+                                </optgroup>
 
-<optgroup label="Project — PHSS Major" data-category="project">
-    <option value="phss-major-ai-1"           {{ $type === 'phss-major-ai-1' ? 'selected' : '' }}>PHSS Major (All In Type 1)</option>
-    <option value="phss-major-ai-2"           {{ $type === 'phss-major-ai-2' ? 'selected' : '' }}>PHSS Major (All In Type 2)</option>
-    <option value="phss-major-ai-3"           {{ $type === 'phss-major-ai-3' ? 'selected' : '' }}>PHSS Major (All In Type 3)</option>
-    <option value="phss-driver"               {{ $type === 'phss-driver' ? 'selected' : '' }}>PHSS Major (Driver)</option>
-    <option value="phss-humas"                {{ $type === 'phss-humas' ? 'selected' : '' }}>PHSS Major (Humas)</option>
-    <option value="phss-reguler"              {{ $type === 'phss-reguler' ? 'selected' : '' }}>PHSS Major (Reguler)</option>
-    <option value="phss-security"             {{ $type === 'phss-security' ? 'selected' : '' }}>PHSS Major (Security)</option>
-</optgroup>
+                                <optgroup label="Project — ELIS PHKT" data-category="project">
+                                    <option value="elis-phkt-5-2"             {{ $type === 'elis-phkt-5-2' ? 'selected' : '' }}>ELIS PHKT 5.2</option>
+                                    <option value="elis-phkt-6-1"             {{ $type === 'elis-phkt-6-1' ? 'selected' : '' }}>ELIS PHKT 6.1</option>
+                                </optgroup>
 
-<optgroup label="Project — Sand Monitoring" data-category="project">
-    <option value="sandmon-teknisi-1"         {{ $type === 'sandmon-teknisi-1' ? 'selected' : '' }}>Sand Monitoring (Teknisi 1)</option>
-    <option value="sandmon-teknisi-2"         {{ $type === 'sandmon-teknisi-2' ? 'selected' : '' }}>Sand Monitoring (Teknisi 2)</option>
-</optgroup>
+                                <optgroup label="Project — PHSS Major" data-category="project">
+                                    <option value="phss-major-ai-1"           {{ $type === 'phss-major-ai-1' ? 'selected' : '' }}>PHSS Major (All In Type 1)</option>
+                                    <option value="phss-major-ai-2"           {{ $type === 'phss-major-ai-2' ? 'selected' : '' }}>PHSS Major (All In Type 2)</option>
+                                    <option value="phss-major-ai-3"           {{ $type === 'phss-major-ai-3' ? 'selected' : '' }}>PHSS Major (All In Type 3)</option>
+                                    <option value="phss-driver"               {{ $type === 'phss-driver' ? 'selected' : '' }}>PHSS Major (Driver)</option>
+                                    <option value="phss-humas"                {{ $type === 'phss-humas' ? 'selected' : '' }}>PHSS Major (Humas)</option>
+                                    <option value="phss-reguler"              {{ $type === 'phss-reguler' ? 'selected' : '' }}>PHSS Major (Reguler)</option>
+                                    <option value="phss-security"             {{ $type === 'phss-security' ? 'selected' : '' }}>PHSS Major (Security)</option>
+                                </optgroup>
 
-<optgroup label="Project — Lain-lain" data-category="project">
-    <option value="pep-lokal-buny"            {{ $type === 'pep-lokal-buny' ? 'selected' : '' }}>PEP Lokal Bunyu</option>
-    <option value="sched-5-2"                 {{ $type === 'sched-5-2' ? 'selected' : '' }}>Schedule 5-2 Rev. 2026</option>
-    <option value="lawe-lawe-reguler"         {{ $type === 'lawe-lawe-reguler' ? 'selected' : '' }}>LAWE LAWE (Reguler)</option>
-    <option value="lawe-lawe-all-in"          {{ $type === 'lawe-lawe-all-in' ? 'selected' : '' }}>LAWE LAWE (All In)</option>
-    <option value="ipfms-dobu"                {{ $type === 'ipfms-dobu' ? 'selected' : '' }}>IPFMS Dobu</option>
-</optgroup>
+                                <optgroup label="Project — Sand Monitoring" data-category="project">
+                                    <option value="sandmon-teknisi-1"         {{ $type === 'sandmon-teknisi-1' ? 'selected' : '' }}>Sand Monitoring (Teknisi 1)</option>
+                                    <option value="sandmon-teknisi-2"         {{ $type === 'sandmon-teknisi-2' ? 'selected' : '' }}>Sand Monitoring (Teknisi 2)</option>
+                                </optgroup>
+
+                                <optgroup label="Project — Lain-lain" data-category="project">
+                                    <option value="pep-lokal-buny"            {{ $type === 'pep-lokal-buny' ? 'selected' : '' }}>PEP Lokal Bunyu</option>
+                                    <option value="sched-5-2"                 {{ $type === 'sched-5-2' ? 'selected' : '' }}>Schedule 5-2 Rev. 2026</option>
+                                    <option value="lawe-lawe-reguler"         {{ $type === 'lawe-lawe-reguler' ? 'selected' : '' }}>LAWE LAWE (Reguler)</option>
+                                    <option value="lawe-lawe-all-in"          {{ $type === 'lawe-lawe-all-in' ? 'selected' : '' }}>LAWE LAWE (All In)</option>
+                                    <option value="ipfms-dobu"                {{ $type === 'ipfms-dobu' ? 'selected' : '' }}>IPFMS Dobu</option>
+                                </optgroup>
                             </select>
                         </div>
 
@@ -152,7 +153,7 @@
                 <div class="card-body">
                     <div class="row g-5">
 
-                        {{-- Contract Number — KOSONG --}}
+                        {{-- Contract Number --}}
                         <div class="col-md-6">
                             <label class="required form-label fw-semibold">No. Contract</label>
                             <input type="text" name="contract_number" class="form-control"
@@ -163,7 +164,7 @@
                             </div>
                         </div>
 
-                        {{-- Contract Date — default hari ini --}}
+                        {{-- Contract Date --}}
                         <div class="col-md-6">
                             <label class="required form-label fw-semibold">Tanggal Contract</label>
                             <input type="date" name="contract_date" id="contract-date" class="form-control"
@@ -260,16 +261,17 @@
                                    class="form-control bg-light"
                                    value="{{ old('employee_name', $source->employee_name) }}" readonly>
                         </div>
-                         {{-- Grade: muncul untuk managerial & non-managerial, tidak untuk project --}}
-<div class="col-md-6" id="grade-wrapper"
-     style="{{ in_array($category, ['managerial', 'non-managerial']) ? '' : 'display: none;' }}">
-    <label class="form-label fw-semibold">Golongan / Grade</label>
-    <select name="grade" id="grade-select" class="form-select"
-            data-control="select2"
-            data-placeholder="Pilih Grade">
-        <option value=""></option>
-    </select>
-</div>
+
+                        {{-- Grade: muncul untuk managerial & non-managerial, tidak untuk project --}}
+                        <div class="col-md-6" id="grade-wrapper"
+                             style="{{ in_array($category, ['managerial', 'non-managerial']) ? '' : 'display: none;' }}">
+                            <label class="form-label fw-semibold">Golongan / Grade</label>
+                            <select name="grade" id="grade-select" class="form-select"
+                                    data-control="select2"
+                                    data-placeholder="Pilih Grade">
+                                <option value=""></option>
+                            </select>
+                        </div>
 
                         {{-- Department --}}
                         <div class="col-md-6">
@@ -427,76 +429,76 @@
             {{-- ================================================== --}}
             {{-- TUNJANGAN (dynamic container) --}}
             {{-- ================================================== --}}
-           @php
-    // Semua tipe yang punya blok tunjangan
-    $allowanceTypes = [
-        // =====================
-        // Managerial
-        // =====================
-        'all-in',
-        'gp-mahal-um-ut-fungsi',
-        'gp-um-ut-fungsi',
+            @php
+                // Semua tipe yang punya blok tunjangan
+                $allowanceTypes = [
+                    // =====================
+                    // Managerial
+                    // =====================
+                    'all-in',
+                    'gp-mahal-um-ut-fungsi',
+                    'gp-um-ut-fungsi',
 
-        // =====================
-        // Non-Managerial
-        // =====================
-        'security',
-        'ob',
-        'gp-um-ut-laut',
-        'gp-um-ut',
-        'gp-mahal-um-ut-fungsi-pls',
-        'gp-mahal-um-ut',
+                    // =====================
+                    // Non-Managerial
+                    // =====================
+                    'security',
+                    'ob',
+                    'gp-um-ut-laut',
+                    'gp-um-ut',
+                    'gp-mahal-um-ut-fungsi-pls',
+                    'gp-mahal-um-ut',
 
-        // =====================
-        // Project — ENI
-        // =====================
-        'eni-civil-all-in',
-        'eni-civil-reguler',
-        'eni-smallcapital-all-in',
-        'eni-smallcapital-reguler',
-        'eni-muara-bakau-lembur',
-        'eni-muara-bakau-all-in',
+                    // =====================
+                    // Project — ENI
+                    // =====================
+                    'eni-civil-all-in',
+                    'eni-civil-reguler',
+                    'eni-smallcapital-all-in',
+                    'eni-smallcapital-reguler',
+                    'eni-muara-bakau-lembur',
+                    'eni-muara-bakau-all-in',
 
-        // =====================
-        // Project — Warlok / Medco
-        // =====================
-        'warlok-all-in',
-        'warlok-lembur',
-        'warlok-security',
+                    // =====================
+                    // Project — Warlok / Medco
+                    // =====================
+                    'warlok-all-in',
+                    'warlok-lembur',
+                    'warlok-security',
 
-        // =====================
-        // Project — ELIS PHKT
-        // =====================
-        'elis-phkt-5-2',
-        'elis-phkt-6-1',
+                    // =====================
+                    // Project — ELIS PHKT
+                    // =====================
+                    'elis-phkt-5-2',
+                    'elis-phkt-6-1',
 
-        // =====================
-        // Project — PHSS Major
-        // =====================
-        'phss-major-ai-1',
-        'phss-major-ai-2',
-        'phss-major-ai-3',
-        'phss-driver',
-        'phss-humas',
-        'phss-reguler',
-        'phss-security',
+                    // =====================
+                    // Project — PHSS Major
+                    // =====================
+                    'phss-major-ai-1',
+                    'phss-major-ai-2',
+                    'phss-major-ai-3',
+                    'phss-driver',
+                    'phss-humas',
+                    'phss-reguler',
+                    'phss-security',
 
-        // =====================
-        // Project — Sand Monitoring
-        // =====================
-        'sandmon-teknisi-1',
-        'sandmon-teknisi-2',
+                    // =====================
+                    // Project — Sand Monitoring
+                    // =====================
+                    'sandmon-teknisi-1',
+                    'sandmon-teknisi-2',
 
-        // =====================
-        // Project — Lain-lain
-        // =====================
-        'pep-lokal-buny',
-        'sched-5-2',
-        'lawe-lawe-reguler',
-        'lawe-lawe-all-in',
-        'ipfms-dobu',
-    ];
-@endphp
+                    // =====================
+                    // Project — Lain-lain
+                    // =====================
+                    'pep-lokal-buny',
+                    'sched-5-2',
+                    'lawe-lawe-reguler',
+                    'lawe-lawe-all-in',
+                    'ipfms-dobu',
+                ];
+            @endphp
 
             <div id="allowance-section">
                 @if (in_array($type, $allowanceTypes))
@@ -657,80 +659,69 @@ $(document).ready(function () {
 
 
     // =========================================================
-    // TYPE & CATEGORY — Dynamic Allowance Fields
+    // GRADE — Dynamic per Category
     // =========================================================
 
-    // =========================================================
-// GRADE — Dynamic per Category
-// =========================================================
+    const GRADE_OPTIONS = {
+        'managerial': [
+            { value: 'M-8', label: 'M-8' },
+            { value: 'M-7', label: 'M-7' },
+            { value: 'M-5-6', label: 'M-5-6' },
+            { value: 'M-3-4', label: 'M-3-4' },
+        ],
+        'non-managerial': [
+            { value: 'NM-5-6', label: 'NM-5-6' },
+            { value: 'NM-3-4', label: 'NM-3-4' },
+            { value: 'NM-1-2', label: 'NM-1-2' },
+        ],
+    };
 
-// Data grade per kategori
-const GRADE_OPTIONS = {
-    'managerial': [
-        { value: 'M-8', label: 'M-8' },
-        { value: 'M-7', label: 'M-7' },
-        { value: 'M-5-6', label: 'M-5-6' },
-        { value: 'M-3-4', label: 'M-3-4' },
-    ],
-    'non-managerial': [
-        { value: 'NM-5-6', label: 'NM-5-6' },
-        { value: 'NM-3-4', label: 'NM-3-4' },
-        { value: 'NM-1-2', label: 'NM-1-2' },
-    ],
-};
+    const SAVED_GRADE = @json(old('grade', $source->grade ?? ''));
 
-// Nilai grade tersimpan (untuk edit form)
-const SAVED_GRADE = @json(old('grade', $source->grade ?? ''));
+    function renderGradeOptions() {
+        const category = $('#category-select').val();
+        const $wrapper = $('#grade-wrapper');
+        const $select  = $('#grade-select');
 
-function renderGradeOptions() {
-    const category = $('#category-select').val();
-    const $wrapper = $('#grade-wrapper');
-    const $select  = $('#grade-select');
+        // Reset options
+        $select.html('<option value=""></option>');
 
-    // Reset options
-    $select.html('<option value=""></option>');
-
-    // Kalau bukan managerial/non-managerial → sembunyikan
-    if (!category || !GRADE_OPTIONS[category]) {
-        $wrapper.hide();
-        $select.removeAttr('required');
-        $select.trigger('change.select2');
-        return;
-    }
-
-    // Tampilkan wrapper
-    $wrapper.show();
-    $select.attr('required', 'required');
-
-    // Tambahkan optgroup sesuai kategori
-    let groupLabel = category === 'managerial' ? 'Managerial' : 'Non-Managerial';
-    let $optgroup  = $('<optgroup>').attr('label', groupLabel);
-
-    GRADE_OPTIONS[category].forEach(function (g) {
-        let $opt = $('<option>')
-            .attr('value', g.value)
-            .text(g.label);
-
-        if (SAVED_GRADE === g.value) {
-            $opt.attr('selected', 'selected');
+        // Kalau bukan managerial/non-managerial → sembunyikan
+        if (!category || !GRADE_OPTIONS[category]) {
+            $wrapper.hide();
+            $select.removeAttr('required');
+            $select.trigger('change.select2');
+            return;
         }
 
-        $optgroup.append($opt);
-    });
+        // Tampilkan wrapper
+        $wrapper.show();
+        $select.attr('required', 'required');
 
-    $select.append($optgroup);
+        // Tambahkan optgroup sesuai kategori
+        let groupLabel = category === 'managerial' ? 'Managerial' : 'Non-Managerial';
+        let $optgroup  = $('<optgroup>').attr('label', groupLabel);
 
-    // Refresh Select2
-    $select.trigger('change.select2');
-}
+        GRADE_OPTIONS[category].forEach(function (g) {
+            let $opt = $('<option>')
+                .attr('value', g.value)
+                .text(g.label);
 
-// Panggil saat halaman load
-renderGradeOptions();
+            if (SAVED_GRADE === g.value) {
+                $opt.attr('selected', 'selected');
+            }
 
-// Panggil saat category berubah
-$('#category-select').on('change', function () {
-    renderGradeOptions();
-});
+            $optgroup.append($opt);
+        });
+
+        $select.append($optgroup);
+        $select.trigger('change.select2');
+    }
+
+
+    // =========================================================
+    // TYPE & CATEGORY — Dynamic
+    // =========================================================
 
     // Aktif/nonaktifkan optgroup sesuai category
     function filterTypesByCategory() {
@@ -749,7 +740,8 @@ $('#category-select').on('change', function () {
             let groupCategory = selectedGroup.data('category');
 
             if (category && groupCategory !== category) {
-                $typeSelect.val('').trigger('change.select2');
+                // Reset type & trigger change (biasa) supaya reloadAllowanceFields jalan
+                $typeSelect.val('').trigger('change');
                 $('#allowance-section').html('');
             }
         }
@@ -820,14 +812,22 @@ $('#category-select').on('change', function () {
         });
     }
 
-    // Bind event
+
+    // =========================================================
+    // BIND EVENT — Consolidated
+    // =========================================================
+
+    // Category change → trigger semua handler
     $('#category-select').on('change', function () {
+        renderGradeOptions();
         filterTypesByCategory();
         updateToolbar();
     });
 
+    // Type change → reload allowance fields + update toolbar
     $('#type-select').on('change', function () {
         reloadAllowanceFields();
+        updateToolbar();
     });
 
 
@@ -837,6 +837,7 @@ $('#category-select').on('change', function () {
 
     fillEmployeeData();
     calculateAge();
+    renderGradeOptions();
     filterTypesByCategory();
     updateToolbar();
 

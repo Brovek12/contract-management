@@ -3,7 +3,7 @@
 @section('title', $contract->title)
 
 @section('document-style')
-    @include('admin.hrd.contracts.partials.show-styles')
+    @include('admin.hrd.contracts.partials.show-styles-project')
 @endsection
 
 
@@ -139,8 +139,26 @@
         sampai dengan tanggal
         <strong>{{ $contract->end_date?->translatedFormat('d F Y') ?? '................' }}</strong>
     </p>
+      @include('admin.hrd.contracts.partials.project.pasal2-hari-jam-kerja', [
+        'contract' => $contract,
+        'type'     => $type,
+    ])
+    
+    @include('admin.hrd.contracts.partials.project.pasal3-status-pekerja', [
+        'contract' => $contract,
+        'type'     => $type,
+    ])
 
-    @include('partials.document-footer')
+    @include('admin.hrd.contracts.partials.project.pasal4-domisili', [
+        'contract' => $contract,
+        'type'     => $type,
+    ])
+    <div class="pasal-title">PASAL 5</div>
+    <div class="pasal-subtitle">PENDAPATAN DAN KESEJAHTERAAN PEKERJA</div>
+
+    <p>1. Selama berlakunya Perjanjian Kerja Waktu Tertentu ini, pihak Perusahaan memberikan imbalan sebagai berikut :</p>
+
+  
 </div>
 {{-- PAGE 1 END --}}
 
@@ -151,66 +169,60 @@
 <div class="document-page">
     @include('partials.document-header')
 
-    @include('admin.hrd.contracts.partials.project.pasal2-hari-jam-kerja', [
+  
+
+     
+       @include('admin.hrd.contracts.partials.project.pasal5-pendapatan', [
         'contract' => $contract,
         'type'     => $type,
     ])
+      @if ($type === 'elis-phkt-5-2' )
+        <ol type="a" class="mt-2">
+            <li>Uang makan dan uang transport diberikan apabila Pekerja bekerja di office/workshop, dan lokasi tertentu yang tidak disediakan fasilitas makan dan transport</li>
+            <li>Uang makan dan transport tidak diberikan apabila fasilitas makan dan transport disediakan oleh Perusahaan atau user</li>
+            <li>Tunjangan Laut hanya diberikan apabila Pekerja bekerja di Offshore.</li>
+        </ol>
+        @endif
 
-    @include('admin.hrd.contracts.partials.project.pasal3-status-pekerja', [
-        'contract' => $contract,
-        'type'     => $type,
-    ])
-
-    @include('admin.hrd.contracts.partials.project.pasal4-domisili', [
-        'contract' => $contract,
-        'type'     => $type,
-    ])
-
-    @include('partials.document-footer')
-</div>
-{{-- PAGE 2 END --}}
-
-
-{{-- =========================================================
-    PAGE 3
-========================================================== --}}
-<div class="document-page">
-    @include('partials.document-header')
-
-    <div class="pasal-title">PASAL 5</div>
-    <div class="pasal-subtitle">PENDAPATAN DAN KESEJAHTERAAN PEKERJA</div>
-
-    <p>1. Selama berlakunya Perjanjian Kerja Waktu Tertentu ini, pihak Perusahaan memberikan imbalan sebagai berikut :</p>
-
-    @include('admin.hrd.contracts.partials.project.pasal5-pendapatan', [
-        'contract' => $contract,
-        'type'     => $type,
-    ])
-
+     @if ($type === 'eni-civil-all-in' || $type === 'eni-muara-bakau-all-in' || $type ==="warlok-all-in" )
+        <ol type="a" class="mt-2">
+            <li>Penggajian di atas sudah termasuk perhitungan apabila terjadi kelebihan jam kerja dan bekerja dihari libur.</li>
+            <li>Apabila karyawan sedang stanby maka tidak mengurangi upah di atas.</li>
+            <li>Apabila keryawan bekerja ke lokasi project maka tidak terhitung Dinas Luar, namun makan dan akomodasi akan disediakan.</li>
+        </ol>
+        @elseif (in_array($type, ['eni-smallcapital-all-in', 'lawe-lawe-all-in']))
+    <p><strong>Catatan:</strong></p>
+    <ol type="a" class="mt-2">
+        <li>Penggajian di atas sudah termasuk perhitungan apabila terjadi kelebihan jam kerja (lembur) di hari kerja dan bekerja dihari off/ libur/ offday/ libur nasional.</li>
+        <li>Pekerja bersedia bekerja jika diperintahkan oleh atasan/pimpinan saat hari kerja ataupun off/ libur/ libur nasional.</li>
+        <li>Apabila Pekerja berada dalam status standby berdasarkan penugasan atau kebijakan Perusahaan, maka penghasilan (gaji all-in) tetap dibayarkan sesuai ketentuan dalam Perjanjian Kerja.</li>
+    </ol>
+        @endif
+@if ($type === 'eni-smallcapital-all-in' || $type === 'eni-smallcapital-reguler')
+<p>2.	 <strong>Pekerja</strong> yang telah bekerja selama 12 (dua belas) bulan berturut-turut mendapat cuti tahunan sebanyak 12 (dua belas) hari kerja. Hak cuti tahunan Pekerja berlaku setelah masa satu tahun masa kerja terhitung dari waktu Pekerja mulai masuk kerja</p>
+@else
     <p>
         2. Semua pekerja yang telah bekerja selama 12 (dua belas) bulan berturut-turut mendapat cuti tahunan
         sebanyak 12 (dua belas) hari kerja. Hak cuti tahunan pekerja berlaku setelah masa satu tahun masa
         kerja terhitung dari waktu pekerja mulai masuk kerja. Cuti tahunan diatur sebagai berikut :
     </p>
     <p class="indent">a. Sebanyak-banyaknya 6 (enam) hari kerja atau sesuai ketentuan PT. Bukaka Teknik Utama Tbk. cabang Balikpapan ditetapkan sebagai cuti bersama (cuti masal) pada setiap Idul Fitri.</p>
-</div>
-{{-- PAGE 3 END --}}
-
-
-{{-- =========================================================
-    PAGE 4
-========================================================== --}}
-<div class="document-page">
-    @include('partials.document-header')
-
     <p class="indent">b. Sisanya 6 (enam) hari kerja dapat dipergunakan menurut kepentingan pribadi masing-masing pekerja.</p>
     <p class="indent">c. Apabila pada saat cuti masal di Hari Raya Idul Fitri karena kondisi pekerjaan, pekerja wajib masuk maka kehadirannya dapat diperhitungkan sebagai lembur di hari libur atau menggeser cutinya.</p>
+    @endif
+    
     <p>3. <strong>Pekerja</strong> diikutsertakan dalam Program <strong>BPJS Ketenagakerjaan</strong> yang meliputi :</p>
 
-    <p class="indent">a. Jaminan Kematian</p>
-    <p class="indent">b. Jaminan Kecelakaan Kerja</p>
-    <p class="indent">c. Jaminan Hari Tua</p>
-    <p class="indent">d. Jaminan Pensiun</p>
+<table class="two-col-list">
+    <tr>
+        <td>a. Jaminan Kematian</td>
+        <td>c. Jaminan Hari Tua</td>
+    </tr>
+    <tr>
+        <td>b. Jaminan Kecelakaan Kerja</td>
+        <td>d. Jaminan Pensiun</td>
+    </tr>
+</table>
 
     <p>
         <strong>Pekerja</strong> menanggung 2% untuk Jaminan Hari Tua dan 1% untuk Jaminan Pensiun yang
@@ -230,12 +242,10 @@
         proporsional. Tunjangan Hari Raya dibayarkan dan dilaksanakan pada saat Hari Raya Idul Fitri
         berlaku untuk semua Pekerja yang Muslim / Non Muslim
     </p>
-
-    @include('admin.hrd.contracts.partials.project.pasal5-attendance', [
+         @include('admin.hrd.contracts.partials.project.pasal5-attendance', [
         'contract' => $contract,
         'type'     => $type,
     ])
-
     <table class="paraf-table">
         <tr><td colspan="2" class="paraf-title">Paraf</td></tr>
         <tr><td class="paraf-title">Karyawan</td><td class="paraf-title">HRD</td></tr>
@@ -254,8 +264,18 @@
             </td>
         </tr>
     </table>
+
+
 </div>
-{{-- PAGE 4 END --}}
+{{-- PAGE 2 END --}}
+
+
+{{-- =========================================================
+    PAGE 3
+========================================================== --}}
+
+
+
 
 
 {{-- =========================================================
@@ -263,6 +283,7 @@
 ========================================================== --}}
 <div class="document-page">
     @include('partials.document-header')
+  
 
     <div class="pasal-title">PASAL 6</div>
     <div class="pasal-subtitle">KENAIKAN GAJI POKOK</div>
@@ -294,6 +315,31 @@
         Pekerja menyerahkan surat keterangan dari dokter yang merawat yang menyatakan bahwa Pekerja telah
         dapat kembali bekerja.
     </p>
+    <p>
+        4. Dalam hal Pekerja mengalami sakit berkepanjangan, menjalani perawatan atau pengobatan dalam jangka
+        waktu yang menyebabkan Pekerja tidak dapat melaksanakan pekerjaannya sampai dengan berakhirnya jangka
+        waktu PKWT, maka hubungan kerja berakhir sesuai dengan tanggal berakhirnya PKWT sebagaimana tercantum
+        dalam Perjanjian Kerja. Dalam hal tersebut, Perusahaan tidak berkewajiban untuk memperpanjang atau
+        memperbarui PKWT
+    </p>
+
+    <div class="pasal-title">PASAL 9</div>
+    <div class="pasal-subtitle">PENEGAKAN DISIPLIN</div>
+
+    <p><strong>1. Ketidakhadiran Tanpa Izin dan Mangkir</strong></p>
+    <p class="indent"><strong>a. Ketidakhadiran Tidak Berturut-turut (Akumulatif)</strong></p>
+    <p class="indent">
+        Pekerja dilarang tidak masuk kerja tanpa izin dari atasan langsung dan/atau pihak User. Setiap
+        ketidakhadiran tanpa izin atau tanpa keterangan tertulis yang sah yang terjadi
+        <strong>tidak secara berturut-turut</strong> dan <strong>terakumulasi dalam jangka waktu 1 (satu)
+        bulan periode berjalan</strong> dikualifikasikan sebagai pelanggaran disiplin kerja.
+    </p>
+    <p class="indent">Sanksi:</p>
+    <p class="indent-2">- Pelanggaran pertama: Surat Peringatan Pertama (SP I)</p>
+    <p class="indent-2">- Pelanggaran kedua: Surat Peringatan Kedua (SP II)</p>
+    <p class="indent-2">- Pelanggaran ketiga: Surat Peringatan Ketiga (SP III)</p>
+    <p class="indent"><strong>b. Ketidakhadiran Berturut-turut (Mangkir)</strong></p>
+
 
     <table class="paraf-table">
         <tr><td colspan="2" class="paraf-title">Paraf</td></tr>
@@ -323,32 +369,10 @@
 <div class="document-page">
     @include('partials.document-header')
 
-    <p>
-        4. Dalam hal Pekerja mengalami sakit berkepanjangan, menjalani perawatan atau pengobatan dalam jangka
-        waktu yang menyebabkan Pekerja tidak dapat melaksanakan pekerjaannya sampai dengan berakhirnya jangka
-        waktu PKWT, maka hubungan kerja berakhir sesuai dengan tanggal berakhirnya PKWT sebagaimana tercantum
-        dalam Perjanjian Kerja. Dalam hal tersebut, Perusahaan tidak berkewajiban untuk memperpanjang atau
-        memperbarui PKWT
-    </p>
+    
+    
 
-    <div class="pasal-title">PASAL 9</div>
-    <div class="pasal-subtitle">PENEGAKAN DISIPLIN</div>
-
-    <p><strong>1. Ketidakhadiran Tanpa Izin dan Mangkir</strong></p>
-    <p class="indent"><strong>a. Ketidakhadiran Tidak Berturut-turut (Akumulatif)</strong></p>
-
-    <p class="indent">
-        Pekerja dilarang tidak masuk kerja tanpa izin dari atasan langsung dan/atau pihak User. Setiap
-        ketidakhadiran tanpa izin atau tanpa keterangan tertulis yang sah yang terjadi
-        <strong>tidak secara berturut-turut</strong> dan <strong>terakumulasi dalam jangka waktu 1 (satu)
-        bulan periode berjalan</strong> dikualifikasikan sebagai pelanggaran disiplin kerja.
-    </p>
-
-    <p class="indent">Sanksi:</p>
-    <p class="indent-2">- Pelanggaran pertama: Surat Peringatan Pertama (SP I)</p>
-    <p class="indent-2">- Pelanggaran kedua: Surat Peringatan Kedua (SP II)</p>
-    <p class="indent-2">- Pelanggaran ketiga: Surat Peringatan Ketiga (SP III)</p>
-    <p class="indent"><strong>b. Ketidakhadiran Berturut-turut (Mangkir)</strong></p>
+    
 
     <p class="indent">
         Dalam hal Pekerja tidak masuk kerja selama <strong>5 (lima) hari kerja atau lebih secara
@@ -358,25 +382,46 @@
         dapat melakukan Pemutusan Hubungan Kerja (PHK) dengan alasan mangkir (pelanggaran disiplin oleh
         Pekerja) sesuai ketentuan Pasal 51 Peraturan Pemerintah Nomor 35 Tahun 2021.
     </p>
+     @include('admin.hrd.contracts.partials.project.pasal9-kepatuhan-jam-kerja', [
+        'contract' => $contract,
+        'type'     => $type,
+    ])
+ 
+<p>3. <strong>Keselamatan, Kesehatan Kerja (K3), dan Fasilitas</strong></p>
 
-    <p>2. <strong>Kepatuhan Jam dan Area Kerja</strong></p>
     <p class="indent">
-        a. Setiap karyawan yang berhalangan hadir, wajib menyampaikan informasi dan permohonan izin
-        kepada atasan langsung sebagai persetujuan, untuk selanjutnya diinformasikan kepada HRD maksimal
-        pada hari H untuk pendataan administrasi. Jenis izin adalah sebagai berikut:
+        Setiap Pekerja Lapangan wajib mematuhi seluruh ketentuan keselamatan dan kesehatan kerja (K3),
+        termasuk kewajiban menggunakan Alat Pelindung Diri (APD/PPE) secara lengkap dan benar serta
+        mengenakan tanda pengenal (ID Card) resmi yang dikeluarkan oleh Perusahaan dan/atau User selama
+        berada di area kerja.
     </p>
-    <p class="indent-2">i. Izin Terlambat</p>
-    <p class="indent-2">ii. Izin Pulang Awal</p>
-    <p class="indent-2">iii. Izin meninggalkan pekerjaan (keperluan pribadi)</p>
-    <p class="indent-2">iv. Izin meninggalkan pekerjaan (keperluan perusahaan)</p>
+     <p>Sanksi :</p>
+    <p class="indent-2">- Pelanggaran ke-1: Teguran tertulis</p>
+    <p class="indent-2">- Pelanggaran ke-2: Surat Peringatan Pertama (SP I)</p>
+    <p class="indent-2">- Pelanggaran ke-3: Surat Peringatan Kedua (SP II)</p>
+    <p class="indent-2">- Pelanggaran ke-4: Surat Peringatan Ketiga (SP III)</p>
+    <p>4. <strong>Ketertiban dan Keamanan Perusahaan</strong></p>
 
-    <p class="indent">b. Penanganan Pelanggaran Perizinan</p>
     <p class="indent">
-        Jika dalam masa 1 (satu) periode payroll terdapat karyawan yang melakukan pelanggaran /
-        ketidakpatuhan terhadap regulasi kedisiplinan yang berlaku, akan dilakukan pembinaan secara
-        bertahap dengan prosedur sebagai berikut:
+        Pekerja bersedia dilakukan pemeriksaan barang bawaan oleh petugas keamanan (security) pada saat
+        memasuki dan/atau meninggalkan lingkungan kerja sepanjang dilakukan secara wajar dan sesuai
+        dengan standar operasional prosedur Perusahaan.
     </p>
+ <p class="indent">Sanksi:</p>
+    <p class="indent-2">- Pelanggaran pertama: Surat Peringatan Pertama (SP I)</p>
+    <p class="indent-2">- Pelanggaran kedua: Surat Peringatan Kedua (SP II)</p>
+    <p class="indent-2">- Pelanggaran ketiga: Surat Peringatan Ketiga (SP III)</p>
+       <p>5. <strong>Larangan Tidur dan Kelalaian di Jam Kerja</strong></p>
 
+    <p class="indent">
+        Pekerja dilarang tidur pada jam kerja di luar waktu istirahat atau melakukan aktivitas pribadi
+        yang melalaikan tugas dan tanggung jawab pekerjaan sehingga mengganggu produktivitas, keselamatan
+        kerja, dan/atau operasional Perusahaan.
+    </p>
+    <p class="indent">Sanksi:</p>
+    <p class="indent-2">- Pelanggaran pertama: Surat Peringatan Pertama (SP I)</p>
+    <p class="indent-2">- Pelanggaran kedua: Surat Peringatan Kedua (SP II)</p>
+    <p class="indent-2">- Pelanggaran ketiga: Surat Peringatan Ketiga (SP III)</p>
     <table class="paraf-table">
         <tr><td colspan="2" class="paraf-title">Paraf</td></tr>
         <tr><td class="paraf-title">Karyawan</td><td class="paraf-title">HRD</td></tr>
@@ -405,54 +450,13 @@
 <div class="document-page">
     @include('partials.document-header')
 
-    <p class="indent-2">i. Surat Panggilan / Coaching (SPg)</p>
-    <p class="indent-2">ii. Surat Peringatan I (SP-1)</p>
-    <p class="indent-2">iii. Surat Peringatan II (SP-2)</p>
-    <p class="indent-2">iv. Surat Peringatan III (SP-3)</p>
-    <p class="indent">c. Setiap bentuk pelanggaran kedisiplinan akan dikenakan sanksi administratif
-        berupa pemotongan upah sebagai berikut:</p>
-    <p class="indent"><strong>Keterlambatan</strong></p>
-    <p class="indent-2">- 30 - 60 menit perhari dikenakan denda sebesar 3 jam upah</p>
-    <p class="indent-2">- Lebih dari 1 jam perhari dikenakan denda sebesar 1 hari upah</p>
-    <p class="indent-2">Perhitungan Upah/jam = (Gaji Pokok / 173) × 50%</p>
-    <p>3. <strong>Keselamatan, Kesehatan Kerja (K3), dan Fasilitas</strong></p>
+    
 
-    <p class="indent">
-        Setiap Pekerja Lapangan wajib mematuhi seluruh ketentuan keselamatan dan kesehatan kerja (K3),
-        termasuk kewajiban menggunakan Alat Pelindung Diri (APD/PPE) secara lengkap dan benar serta
-        mengenakan tanda pengenal (ID Card) resmi yang dikeluarkan oleh Perusahaan dan/atau User selama
-        berada di area kerja.
-    </p>
+   
+   
 
-    <p>Sanksi :</p>
-    <p class="indent-2">- Pelanggaran ke-1: Teguran tertulis</p>
-    <p class="indent-2">- Pelanggaran ke-2: Surat Peringatan Pertama (SP I)</p>
-    <p class="indent-2">- Pelanggaran ke-3: Surat Peringatan Kedua (SP II)</p>
-    <p class="indent-2">- Pelanggaran ke-4: Surat Peringatan Ketiga (SP III)</p>
-    <p>4. <strong>Ketertiban dan Keamanan Perusahaan</strong></p>
-
-    <p class="indent">
-        Pekerja bersedia dilakukan pemeriksaan barang bawaan oleh petugas keamanan (security) pada saat
-        memasuki dan/atau meninggalkan lingkungan kerja sepanjang dilakukan secara wajar dan sesuai
-        dengan standar operasional prosedur Perusahaan.
-    </p>
-
-    <p class="indent">Sanksi:</p>
-    <p class="indent-2">- Pelanggaran pertama: Surat Peringatan Pertama (SP I)</p>
-    <p class="indent-2">- Pelanggaran kedua: Surat Peringatan Kedua (SP II)</p>
-    <p class="indent-2">- Pelanggaran ketiga: Surat Peringatan Ketiga (SP III)</p>
-
-    <p>5. <strong>Larangan Tidur dan Kelalaian di Jam Kerja</strong></p>
-
-    <p class="indent">
-        Pekerja dilarang tidur pada jam kerja di luar waktu istirahat atau melakukan aktivitas pribadi
-        yang melalaikan tugas dan tanggung jawab pekerjaan sehingga mengganggu produktivitas, keselamatan
-        kerja, dan/atau operasional Perusahaan.
-    </p>
-    <p class="indent">Sanksi:</p>
-    <p class="indent-2">- Pelanggaran pertama: Surat Peringatan Pertama (SP I)</p>
-    <p class="indent-2">- Pelanggaran kedua: Surat Peringatan Kedua (SP II)</p>
-    <p class="indent-2">- Pelanggaran ketiga: Surat Peringatan Ketiga (SP III)</p>
+ 
+    
 
     <p>6. <strong>Kewajiban Pemutakhiran Data Pekerja</strong></p>
     <p class="indent">
@@ -471,6 +475,47 @@
     <p class="indent">8. Perubahan pihak yang menjadi ahli waris atau penerima manfaat hak ketenagakerjaan.</p>
 
     <p><strong>Sanksi :</strong> Surat Peringatan Pertama (SP I)</p>
+     <div class="pasal-title">PASAL 10</div>
+    <div class="pasal-subtitle">PELANGGARAN TATA TERTIB</div>
+
+    <p><strong>Ketentuan Umum:</strong></p>
+
+    <p>
+        1. Setiap Pekerja wajib mematuhi seluruh tata tertib, kode etik, serta standar prosedur kerja
+        Perusahaan, termasuk kepatuhan penuh terhadap aturan <strong>HSE (<em>Health, Safety, and
+        Environment</em>)</strong> demi menjamin keselamatan jiwa, keamanan aset, dan kelestarian
+        lingkungan kerja.
+    </p>
+    <p>
+        2. Pelanggaran terhadap ketentuan ini dikenakan sanksi sesuai tingkat kesalahan dan dampaknya,
+        mulai dari <strong>Surat Peringatan (SP I, II, III), Skorsing, hingga Pemutusan Hubungan Kerja
+        (PHK)</strong>, berdasarkan regulasi ketenagakerjaan yang berlaku serta kebijakan internal
+        Perusahaan.
+    </p>
+     <p>
+        3. Khusus untuk jenis pelanggaran yang diklasifikasikan sebagai <strong>Pelanggaran
+        Mendesak</strong>, Perusahaan berhak menjatuhkan sanksi <strong>Pemutusan Hubungan Kerja
+        (PHK)</strong> secara langsung tanpa melalui tahapan pemberian Surat Peringatan secara
+        berturut-turut, sebagaimana diatur dalam <strong>Pasal 52 ayat (2) Peraturan Pemerintah No. 35
+        Tahun 2021</strong>.
+    </p>
+    <p>
+        4. Khusus sanksi PHK atas pelanggaran berulang dan atau pelanggaran berat-mendesak, maka
+        Perusahaan <strong>tidak berkewajiban membayarkan ganti rugi sisa masa kontrak</strong>
+        sebagaimana dimaksud dalam Pasal 62 Undang-Undang Nomor 13 Tahun 2003.
+    </p>
+
+    <p><strong>A. Ketertiban dan Kepatuhan Kerja</strong></p>
+
+    <p>
+        1. <strong>Standar Penampilan:</strong> Pekerja pria dilarang berambut panjang, gondrong, atau
+        menguncir rambut yang tidak sesuai dengan ketentuan kerapian dan standar penampilan Perusahaan.
+    </p>
+    <p class="indent">Kategori Pelanggaran: Ringan</p>
+    <p class="indent">Sanksi:</p>
+    <p class="indent-2">Pelanggaran ke-1: Surat Peringatan Pertama (SP I)</p>
+    <p class="indent-2">Pelanggaran ke-2: Surat Peringatan Kedua (SP II)</p>
+    <p class="indent-2">Pelanggaran ke-3: Skorsing 1 (satu) minggu</p>
 
     <table class="paraf-table">
         <tr><td colspan="2" class="paraf-title">Paraf</td></tr>
@@ -500,47 +545,8 @@
 <div class="document-page">
     @include('partials.document-header')
 
-    <div class="pasal-title">PASAL 10</div>
-    <div class="pasal-subtitle">PELANGGARAN TATA TERTIB</div>
-
-    <p><strong>Ketentuan Umum:</strong></p>
-
-    <p>
-        1. Setiap Pekerja wajib mematuhi seluruh tata tertib, kode etik, serta standar prosedur kerja
-        Perusahaan, termasuk kepatuhan penuh terhadap aturan <strong>HSE (<em>Health, Safety, and
-        Environment</em>)</strong> demi menjamin keselamatan jiwa, keamanan aset, dan kelestarian
-        lingkungan kerja.
-    </p>
-    <p>
-        2. Pelanggaran terhadap ketentuan ini dikenakan sanksi sesuai tingkat kesalahan dan dampaknya,
-        mulai dari <strong>Surat Peringatan (SP I, II, III), Skorsing, hingga Pemutusan Hubungan Kerja
-        (PHK)</strong>, berdasarkan regulasi ketenagakerjaan yang berlaku serta kebijakan internal
-        Perusahaan.
-    </p>
-    <p>
-        3. Khusus untuk jenis pelanggaran yang diklasifikasikan sebagai <strong>Pelanggaran
-        Mendesak</strong>, Perusahaan berhak menjatuhkan sanksi <strong>Pemutusan Hubungan Kerja
-        (PHK)</strong> secara langsung tanpa melalui tahapan pemberian Surat Peringatan secara
-        berturut-turut, sebagaimana diatur dalam <strong>Pasal 52 ayat (2) Peraturan Pemerintah No. 35
-        Tahun 2021</strong>.
-    </p>
-    <p>
-        4. Khusus sanksi PHK atas pelanggaran berulang dan atau pelanggaran berat-mendesak, maka
-        Perusahaan <strong>tidak berkewajiban membayarkan ganti rugi sisa masa kontrak</strong>
-        sebagaimana dimaksud dalam Pasal 62 Undang-Undang Nomor 13 Tahun 2003.
-    </p>
-
-    <p><strong>A. Ketertiban dan Kepatuhan Kerja</strong></p>
-
-    <p>
-        1. <strong>Standar Penampilan:</strong> Pekerja pria dilarang berambut panjang, gondrong, atau
-        menguncir rambut yang tidak sesuai dengan ketentuan kerapian dan standar penampilan Perusahaan.
-    </p>
-    <p class="indent">Kategori Pelanggaran: Ringan</p>
-    <p class="indent">Sanksi:</p>
-    <p class="indent-2">Pelanggaran ke-1: Surat Peringatan Pertama (SP I)</p>
-    <p class="indent-2">Pelanggaran ke-2: Surat Peringatan Kedua (SP II)</p>
-    <p class="indent-2">Pelanggaran ke-3: Skorsing 1 (satu) minggu</p>
+   
+   
 
     <p>
         2. <strong>Penyalahgunaan Waktu Kerja:</strong> Pekerja dilarang berdagang bukan untuk
@@ -592,6 +598,24 @@
         atau kerugian terhadap aset Perusahaan/User atau mempersulit kegiatan perusahaan dan atau
         menyebabkan kecelakaan kerja.
     </p>
+    
+    <p class="indent">Kategori Pelanggaran: <strong>Ringan / Berat / Mendesak</strong></p>
+    <p class="indent">Sanksi:</p>
+    <p class="indent-2">a. Apabila berdampak ringan dan tidak menimbulkan kerugian material yang signifikan: Surat Peringatan Pertama dan Terakhir</p>
+    <p class="indent-2">b. Apabila menimbulkan kerugian material besar, kecelakaan serius, gangguan operasional, potensi fatalitas, kebakaran, ledakan, atau pelanggaran K3 berat: Pemutusan Hubungan Kerja (PHK)</p>
+    <p>
+        8. <strong>Senjata dan Minuman Keras:</strong> Pekerja dilarang membawa, menyimpan, menggunakan,
+        atau mengancam dengan senjata tajam, senjata api, maupun minuman keras di lingkungan kerja.
+    </p>
+    <p class="indent">Kategori Pelanggaran: Berat / Mendesak</p>
+    <p class="indent">Sanksi:</p>
+    <p class="indent-2">a. Apabila hanya membawa: Skorsing</p>
+    <p class="indent-2">b. Apabila menimbulkan kerugian material besar, kecelakaan serius, gangguan operasional, potensi fatalitas, kebakaran, ledakan, atau pelanggaran K3 berat: Pemutusan Hubungan Kerja (PHK)</p>
+
+    <p>
+        9. <strong>Narkotika:</strong> Pekerja dilarang membawa, menyimpan, menjual, membeli, atau
+        mengonsumsi narkotika dan zat adiktif terlarang di dalam maupun di luar lingkungan kerja.
+    </p>
 
     <table class="paraf-table">
         <tr><td colspan="2" class="paraf-title">Paraf</td></tr>
@@ -621,23 +645,6 @@
 <div class="document-page">
     @include('partials.document-header')
 
-    <p class="indent">Kategori Pelanggaran: <strong>Ringan / Berat / Mendesak</strong></p>
-    <p class="indent">Sanksi:</p>
-    <p class="indent-2">a. Apabila berdampak ringan dan tidak menimbulkan kerugian material yang signifikan: Surat Peringatan Pertama dan Terakhir</p>
-    <p class="indent-2">b. Apabila menimbulkan kerugian material besar, kecelakaan serius, gangguan operasional, potensi fatalitas, kebakaran, ledakan, atau pelanggaran K3 berat: Pemutusan Hubungan Kerja (PHK)</p>
-    <p>
-        8. <strong>Senjata dan Minuman Keras:</strong> Pekerja dilarang membawa, menyimpan, menggunakan,
-        atau mengancam dengan senjata tajam, senjata api, maupun minuman keras di lingkungan kerja.
-    </p>
-    <p class="indent">Kategori Pelanggaran: Berat / Mendesak</p>
-    <p class="indent">Sanksi:</p>
-    <p class="indent-2">a. Apabila hanya membawa: Skorsing</p>
-    <p class="indent-2">b. Apabila menimbulkan kerugian material besar, kecelakaan serius, gangguan operasional, potensi fatalitas, kebakaran, ledakan, atau pelanggaran K3 berat: Pemutusan Hubungan Kerja (PHK)</p>
-
-    <p>
-        9. <strong>Narkotika:</strong> Pekerja dilarang membawa, menyimpan, menjual, membeli, atau
-        mengonsumsi narkotika dan zat adiktif terlarang di dalam maupun di luar lingkungan kerja.
-    </p>
     <p class="indent">Kategori Pelanggaran: Mendesak</p>
     <p class="indent">Sanksi: PHK</p>
     <p><strong>B. LARANGAN MEROKOK (K3 &amp; ZERO ACCIDENT)</strong></p>
@@ -664,6 +671,29 @@
     <p class="indent-2" style="margin-left:20mm !important;">Pelanggaran ke-1: Surat Peringatan Pertama dan Terakhir</p>
     <p class="indent-2" style="margin-left:20mm !important;">Pelanggaran ke-2: PHK</p>
     <p class="indent-2">b. Menyebabkan Kebakaran atau kerugian materil besar : PHK</p>
+     <p>13. Merokok pada waktu jam istirahat di area yang dilarang merokok/area terbatas di wilayah User.</p>
+    <p class="indent">Sanksi:</p>
+    <p class="indent-2">a. Tidak menyebabkan Kebakaran atau kerugian materil</p>
+    <p class="indent-2" style="margin-left:20mm !important;">Pelanggaran ke-1: Surat Peringatan Pertama dan Terakhir</p>
+    <p class="indent-2" style="margin-left:20mm !important;">Pelanggaran ke-2: PHK</p>
+    <p class="indent-2">b. Menyebabkan Kebakaran atau kerugian materil besar : PHK</p>
+
+
+    <p><strong>C. PERILAKU, ETIKA &amp; INFORMASI ELEKTRONIK</strong></p>
+    <p>
+        14. <strong>Penggunaan Perangkat Elektronik Terlarang:</strong> Pekerja membawa, menggunakan HP
+        atau perangkat elektronik sejenis di area yang dilarang/ area terbatas yang ditetapkan Perusahaan/User.
+    </p>
+    <p class="indent">Kategori Pelanggaran: Berat</p>
+    <p class="indent">Sanksi:</p>
+    <p class="indent-2">Pelanggaran ke-1: Surat Peringatan Pertama dan Terakhir</p>
+    <p class="indent-2">Pelanggaran ke-2: PHK</p>
+
+    <p>
+        15. <strong>Pemalsuan Administrasi:</strong> Pekerja dilarang menggunakan atau menyerahkan
+        dokumen palsu (ijazah, sertifikat, surat keterangan dokter atau surat keterangan resmi lainnya)
+        yang berhubungan dengan prosedur kerja atau kepentingan hubungan kerja.
+    </p>
 
     <table class="paraf-table">
         <tr><td colspan="2" class="paraf-title">Paraf</td></tr>
@@ -692,30 +722,6 @@
 ========================================================== --}}
 <div class="document-page">
     @include('partials.document-header')
-
-    <p>13. Merokok pada waktu jam istirahat di area yang dilarang merokok/area terbatas di wilayah User.</p>
-    <p class="indent">Sanksi:</p>
-    <p class="indent-2">a. Tidak menyebabkan Kebakaran atau kerugian materil</p>
-    <p class="indent-2" style="margin-left:20mm !important;">Pelanggaran ke-1: Surat Peringatan Pertama dan Terakhir</p>
-    <p class="indent-2" style="margin-left:20mm !important;">Pelanggaran ke-2: PHK</p>
-    <p class="indent-2">b. Menyebabkan Kebakaran atau kerugian materil besar : PHK</p>
-
-    <p><strong>C. PERILAKU, ETIKA &amp; INFORMASI ELEKTRONIK</strong></p>
-
-    <p>
-        14. <strong>Penggunaan Perangkat Elektronik Terlarang:</strong> Pekerja membawa, menggunakan HP
-        atau perangkat elektronik sejenis di area yang dilarang/ area terbatas yang ditetapkan Perusahaan/User.
-    </p>
-    <p class="indent">Kategori Pelanggaran: Berat</p>
-    <p class="indent">Sanksi:</p>
-    <p class="indent-2">Pelanggaran ke-1: Surat Peringatan Pertama dan Terakhir</p>
-    <p class="indent-2">Pelanggaran ke-2: PHK</p>
-
-    <p>
-        15. <strong>Pemalsuan Administrasi:</strong> Pekerja dilarang menggunakan atau menyerahkan
-        dokumen palsu (ijazah, sertifikat, surat keterangan dokter atau surat keterangan resmi lainnya)
-        yang berhubungan dengan prosedur kerja atau kepentingan hubungan kerja.
-    </p>
     <p class="indent">Kategori Pelanggaran: Berat</p>
     <p class="indent">Sanksi:</p>
     <p class="indent-2">Pelanggaran ke-1: Surat Peringatan Pertama dan Terakhir</p>
@@ -737,6 +743,38 @@
     </p>
     <p class="indent">Kategori Pelanggaran: Mendesak</p>
     <p class="indent">Sanksi: PHK</p>
+    <p>
+        18. <strong>Etika Verbal:</strong> Pekerja dilarang berkata kasar, menghina, atau merendahkan
+        rekan kerja di lingkungan kerja.
+    </p>
+    <p class="indent">Kategori Pelanggaran: Ringan</p>
+    <p class="indent">Sanksi:</p>
+    <p class="indent-2">Pelanggaran ke-1: Surat Peringatan Pertama dan Terakhir</p>
+    <p class="indent-2">Pelanggaran ke-2: PHK</p>
+
+    <p>19. <strong>Vandalisme:</strong> Merusak atau mencoret fasilitas Perusahaan/User secara sengaja.</p>
+    <p class="indent">Kategori Pelanggaran: Sedang</p>
+    <p class="indent">Sanksi:</p>
+    <p class="indent-2">Pelanggaran ke-1: Skorsing maksimal 1 (satu) minggu</p>
+    <p class="indent-2">Pelanggaran ke-2: PHK</p>
+
+    <p>20. <strong>Intimidasi:</strong> Mengancam secara fisik atau psikis terhadap atasan, bawahan, rekan kerja, atau keluarganya.</p>
+    <p class="indent">Kategori Pelanggaran: Berat</p>
+    <p class="indent">Sanksi:</p>
+    <p class="indent-2">Pelanggaran ke-1: Skorsing maksimal 2 (dua) minggu</p>
+    <p class="indent-2">Pelanggaran ke-2: PHK</p>
+
+    <p>21. <strong>Perjudian</strong>: Terbukti melakukan kegiatan perjudian dalam bentuk apa pun di lingkungan kerja.</p>
+    <p class="indent">Kategori Pelanggaran: Mendesak</p>
+    <p class="indent">Sanksi: PHK</p>
+     <p>22. <strong>Perbuatan Asusila:</strong> Terbukti melakukan pelecehan, tindakan tidak bermoral, pornografi, atau pornoaksi kepada rekan kerja.</p>
+    <p class="indent">Kategori Pelanggaran: Mendesak</p>
+    <p class="indent">Sanksi: PHK</p>
+
+    <p>23. <strong>Kekerasan Fisik:</strong> Berkelahi, memukul, melukai orang lain, membunuh, atau melakukan tindak pidana hukum lainnya baik rekan kerja maupun keluarganya baik di lingkungan kerja ataupun diluar lingkungan kerja.</p>
+    <p class="indent">Kategori Pelanggaran: Mendesak</p>
+    <p class="indent">Sanksi: PHK</p>
+
 
     <table class="paraf-table">
         <tr><td colspan="2" class="paraf-title">Paraf</td></tr>
@@ -766,39 +804,9 @@
 <div class="document-page">
     @include('partials.document-header')
 
-    <p>
-        18. <strong>Etika Verbal:</strong> Pekerja dilarang berkata kasar, menghina, atau merendahkan
-        rekan kerja di lingkungan kerja.
-    </p>
-    <p class="indent">Kategori Pelanggaran: Ringan</p>
-    <p class="indent">Sanksi:</p>
-    <p class="indent-2">Pelanggaran ke-1: Surat Peringatan Pertama dan Terakhir</p>
-    <p class="indent-2">Pelanggaran ke-2: PHK</p>
+    
 
-    <p>19. <strong>Vandalisme:</strong> Merusak atau mencoret fasilitas Perusahaan/User secara sengaja.</p>
-    <p class="indent">Kategori Pelanggaran: Sedang</p>
-    <p class="indent">Sanksi:</p>
-    <p class="indent-2">Pelanggaran ke-1: Skorsing maksimal 1 (satu) minggu</p>
-    <p class="indent-2">Pelanggaran ke-2: PHK</p>
-
-    <p>20. <strong>Intimidasi:</strong> Mengancam secara fisik atau psikis terhadap atasan, bawahan, rekan kerja, atau keluarganya.</p>
-    <p class="indent">Kategori Pelanggaran: Berat</p>
-    <p class="indent">Sanksi:</p>
-    <p class="indent-2">Pelanggaran ke-1: Skorsing maksimal 2 (dua) minggu</p>
-    <p class="indent-2">Pelanggaran ke-2: PHK</p>
-
-    <p>21. <strong>Perjudian</strong>: Terbukti melakukan kegiatan perjudian dalam bentuk apa pun di lingkungan kerja.</p>
-    <p class="indent">Kategori Pelanggaran: Mendesak</p>
-    <p class="indent">Sanksi: PHK</p>
-
-    <p>22. <strong>Perbuatan Asusila:</strong> Terbukti melakukan pelecehan, tindakan tidak bermoral, pornografi, atau pornoaksi kepada rekan kerja.</p>
-    <p class="indent">Kategori Pelanggaran: Mendesak</p>
-    <p class="indent">Sanksi: PHK</p>
-
-    <p>23. <strong>Kekerasan Fisik:</strong> Berkelahi, memukul, melukai orang lain, membunuh, atau melakukan tindak pidana hukum lainnya baik rekan kerja maupun keluarganya baik di lingkungan kerja ataupun diluar lingkungan kerja.</p>
-    <p class="indent">Kategori Pelanggaran: Mendesak</p>
-    <p class="indent">Sanksi: PHK</p>
-
+   
     <p>24. <strong>Pelanggaran Akses:</strong> Memasuki area Perusahaan di luar jam kerja tanpa izin atasan atau pimpinan perusahaan.</p>
     <p class="indent">Kategori Pelanggaran: Ringan → Sedang</p>
     <p class="indent">Sanksi:</p>
@@ -806,35 +814,6 @@
     <p class="indent-2">Pelanggaran ke-2: SP II</p>
     <p class="indent-2">Pelanggaran ke-3: SP III</p>
     <p class="indent-2">Pelanggaran ke-4: PHK</p>
-
-    <table class="paraf-table">
-        <tr><td colspan="2" class="paraf-title">Paraf</td></tr>
-        <tr><td class="paraf-title">Karyawan</td><td class="paraf-title">HRD</td></tr>
-        <tr>
-            <td class="paraf-box">
-                @if ($contract->employee_signature)
-                    <img src="{{ asset('storage/' . $contract->employee_signature) }}" class="signature-image" alt="Employee Signature">
-                @endif
-            </td>
-            <td class="paraf-box-hrd">
-                @if ($contract->hrd_qr_path)
-                    <img src="{{ asset('storage/' . $contract->hrd_qr_path) }}" class="signature-image-3" alt="QR HRD Approval">
-                @else
-                    <div class="text-muted fs-8">Belum di-approve</div>
-                @endif
-            </td>
-        </tr>
-    </table>
-</div>
-{{-- PAGE 11 END --}}
-
-
-{{-- =========================================================
-    PAGE 12 — Pasal 10 lanjutan (25-31)
-========================================================== --}}
-<div class="document-page">
-    @include('partials.document-header')
-
     <p>25. <strong>Kecerobohan Alat Kerja</strong>: Menggunakan peralatan/perangkat kerja, bahan-bahan baku serta barang lain milik perusahaan/user secara sengaja ceroboh hingga menimbulkan kerusakan atau kerugian bagi perusahaan.</p>
     <p class="indent">Kategori Pelanggaran: Berat</p>
     <p class="indent">Sanksi:</p>
@@ -868,10 +847,19 @@
     <p class="indent">Sanksi:</p>
     <p class="indent-2">Pelanggaran ke-1: Surat Peringatan Pertama dan Terakhir</p>
     <p class="indent-2">Pelanggaran ke-2: PHK</p>
-
-    <p>31. <strong>Tindak Pidana:</strong> Pekerja dinyatakan bersalah melakukan tindak criminal/pidana berdasarkan putusan aparat penegak hukum.</p>
+   <p>31. <strong>Tindak Pidana:</strong> Pekerja dinyatakan bersalah melakukan tindak criminal/pidana berdasarkan putusan aparat penegak hukum.</p>
     <p class="indent">Kategori Pelanggaran: Mendesak</p>
     <p class="indent">Sanksi: PHK</p>
+
+    <p><strong>E. LAIN-LAIN</strong></p>
+
+    <p>
+        32. <strong>Diskresi Perusahaan:</strong> Perbuatan atau tindakan Pekerja yang belum diatur
+        secara khusus dalam aturan perusahaan atau kontrak kerja ini, namun berdasarkan penilaian
+        objektif terbukti merusak citra dan atau merugikan Perusahaan, mengganggu operasional, melanggar
+        kepatutan kerja, atau menimbulkan risiko terhadap keselamatan, keamanan, dan ketertiban kerja.
+    </p>
+   
 
     <table class="paraf-table">
         <tr><td colspan="2" class="paraf-title">Paraf</td></tr>
@@ -892,23 +880,10 @@
         </tr>
     </table>
 </div>
-{{-- PAGE 12 END --}}
 
-
-{{-- =========================================================
-    PAGE 13 — Pasal 10 lanjutan (Diskresi 32) + Pasal 11 + Pasal 12
-========================================================== --}}
 <div class="document-page">
     @include('partials.document-header')
-
-    <p><strong>E. LAIN-LAIN</strong></p>
-
-    <p>
-        32. <strong>Diskresi Perusahaan:</strong> Perbuatan atau tindakan Pekerja yang belum diatur
-        secara khusus dalam aturan perusahaan atau kontrak kerja ini, namun berdasarkan penilaian
-        objektif terbukti merusak citra dan atau merugikan Perusahaan, mengganggu operasional, melanggar
-        kepatutan kerja, atau menimbulkan risiko terhadap keselamatan, keamanan, dan ketertiban kerja.
-    </p>
+  
     <p class="indent">Kategori Pelanggaran: <strong>Ringan → Mendesak</strong></p>
     <p class="indent">Sanksi:</p>
     <p class="indent">
@@ -964,6 +939,40 @@
         a. Pekerja berhak atas Uang Kompensasi yang besarnya dihitung berdasarkan jangka waktu PKWT yang
         telah dilaksanakan oleh Pekerja (sesuai poin 1).
     </p>
+      <p class="indent">
+        b. Pekerja membayar ganti rugi kepada Perusahaan sebesar Upah Pekerja sampai batas waktu
+        berakhirnya jangka waktu PKWT berdasarkan gaji pokok. (Sesuai Pasal 17 PP 35/2021).
+    </p>
+    <p class="indent">
+        c. Pembayaran Uang Kompensasi sebagaimana dimaksud pada butir (a) dapat diperhitungkan
+        (dikompensasikan) dengan kewajiban pembayaran ganti rugi oleh Pekerja kepada Perusahaan.
+    </p>
+     <p>
+        4. Pekerja tidak hadir selama 5 (Lima) hari dalam 1 (satu) bulan secara berturut -- turut, tanpa
+        izin atau tanpa alasan yang bisa dipertanggung jawabkan dan atau telah dipanggil secara patut dan
+        tertulis sebanyak 2 (dua) kali maka dapat di PHK karena mangkir (PP 35 pasal 51).
+    </p>
+    <p>
+        5. Pekerja tidak berhak menuntut ganti rugi kontrak dan hanya akan menerima pendapatan sampai
+        saat tanggal pemutusan Perjanjian Kerja Waktu Tertentu jika :
+    </p>
+    <p class="indent">a. Pekerja yang mengundurkan diri atau yang mangkir.</p>
+    <p class="indent">
+        b. Pekerja telah terbukti sah melakukan pelanggaran pasal disiplin dan tata tertib perusahaan
+        dengan sanksi PHK, melalui bukti temuan atau dokumen perusahaan atau surat pendukung lainnya yang
+        dapat dipertanggungjawabkan secara hukum.
+    </p>
+      
+    <p class="indent">
+        c. Atau, Pekerja telah terbukti sah melakukan pelanggaran disiplin dan tata tertib dengan sanksi
+        PHK berdasarkan putusan pengadilan yang berkekuatan hukum tetap jika diperlukan (kategori kasus
+        kriminal/penipuan dalam undang-undang pidana/perdata).
+    </p>
+    <p>6. Pemberitahuan pengunduran diri diberikan kepada Perusahaan selambat -- lambatnya 30 (tiga puluh) hari sebelumnya.</p>
+    <p>
+        7. Pekerja yang mengundurkan diri wajib menyelesaikan tanggungjawab pekerjaan / alih tugas
+        kepada pekerja yang ditunjuk atasan.
+    </p>
 
     <table class="paraf-table">
         <tr><td colspan="2" class="paraf-title">Paraf</td></tr>
@@ -993,40 +1002,10 @@
 <div class="document-page">
     @include('partials.document-header')
 
-    <p class="indent">
-        b. Pekerja membayar ganti rugi kepada Perusahaan sebesar Upah Pekerja sampai batas waktu
-        berakhirnya jangka waktu PKWT berdasarkan gaji pokok. (Sesuai Pasal 17 PP 35/2021).
-    </p>
-    <p class="indent">
-        c. Pembayaran Uang Kompensasi sebagaimana dimaksud pada butir (a) dapat diperhitungkan
-        (dikompensasikan) dengan kewajiban pembayaran ganti rugi oleh Pekerja kepada Perusahaan.
-    </p>
+  
 
-    <p>
-        4. Pekerja tidak hadir selama 5 (Lima) hari dalam 1 (satu) bulan secara berturut -- turut, tanpa
-        izin atau tanpa alasan yang bisa dipertanggung jawabkan dan atau telah dipanggil secara patut dan
-        tertulis sebanyak 2 (dua) kali maka dapat di PHK karena mangkir (PP 35 pasal 51).
-    </p>
-    <p>
-        5. Pekerja tidak berhak menuntut ganti rugi kontrak dan hanya akan menerima pendapatan sampai
-        saat tanggal pemutusan Perjanjian Kerja Waktu Tertentu jika :
-    </p>
-    <p class="indent">a. Pekerja yang mengundurkan diri atau yang mangkir.</p>
-    <p class="indent">
-        b. Pekerja telah terbukti sah melakukan pelanggaran pasal disiplin dan tata tertib perusahaan
-        dengan sanksi PHK, melalui bukti temuan atau dokumen perusahaan atau surat pendukung lainnya yang
-        dapat dipertanggungjawabkan secara hukum.
-    </p>
-    <p class="indent">
-        c. Atau, Pekerja telah terbukti sah melakukan pelanggaran disiplin dan tata tertib dengan sanksi
-        PHK berdasarkan putusan pengadilan yang berkekuatan hukum tetap jika diperlukan (kategori kasus
-        kriminal/penipuan dalam undang-undang pidana/perdata).
-    </p>
-    <p>6. Pemberitahuan pengunduran diri diberikan kepada Perusahaan selambat -- lambatnya 30 (tiga puluh) hari sebelumnya.</p>
-    <p>
-        7. Pekerja yang mengundurkan diri wajib menyelesaikan tanggungjawab pekerjaan / alih tugas
-        kepada pekerja yang ditunjuk atasan.
-    </p>
+ 
+    
     <p>
         8. Apabila masa kerja Pekerja memenuhi persyaratan saat akhir hubungan kerja, maka Pekerja akan
         mendapatkan uang pengganti hak sesuai dengan Pasal 40 ayat (4) pada PP No. 35 Tahun 2021.
@@ -1052,35 +1031,6 @@
         secara musyawarah dan kekeluargaan. Bila tidak tercapai kesepakatan maka akan diselesaikan
         menurut peraturan perundang -- undangan yang berlaku di Wilayah Republik Indonesia.
     </p>
-
-    <table class="paraf-table">
-        <tr><td colspan="2" class="paraf-title">Paraf</td></tr>
-        <tr><td class="paraf-title">Karyawan</td><td class="paraf-title">HRD</td></tr>
-        <tr>
-            <td class="paraf-box">
-                @if ($contract->employee_signature)
-                    <img src="{{ asset('storage/' . $contract->employee_signature) }}" class="signature-image" alt="Employee Signature">
-                @endif
-            </td>
-            <td class="paraf-box-hrd">
-                @if ($contract->hrd_qr_path)
-                    <img src="{{ asset('storage/' . $contract->hrd_qr_path) }}" class="signature-image-3" alt="QR HRD Approval">
-                @else
-                    <div class="text-muted fs-8">Belum di-approve</div>
-                @endif
-            </td>
-        </tr>
-    </table>
-</div>
-{{-- PAGE 14 END --}}
-
-
-{{-- =========================================================
-    PAGE 15 — Pasal 14 + SIGNATURE
-========================================================== --}}
-<div class="document-page">
-    @include('partials.document-header')
-
     <div class="pasal-title">PASAL 14</div>
     <div class="pasal-subtitle">KETENTUAN LAIN</div>
 
@@ -1160,10 +1110,10 @@
             <div class="signature-title">Head Of Balikpapan Branch</div>
         </div>
     </div>
-
-    @include('partials.document-footer')
+ @include('partials.document-footer')
+   
 </div>
-{{-- PAGE 15 END --}}
+
 
 @endsection
 

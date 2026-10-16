@@ -994,12 +994,9 @@ class ContractController extends Controller
 
         // ENI Civil — Reguler (Gaji 09)
         // Gaji Pokok + Tunj. Kemahalan + UM + UT + Fungsi
-        'eni-civil-reguler' => [
-            'cost_allowance'       => 'nullable|numeric|min:0',
-            'meal_allowance'       => 'nullable|numeric|min:0',
-            'transport_allowance'  => 'nullable|numeric|min:0',
-            'functional_allowance' => 'nullable|numeric|min:0',
-        ],
+     'eni-civil-reguler' => [
+        'attendance_allowance' => 'nullable|numeric|min:0',
+    ],
 
         // ENI Small Capital — All In
         // Gaji Pokok + Tunj. Jabatan (keduanya All-In)
@@ -1189,39 +1186,41 @@ class ContractController extends Controller
         'projects'  => $projects,
     ]);
 }
-    public function allowanceFields(Request $request)
-    {
-        $type = $request->query('type');
+   public function allowanceFields(Request $request)
+{
+    $type = $request->query('type');
 
-        $allowanceTypes = [
-            'all-in',
-            'gp-mahal-um-ut-fungsi',
-            'gp-um-ut-fungsi',
-            'security',
-            'ob',
-            'gp-um-ut-laut',
-            'gp-um-ut',
-            'gp-mahal-um-ut-fungsi-pls',
-            'gp-mahal-um-ut',
-            'pep-lokal-buny',
-            'elis-phkt-5-2',
-            'elis-phkt-6-1',
-            'eni-muara-bakau-lembur',
-            'eni-muara-bakau-all-in',
-            'ipfms-dobu',
-        ];
+    $allowanceTypes = [
+        'all-in', 'gp-mahal-um-ut-fungsi', 'gp-um-ut-fungsi',
+        'security', 'ob', 'gp-um-ut-laut', 'gp-um-ut',
+        'gp-mahal-um-ut-fungsi-pls', 'gp-mahal-um-ut',
 
-        if (!in_array($type, $allowanceTypes)) {
-            return response()->json(['html' => '']);
-        }
+        // Project lama
+        'pep-lokal-buny', 'elis-phkt-5-2', 'elis-phkt-6-1',
+        'eni-muara-bakau-lembur', 'eni-muara-bakau-all-in',
+        'ipfms-dobu',
 
-        $html = view('admin.hrd.contracts.partials.create-pasal5', [
-            'contract' => null, // mode create → field kosong
-            'type'     => $type,
-        ])->render();
+        // Project baru
+        'eni-civil-all-in', 'eni-civil-reguler',
+        'eni-smallcapital-all-in', 'eni-smallcapital-reguler',
+        'warlok-all-in', 'warlok-lembur', 'warlok-security',
+        'phss-major-ai-1', 'phss-major-ai-2', 'phss-major-ai-3',
+        'phss-driver', 'phss-humas', 'phss-reguler', 'phss-security',
+        'sandmon-teknisi-1', 'sandmon-teknisi-2',
+        'sched-5-2', 'lawe-lawe-reguler', 'lawe-lawe-all-in',
+    ];
 
-        return response()->json(['html' => $html]);
+    if (!in_array($type, $allowanceTypes)) {
+        return response()->json(['html' => '']);
     }
+
+    $html = view('admin.hrd.contracts.partials.create-pasal5', [
+        'contract' => null,
+        'type'     => $type,
+    ])->render();
+
+    return response()->json(['html' => $html]);
+}
 
     public function verify($token)
     {

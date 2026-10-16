@@ -29,14 +29,17 @@
             <td style="padding-left: 20px;">Perbulan</td>
         </tr>
     </table>
+@elseif (in_array($type, ['warlok-all-in', 'warlok-lembur', 'warlok-security']))
 
-    @if ($type === 'eni-civil-all-in')
-        <ol type="a" class="mt-2">
-            <li>Penggajian di atas sudah termasuk perhitungan apabila terjadi kelebihan jam kerja dan bekerja dihari libur.</li>
-            <li>Apabila karyawan sedang stanby maka tidak mengurangi upah di atas.</li>
-            <li>Apabila keryawan bekerja ke lokasi project maka tidak terhitung Dinas Luar, namun makan dan akomodasi akan disediakan.</li>
-        </ol>
-    @endif
+    <table class="data-table" style="width: auto; margin: 6px auto 10px;">
+        <tr>
+            <td class="data-label" style="width: auto;">Gaji Pokok</td>
+            <td class="data-sep">:</td>
+            <td class="data-value"><strong>Rp {{ $rp($c->basic_salary ?? 0) }}</strong></td>
+            <td style="padding-left: 20px;">Perbulan (ALL-IN)</td>
+        </tr>
+    </table>
+
 
 
 {{-- ============================================================= --}}
@@ -45,7 +48,28 @@
 {{-- elis-phkt-5-2, phss-driver, phss-reguler,                    --}}
 {{-- lawe-lawe-reguler                                           --}}
 {{-- ============================================================= --}}
-@elseif (in_array($type, ['eni-smallcapital-reguler', 'eni-muara-bakau-lembur', 'elis-phkt-5-2', 'phss-driver', 'phss-reguler', 'lawe-lawe-reguler']))
+@elseif (in_array($type, ['eni-smallcapital-reguler', 'eni-muara-bakau-lembur', 'phss-driver', 'phss-reguler', 'lawe-lawe-reguler']))
+
+    <table class="data-table" style="width: auto; margin: 6px auto 10px;">
+        <tr>
+            <td class="data-label" style="width: auto;">Gaji Pokok</td>
+            <td class="data-sep">:</td>
+            <td class="data-value"><strong>Rp {{ $rp($c->basic_salary ?? 0) }}</strong></td>
+            <td style="padding-left: 20px;">Perbulan</td>
+        </tr>
+        <tr>
+            <td class="data-label" style="width: auto;">Uang Kehadiran (Makan &amp; Transport)</td>
+            <td class="data-sep">:</td>
+            <td class="data-value"><strong>Rp {{ $rp($c->attendance_allowance ?? 0) }}</strong></td>
+            <td style="padding-left: 20px;">Perhari Masuk Kerja</td>
+        </tr>
+    </table>
+
+{{-- ============================================================= --}}
+{{-- GROUP 3 — Gaji + Kehadiran (ENI Civil Reguler)              --}}
+{{-- eni-civil-reguler                                           --}}
+{{-- ============================================================= --}}
+@elseif ($type === 'eni-civil-reguler')
 
     <table class="data-table" style="width: auto; margin: 6px auto 10px;">
         <tr>
@@ -64,56 +88,10 @@
 
 
 {{-- ============================================================= --}}
-{{-- GROUP 3 — Gaji + Kemahalan + UM + UT + Fungsi               --}}
-{{-- eni-civil-reguler                                           --}}
-{{-- ============================================================= --}}
-@elseif ($type === 'eni-civil-reguler')
-
-    <table class="data-table" style="width: auto; margin: 6px auto 10px;">
-        <tr>
-            <td class="data-label" style="width: auto;">Gaji Pokok</td>
-            <td class="data-sep">:</td>
-            <td class="data-value"><strong>Rp {{ $rp($c->basic_salary ?? 0) }}</strong></td>
-            <td style="padding-left: 20px;">Perbulan</td>
-        </tr>
-        <tr>
-            <td class="data-label" style="width: auto;">Tunj. Kemahalan</td>
-            <td class="data-sep">:</td>
-            <td class="data-value"><strong>Rp {{ $rp($c->cost_allowance ?? 0) }}</strong></td>
-            <td style="padding-left: 20px;">Perbulan</td>
-        </tr>
-        <tr>
-            <td class="data-label" style="width: auto;">Uang Makan</td>
-            <td class="data-sep">:</td>
-            <td class="data-value"><strong>Rp {{ $rp($c->meal_allowance ?? 0) }}</strong></td>
-            <td style="padding-left: 20px;">Perhari Masuk Kerja</td>
-        </tr>
-        <tr>
-            <td class="data-label" style="width: auto;">Uang Transport</td>
-            <td class="data-sep">:</td>
-            <td class="data-value"><strong>Rp {{ $rp($c->transport_allowance ?? 0) }}</strong></td>
-            <td style="padding-left: 20px;">Perhari Masuk Kerja</td>
-        </tr>
-        <tr>
-            <td class="data-label" style="width: auto;">Tunj. Fungsional</td>
-            <td class="data-sep">:</td>
-            <td class="data-value"><strong>Rp {{ $rp($c->functional_allowance ?? 0) }}</strong></td>
-            <td style="padding-left: 20px;">Perhari Masuk Kerja</td>
-        </tr>
-    </table>
-
-    <ol type="a" class="mt-2">
-        <li>Penggajian di atas sudah termasuk perhitungan apabila terjadi kelebihan jam kerja dan bekerja dihari libur.</li>
-        <li>Apabila karyawan sedang stanby maka tidak mengurangi upah di atas.</li>
-        <li>Apabila keryawan bekerja ke lokasi project maka tidak terhitung Dinas Luar, namun makan dan akomodasi akan disediakan.</li>
-    </ol>
-
-
-{{-- ============================================================= --}}
 {{-- GROUP 4 — Gaji Pokok + Tunj. Jabatan (All-In)                --}}
 {{-- eni-smallcapital-all-in, warlok-all-in, lawe-lawe-all-in    --}}
 {{-- ============================================================= --}}
-@elseif (in_array($type, ['eni-smallcapital-all-in', 'warlok-all-in', 'lawe-lawe-all-in']))
+@elseif (in_array($type, ['eni-smallcapital-all-in', 'lawe-lawe-all-in']))
 
     <table class="data-table" style="width: auto; margin: 6px auto 10px;">
         <tr>
@@ -130,12 +108,6 @@
         </tr>
     </table>
 
-    <p><strong>Catatan:</strong></p>
-    <ol type="a" class="mt-2">
-        <li>Penggajian di atas sudah termasuk perhitungan apabila terjadi kelebihan jam kerja (lembur) di hari kerja dan bekerja dihari off/ libur/ offday/ libur nasional.</li>
-        <li>Pekerja bersedia bekerja jika diperintahkan oleh atasan/pimpinan saat hari kerja ataupun off/ libur/ libur nasional.</li>
-        <li>Apabila Pekerja berada dalam status standby berdasarkan penugasan atau kebijakan Perusahaan, maka penghasilan (gaji all-in) tetap dibayarkan sesuai ketentuan dalam Perjanjian Kerja.</li>
-    </ol>
 
 
 {{-- ============================================================= --}}
@@ -186,7 +158,7 @@
 {{-- GROUP 7 — Security: Kehadiran + Insentif Khusus              --}}
 {{-- warlok-security, phss-security                              --}}
 {{-- ============================================================= --}}
-@elseif (in_array($type, ['warlok-security', 'phss-security']))
+@elseif (in_array($type, [ 'phss-security']))
 
     <table class="data-table" style="width: auto; margin: 6px auto 10px;">
         <tr>
@@ -322,7 +294,7 @@
 {{-- GROUP 9 — Gaji Pokok saja (PEP Lokal Bunyu)                  --}}
 {{-- pep-lokal-buny                                              --}}
 {{-- ============================================================= --}}
-@elseif ($type === 'pep-lokal-buny')
+@elseif ($type === 'pep-lokal-buny' || $type ==='elis-phkt-6-1')
 
     <table class="data-table" style="width: auto; margin: 6px auto 10px;">
         <tr>
