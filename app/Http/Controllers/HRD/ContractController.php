@@ -714,7 +714,7 @@ class ContractController extends Controller
             ]);
 
             // Kirim WA ke employee
-            $this->sendWaContractSent($contract);
+            // $this->sendWaContractSent($contract);
 
             return redirect()
                 ->back()

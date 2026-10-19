@@ -791,7 +791,7 @@
                value="{{ old('functional_allowance', $c->functional_allowance ?? 0) }}">
     </div>
 
-@elseif ($type === 'ipfms-dobu')
+@elseif ($type === 'ipfms-dobu' || $type === 'sched-5-2')
 
     {{-- ========================================================= --}}
     {{-- PROJECT: ipfms-dobu --}}
@@ -833,23 +833,6 @@
                value="{{ old('transport_allowance', $c->transport_allowance ?? 0) }}">
     </div>
 
-    {{-- Tunjangan Laut --}}
-    <div class="col-md-6">
-        <label class="form-label fw-semibold">Tunjangan Laut</label>
-        <div class="input-group">
-            <span class="input-group-text">Rp</span>
-            <input type="text"
-                   class="form-control currency-input"
-                   data-target="sea_allowance"
-                   placeholder="0"
-                   value="{{ old('sea_allowance', $c->sea_allowance ?? null) ? number_format((float) old('sea_allowance', $c->sea_allowance ?? null), 0, ',', '.') : '' }}"
-                   inputmode="numeric"
-                   autocomplete="off">
-            <span class="input-group-text">/ Hari Masuk Kerja (Jika Laut)</span>
-        </div>
-        <input type="hidden" name="sea_allowance" id="sea_allowance"
-               value="{{ old('sea_allowance', $c->sea_allowance ?? 0) }}">
-    </div>
 {{-- ========================================================= --}}
 {{-- NEW PROJECT TYPES — Batch 2026                         --}}
 {{-- ========================================================= --}}
@@ -879,7 +862,7 @@
                value="{{ old('position_allowance', $c->position_allowance ?? 0) }}">
     </div>
 
-@elseif (in_array($type, ['eni-civil-all-in', 'phss-major-ai-1', 'phss-humas']))
+@elseif (in_array($type, ['eni-civil-all-in', 'phss-major-ai-1', 'phss-humas','phss-major-ai-3']))
 
     {{-- ========================================================= --}}
     {{-- GROUP B: Tunj. Fungsional (3 type)                      --}}
@@ -985,7 +968,7 @@
                value="{{ old('attendance_allowance', $c->attendance_allowance ?? 0) }}">
     </div>
 
-@elseif (in_array($type, ['eni-smallcapital-reguler', 'phss-driver', 'phss-reguler', 'lawe-lawe-reguler']))
+@elseif (in_array($type, ['eni-smallcapital-reguler', 'phss-reguler']))
 
     {{-- ========================================================= --}}
     {{-- GROUP D: Uang Kehadiran (5 type)                        --}}
@@ -1169,7 +1152,7 @@
                value="{{ old('severance_allowance', $c->severance_allowance ?? 0) }}">
     </div>
 
-@elseif (in_array($type, ['phss-major-ai-3', 'sched-5-2','warlok-all-in','warlok-lembur', 'warlok-security']))
+@elseif (in_array($type, ['warlok-all-in','warlok-lembur', 'warlok-security', 'phss-driver','lawe-lawe-reguler']))
 
     {{-- ========================================================= --}}
     {{-- GROUP H & I: Tidak Ada Tunjangan (2 type)               --}}

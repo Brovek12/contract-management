@@ -9,7 +9,7 @@
     $c = $contract ?? null;
 @endphp
 
-@if ($type == 'eni-smallcapital-all')
+@if ($type == 'eni-smallcapital-all' || $type ==='sched-5-2')
 
     {{-- ========================================================= --}}
     {{-- VERSI PENDEK — ENI Small Capital All-In                     --}}

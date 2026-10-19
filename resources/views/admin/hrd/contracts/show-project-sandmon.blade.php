@@ -3,7 +3,7 @@
 @section('title', $contract->title)
 
 @section('document-style')
-    @include('admin.hrd.contracts.partials.show-styles')
+    @include('admin.hrd.contracts.partials.show-styles-project')
 @endsection
 
 
@@ -137,18 +137,7 @@
         sampai dengan tanggal
         <strong>{{ $contract->end_date?->translatedFormat('d F Y') ?? '................' }}</strong>
     </p>
-
-    @include('partials.document-footer')
-</div>
-{{-- PAGE 1 END --}}
-
-
-{{-- =========================================================
-    PAGE 2 — Pasal 2, 3, 4
-========================================================== --}}
-<div class="document-page">
-    @include('partials.document-header')
-
+    
     @include('admin.hrd.contracts.partials.project.pasal2-hari-jam-kerja', [
         'contract' => $contract,
         'type'     => $type,
@@ -164,8 +153,13 @@
         'type'     => $type,
     ])
 
-    @include('partials.document-footer')
 </div>
+{{-- PAGE 1 END --}}
+
+
+{{-- =========================================================
+    PAGE 2 — Pasal 2, 3, 4
+========================================================== --}}
 {{-- PAGE 2 END --}}
 
 
@@ -179,19 +173,7 @@
         'contract' => $contract,
         'type'     => $type,
     ])
-
-    @include('partials.document-footer')
-</div>
-{{-- PAGE 3 END --}}
-
-
-{{-- =========================================================
-    PAGE 4 — PASAL 6: PENDAPATAN DAN KESEJAHTERAAN KARYAWAN
-========================================================== --}}
-<div class="document-page">
-    @include('partials.document-header')
-
-    <div class="pasal-title">PASAL 6</div>
+     <div class="pasal-title">PASAL 6</div>
     <div class="pasal-subtitle">PENDAPATAN DAN KESEJAHTERAAN KARYAWAN</div>
 
     <p>1. Selama berlakunya Perjanjian Kerja Waktu Tertentu ini, pihak Perusahaan memberikan imbalan sesuai dengan MOU Tender SA14040807A Sand Monitoring Services for PHM) sebagai berikut :</p>
@@ -200,8 +182,7 @@
         'contract' => $contract,
         'type'     => $type,
     ])
-
-    <p>2. Karyawan diikutsertakan dalam Program BPJS Ketenagakerjaan yang meliputi (MOU Pasal 4 Point 12) :</p>
+      <p>2. Karyawan diikutsertakan dalam Program BPJS Ketenagakerjaan yang meliputi (MOU Pasal 4 Point 12) :</p>
     <p class="indent">a. Jaminan Kematian</p>
     <p class="indent">b. Jaminan Kecelakaan Kerja</p>
     <p class="indent">c. Jaminan Hari Tua</p>
@@ -213,35 +194,14 @@
 
     <p>5. Gaji dibayarkan pada tanggal 09 setiap bulannya. Apabila tanggal 09 jatuh di Hari Libur, Maka Tanggal Penggajian akan dimajukan Dengan perhitungan satu periode timesheet dari lapangan yang telah di setujui. Apabila pembayaran gaji mengalami keterlambatan maka perusahaan akan mendapatkan sanksi terkait keterlambatan pembayaran gaji sesuai dengan Peraturan Pemerintah Nomor 36 Tahun 2021 (MOU Pasal 5 Point 3)</p>
 
-    <p>6. Potongan Ketidakhadiran (MOU Pasal 4 Point 3-5)</p>
-    <p class="indent">a. Jika dalam 1 periode Timesheet (14 hari kerja) Karyawan berhalangan hadir dalam keadaan sakit dengan menunjukan Surat Dokter maka Perusahaan hanya akan membayarkan Gaji Pokok + Tunjangan Tetap kepada Karyawan yang mengacu pada perhitungan pada Pasal 6 Poin 1.</p>
-    <p class="indent">b. Jika dalam 1 periode Timesheet (14 hari kerja) Karyawan berhalangan hadir Karena Sakit yang di sebabkan oleh kecelakaan kerja dengan menunjukan surat dokter dan persetujuan dari Site Supervisor beserta Pertamina Hulu Mahakam (PHM) maka Perusahaan akan membayarkan THP kepada Karyawan.</p>
-    <p class="indent">c. Bila dalam 1 Periode Timesheet (14 hari kerja) Karyawan hanya dapat hadir beberapa hari (kurang dari 14 hari) maka Perusahaan akan memotong EWHC dan Tunjangan Harian sesuai dengan hari yang di tinggalkan. Apabila dalam 1 Periode Timesheet Karyawan diminta hadir lebih dari 14 hari kerja, maka Perusahaan akan memberikan tambahan harian nilai EWHC sesuai dengan jumlah hari yang ditambahkan Perhitungan harian nilai EWHC dan Tunjangan Harian adalah Total dari nilai EWHC dan Tunjangan Harian dibagi 14 hari. (Pengecualian Pasal 13).</p>
+   
 
-    <p>7. Pajak pendapatan (Pph Pasal 21) ditanggung sepenuhnya oleh Perusahaan untuk kemudian disetorkan ke Kas Negara.</p>
-
-    <table class="paraf-table">
-        <tr><td colspan="2" class="paraf-title">Paraf</td></tr>
-        <tr><td class="paraf-title">Karyawan</td><td class="paraf-title">HRD</td></tr>
-        <tr>
-            <td class="paraf-box">
-                @if ($contract->employee_signature)
-                    <img src="{{ asset('storage/' . $contract->employee_signature) }}" class="signature-image" alt="Employee Signature">
-                @endif
-            </td>
-            <td class="paraf-box-hrd">
-                @if ($contract->hrd_qr_path)
-                    <img src="{{ asset('storage/' . $contract->hrd_qr_path) }}" class="signature-image-3" alt="QR HRD Approval">
-                @else
-                    <div class="text-muted fs-8">Belum di-approve</div>
-                @endif
-            </td>
-        </tr>
-    </table>
 
     @include('partials.document-footer')
 </div>
-{{-- PAGE 4 END --}}
+{{-- PAGE 3 END --}}
+
+
 
 
 {{-- =========================================================
@@ -249,6 +209,12 @@
 ========================================================== --}}
 <div class="document-page">
     @include('partials.document-header')
+     <p>6. Potongan Ketidakhadiran (MOU Pasal 4 Point 3-5)</p>
+    <p class="indent">a. Jika dalam 1 periode Timesheet (14 hari kerja) Karyawan berhalangan hadir dalam keadaan sakit dengan menunjukan Surat Dokter maka Perusahaan hanya akan membayarkan Gaji Pokok + Tunjangan Tetap kepada Karyawan yang mengacu pada perhitungan pada Pasal 6 Poin 1.</p>
+    <p class="indent">b. Jika dalam 1 periode Timesheet (14 hari kerja) Karyawan berhalangan hadir Karena Sakit yang di sebabkan oleh kecelakaan kerja dengan menunjukan surat dokter dan persetujuan dari Site Supervisor beserta Pertamina Hulu Mahakam (PHM) maka Perusahaan akan membayarkan THP kepada Karyawan.</p>
+    <p class="indent">c. Bila dalam 1 Periode Timesheet (14 hari kerja) Karyawan hanya dapat hadir beberapa hari (kurang dari 14 hari) maka Perusahaan akan memotong EWHC dan Tunjangan Harian sesuai dengan hari yang di tinggalkan. Apabila dalam 1 Periode Timesheet Karyawan diminta hadir lebih dari 14 hari kerja, maka Perusahaan akan memberikan tambahan harian nilai EWHC sesuai dengan jumlah hari yang ditambahkan Perhitungan harian nilai EWHC dan Tunjangan Harian adalah Total dari nilai EWHC dan Tunjangan Harian dibagi 14 hari. (Pengecualian Pasal 13).</p>
+
+    <p>7. Pajak pendapatan (Pph Pasal 21) ditanggung sepenuhnya oleh Perusahaan untuk kemudian disetorkan ke Kas Negara.</p>
 
     @include('admin.hrd.contracts.partials.sandmon.pasal7-ppe', [
         'contract' => $contract,
@@ -260,7 +226,7 @@
         'type'     => $type,
     ])
 
-    <table class="paraf-table">
+    {{-- <table class="paraf-table">
         <tr><td colspan="2" class="paraf-title">Paraf</td></tr>
         <tr><td class="paraf-title">Karyawan</td><td class="paraf-title">HRD</td></tr>
         <tr>
@@ -277,7 +243,7 @@
                 @endif
             </td>
         </tr>
-    </table>
+    </table> --}}
 
     @include('partials.document-footer')
 </div>
@@ -300,37 +266,6 @@
     <p class="indent">Pernyataan sehat dan dapat bekerja kembali harus dengan surat pernyataan dokter yang merawat.</p>
 
     <p>2. Maksimal setelah 1 (satu) tahun, apabila Karyawan yang bersangkutan tidak bisa melaksanakan kewajibannya (bekerja), maka perusahaan melakukan pemutusan hubungan kerja (PHK), berdasarkan ketentuan perundangan yang berlaku.</p>
-
-    <table class="paraf-table">
-        <tr><td colspan="2" class="paraf-title">Paraf</td></tr>
-        <tr><td class="paraf-title">Karyawan</td><td class="paraf-title">HRD</td></tr>
-        <tr>
-            <td class="paraf-box">
-                @if ($contract->employee_signature)
-                    <img src="{{ asset('storage/' . $contract->employee_signature) }}" class="signature-image" alt="Employee Signature">
-                @endif
-            </td>
-            <td class="paraf-box-hrd">
-                @if ($contract->hrd_qr_path)
-                    <img src="{{ asset('storage/' . $contract->hrd_qr_path) }}" class="signature-image-3" alt="QR HRD Approval">
-                @else
-                    <div class="text-muted fs-8">Belum di-approve</div>
-                @endif
-            </td>
-        </tr>
-    </table>
-
-    @include('partials.document-footer')
-</div>
-{{-- PAGE 6 END --}}
-
-
-{{-- =========================================================
-    PAGE 7 — PASAL 10: PENEGAKAN DISIPLIN (bagian 1)
-========================================================== --}}
-<div class="document-page">
-    @include('partials.document-header')
-
     <div class="pasal-title">PASAL 10</div>
     <div class="pasal-subtitle">PENEGAKAN DISIPLIN</div>
 
@@ -384,7 +319,7 @@
     <p class="indent-2">- Pelanggaran ke-3: Surat Peringatan Kedua (SP II)</p>
     <p class="indent-2">- Pelanggaran ke-4: Surat Peringatan Ketiga (SP III)</p>
 
-    <table class="paraf-table">
+    {{-- <table class="paraf-table">
         <tr><td colspan="2" class="paraf-title">Paraf</td></tr>
         <tr><td class="paraf-title">Karyawan</td><td class="paraf-title">HRD</td></tr>
         <tr>
@@ -401,11 +336,17 @@
                 @endif
             </td>
         </tr>
-    </table>
+    </table> --}}
 
     @include('partials.document-footer')
 </div>
-{{-- PAGE 7 END --}}
+{{-- PAGE 6 END --}}
+
+
+{{-- =========================================================
+    PAGE 7 — PASAL 10: PENEGAKAN DISIPLIN (bagian 1)
+========================================================== --}}
+
 
 
 {{-- =========================================================
@@ -453,8 +394,17 @@
     <p class="indent">8. Perubahan pihak yang menjadi ahli waris atau penerima manfaat hak ketenagakerjaan.</p>
 
     <p><strong>Sanksi :</strong> Surat Peringatan Pertama (SP I)</p>
+    <div class="pasal-title">PASAL 11</div>
+    <div class="pasal-subtitle">PELANGGARAN TATA TERTIB</div>
 
-    <table class="paraf-table">
+    <p><strong>Ketentuan Umum:</strong></p>
+
+    <p>1. Setiap Pekerja wajib mematuhi seluruh tata tertib, kode etik, serta standar prosedur kerja Perusahaan, termasuk kepatuhan penuh terhadap aturan HSE (Health, Safety, and Environment) demi menjamin keselamatan jiwa, keamanan aset, dan kelestarian lingkungan kerja.</p>
+    <p>2. Pelanggaran terhadap ketentuan ini dikenakan sanksi sesuai tingkat kesalahan dan dampaknya, mulai dari Surat Peringatan (SP I, II, III), Skorsing, hingga Pemutusan Hubungan Kerja (PHK), berdasarkan regulasi ketenagakerjaan yang berlaku serta kebijakan internal Perusahaan.</p>
+    <p>3. Khusus untuk jenis pelanggaran yang diklasifikasikan sebagai Pelanggaran Mendesak, Perusahaan berhak menjatuhkan sanksi Pemutusan Hubungan Kerja (PHK) secara langsung tanpa melalui tahapan pemberian Surat Peringatan secara berturut-turut, sebagaimana diatur dalam Pasal 52 ayat (2) Peraturan Pemerintah No. 35 Tahun 2021.</p>
+    <p>4. Khusus sanksi PHK atas pelanggaran berulang dan atau pelanggaran berat-mendesak, maka Perusahaan tidak berkewajiban membayarkan ganti rugi sisa masa kontrak sebagaimana dimaksud dalam Pasal 62 Undang-Undang Nomor 13 Tahun 2003.</p>
+
+    {{-- <table class="paraf-table">
         <tr><td colspan="2" class="paraf-title">Paraf</td></tr>
         <tr><td class="paraf-title">Karyawan</td><td class="paraf-title">HRD</td></tr>
         <tr>
@@ -471,7 +421,7 @@
                 @endif
             </td>
         </tr>
-    </table>
+    </table> --}}
 
     @include('partials.document-footer')
 </div>
@@ -484,15 +434,7 @@
 <div class="document-page">
     @include('partials.document-header')
 
-    <div class="pasal-title">PASAL 11</div>
-    <div class="pasal-subtitle">PELANGGARAN TATA TERTIB</div>
-
-    <p><strong>Ketentuan Umum:</strong></p>
-
-    <p>1. Setiap Pekerja wajib mematuhi seluruh tata tertib, kode etik, serta standar prosedur kerja Perusahaan, termasuk kepatuhan penuh terhadap aturan HSE (Health, Safety, and Environment) demi menjamin keselamatan jiwa, keamanan aset, dan kelestarian lingkungan kerja.</p>
-    <p>2. Pelanggaran terhadap ketentuan ini dikenakan sanksi sesuai tingkat kesalahan dan dampaknya, mulai dari Surat Peringatan (SP I, II, III), Skorsing, hingga Pemutusan Hubungan Kerja (PHK), berdasarkan regulasi ketenagakerjaan yang berlaku serta kebijakan internal Perusahaan.</p>
-    <p>3. Khusus untuk jenis pelanggaran yang diklasifikasikan sebagai Pelanggaran Mendesak, Perusahaan berhak menjatuhkan sanksi Pemutusan Hubungan Kerja (PHK) secara langsung tanpa melalui tahapan pemberian Surat Peringatan secara berturut-turut, sebagaimana diatur dalam Pasal 52 ayat (2) Peraturan Pemerintah No. 35 Tahun 2021.</p>
-    <p>4. Khusus sanksi PHK atas pelanggaran berulang dan atau pelanggaran berat-mendesak, maka Perusahaan tidak berkewajiban membayarkan ganti rugi sisa masa kontrak sebagaimana dimaksud dalam Pasal 62 Undang-Undang Nomor 13 Tahun 2003.</p>
+    
 
     <p><strong>A. Ketertiban dan Kepatuhan Kerja</strong></p>
 
@@ -516,44 +458,12 @@
     <p class="indent-2">Pelanggaran ke-1: SP I</p>
     <p class="indent-2">Pelanggaran ke-2: SP II</p>
     <p class="indent-2">Pelanggaran ke-3: SP III atau Skorsing</p>
-
-    <table class="paraf-table">
-        <tr><td colspan="2" class="paraf-title">Paraf</td></tr>
-        <tr><td class="paraf-title">Karyawan</td><td class="paraf-title">HRD</td></tr>
-        <tr>
-            <td class="paraf-box">
-                @if ($contract->employee_signature)
-                    <img src="{{ asset('storage/' . $contract->employee_signature) }}" class="signature-image" alt="Employee Signature">
-                @endif
-            </td>
-            <td class="paraf-box-hrd">
-                @if ($contract->hrd_qr_path)
-                    <img src="{{ asset('storage/' . $contract->hrd_qr_path) }}" class="signature-image-3" alt="QR HRD Approval">
-                @else
-                    <div class="text-muted fs-8">Belum di-approve</div>
-                @endif
-            </td>
-        </tr>
-    </table>
-
-    @include('partials.document-footer')
-</div>
-{{-- PAGE 9 END --}}
-
-
-{{-- =========================================================
-    PAGE 10 — PASAL 11 (bagian 2)
-========================================================== --}}
-<div class="document-page">
-    @include('partials.document-header')
-
     <p>4. <strong>Mengabaikan Prosedur Kerja:</strong> Pekerja wajib mematuhi prosedur kerja sesuai surat edaran instruksi teknis, serta program kerja yang ditetapkan oleh Perusahaan atau User.</p>
     <p class="indent">Kategori Pelanggaran: Sedang - Berat</p>
     <p class="indent">Sanksi:</p>
     <p class="indent-2">Pelanggaran ke-1: Surat Peringatan Pertama dan Terakhir</p>
     <p class="indent-2">Pelanggaran ke-2: PHK</p>
-
-    <p>5. <strong>Keterangan Tidak Benar:</strong> Pekerja dilarang memberikan laporan, data, atau informasi yang tidak benar terkait aset, pekerjaan, atau kegiatan operasional Perusahaan.</p>
+     <p>5. <strong>Keterangan Tidak Benar:</strong> Pekerja dilarang memberikan laporan, data, atau informasi yang tidak benar terkait aset, pekerjaan, atau kegiatan operasional Perusahaan.</p>
     <p class="indent">Kategori Pelanggaran: Berat</p>
     <p class="indent">Sanksi:</p>
     <p class="indent-2">Pelanggaran ke-1: Skorsing</p>
@@ -569,17 +479,8 @@
     <p class="indent-2">a. Apabila berdampak ringan dan tidak menimbulkan kerugian material yang signifikan: Surat Peringatan Pertama dan Terakhir</p>
     <p class="indent-2">b. Apabila menimbulkan kerugian material besar, kecelakaan serius, gangguan operasional, potensi fatalitas, kebakaran, ledakan, atau pelanggaran K3 berat: Pemutusan Hubungan Kerja (PHK)</p>
 
-    <p>8. <strong>Senjata dan Minuman Keras:</strong> Pekerja dilarang membawa, menyimpan, menggunakan, atau mengancam dengan senjata tajam, senjata api, maupun minuman keras di lingkungan kerja.</p>
-    <p class="indent">Kategori Pelanggaran: Berat / Mendesak</p>
-    <p class="indent">Sanksi:</p>
-    <p class="indent-2">a. Apabila hanya membawa: Skorsing</p>
-    <p class="indent-2">b. Apabila menimbulkan kerugian material besar, kecelakaan serius, gangguan operasional, potensi fatalitas, kebakaran, ledakan, atau pelanggaran K3 berat: Pemutusan Hubungan Kerja (PHK)</p>
 
-    <p>9. <strong>Narkotika:</strong> Pekerja dilarang membawa, menyimpan, menjual, membeli, atau mengonsumsi narkotika dan zat adiktif terlarang di dalam maupun di luar lingkungan kerja.</p>
-    <p class="indent">Kategori Pelanggaran: Mendesak</p>
-    <p class="indent">Sanksi: PHK</p>
-
-    <table class="paraf-table">
+    {{-- <table class="paraf-table">
         <tr><td colspan="2" class="paraf-title">Paraf</td></tr>
         <tr><td class="paraf-title">Karyawan</td><td class="paraf-title">HRD</td></tr>
         <tr>
@@ -596,11 +497,12 @@
                 @endif
             </td>
         </tr>
-    </table>
+    </table> --}}
 
     @include('partials.document-footer')
 </div>
-{{-- PAGE 10 END --}}
+{{-- PAGE 9 END --}}
+
 
 
 {{-- =========================================================
@@ -608,6 +510,15 @@
 ========================================================== --}}
 <div class="document-page">
     @include('partials.document-header')
+     <p>8. <strong>Senjata dan Minuman Keras:</strong> Pekerja dilarang membawa, menyimpan, menggunakan, atau mengancam dengan senjata tajam, senjata api, maupun minuman keras di lingkungan kerja.</p>
+    <p class="indent">Kategori Pelanggaran: Berat / Mendesak</p>
+    <p class="indent">Sanksi:</p>
+    <p class="indent-2">a. Apabila hanya membawa: Skorsing</p>
+    <p class="indent-2">b. Apabila menimbulkan kerugian material besar, kecelakaan serius, gangguan operasional, potensi fatalitas, kebakaran, ledakan, atau pelanggaran K3 berat: Pemutusan Hubungan Kerja (PHK)</p>
+
+    <p>9. <strong>Narkotika:</strong> Pekerja dilarang membawa, menyimpan, menjual, membeli, atau mengonsumsi narkotika dan zat adiktif terlarang di dalam maupun di luar lingkungan kerja.</p>
+    <p class="indent">Kategori Pelanggaran: Mendesak</p>
+    <p class="indent">Sanksi: PHK</p>
 
     <p><strong>B. LARANGAN MEROKOK (K3 &amp; ZERO ACCIDENT)</strong></p>
 
@@ -641,14 +552,8 @@
     <p class="indent-2" style="margin-left:20mm !important;">Pelanggaran ke-2: PHK</p>
     <p class="indent-2">b. Menyebabkan Kebakaran atau kerugian materil besar : PHK</p>
 
-    <p><strong>C. PERILAKU, ETIKA &amp; INFORMASI ELEKTRONIK</strong></p>
-
-    <p>14. <strong>Penggunaan Perangkat Elektronik Terlarang:</strong> Pekerja membawa, menggunakan HP atau perangkat elektronik sejenis di area yang dilarang/ area terbatas yang ditetapkan Perusahaan/User.</p>
-    <p class="indent">Kategori Pelanggaran: Berat</p>
-    <p class="indent">Sanksi:</p>
-    <p class="indent-2">Pelanggaran ke-1: Surat Peringatan Pertama dan Terakhir</p>
-    <p class="indent-2">Pelanggaran ke-2: PHK</p>
-
+    
+{{-- 
     <table class="paraf-table">
         <tr><td colspan="2" class="paraf-title">Paraf</td></tr>
         <tr><td class="paraf-title">Karyawan</td><td class="paraf-title">HRD</td></tr>
@@ -666,7 +571,7 @@
                 @endif
             </td>
         </tr>
-    </table>
+    </table> --}}
 
     @include('partials.document-footer')
 </div>
@@ -678,6 +583,13 @@
 ========================================================== --}}
 <div class="document-page">
     @include('partials.document-header')
+    <p><strong>C. PERILAKU, ETIKA &amp; INFORMASI ELEKTRONIK</strong></p>
+
+    <p>14. <strong>Penggunaan Perangkat Elektronik Terlarang:</strong> Pekerja membawa, menggunakan HP atau perangkat elektronik sejenis di area yang dilarang/ area terbatas yang ditetapkan Perusahaan/User.</p>
+    <p class="indent">Kategori Pelanggaran: Berat</p>
+    <p class="indent">Sanksi:</p>
+    <p class="indent-2">Pelanggaran ke-1: Surat Peringatan Pertama dan Terakhir</p>
+    <p class="indent-2">Pelanggaran ke-2: PHK</p>
 
     <p>15. <strong>Pemalsuan Administrasi:</strong> Pekerja dilarang menggunakan atau menyerahkan dokumen palsu (ijazah, sertifikat, surat keterangan dokter atau surat keterangan resmi lainnya) yang berhubungan dengan prosedur kerja atau kepentingan hubungan kerja.</p>
     <p class="indent">Kategori Pelanggaran: Berat</p>
@@ -713,7 +625,7 @@
     <p class="indent-2">Pelanggaran ke-1: Skorsing maksimal 2 (dua) minggu</p>
     <p class="indent-2">Pelanggaran ke-2: PHK</p>
 
-    <table class="paraf-table">
+    {{-- <table class="paraf-table">
         <tr><td colspan="2" class="paraf-title">Paraf</td></tr>
         <tr><td class="paraf-title">Karyawan</td><td class="paraf-title">HRD</td></tr>
         <tr>
@@ -730,7 +642,7 @@
                 @endif
             </td>
         </tr>
-    </table>
+    </table> --}}
 
     @include('partials.document-footer')
 </div>
@@ -773,8 +685,16 @@
     <div class="pasal-subtitle">ALIH TUGAS</div>
 
     <p>Karyawan bersedia sewaktu – waktu dialih tugaskan oleh Perusahaan ke bagian / jabatan / daerah lain sesuai keperluan yang akan diatur kemudian.</p>
+     @include('admin.hrd.contracts.partials.sandmon.pasal13-kelonggaran', [
+        'contract' => $contract,
+        'type'     => $type,
+    ])
+     <div class="pasal-title">PASAL 14</div>
+    <div class="pasal-subtitle">AKHIR PERJANJIAN KERJA</div>
 
-    <table class="paraf-table">
+    <p>1. Karyawan mengajukan pengunduran diri. pengunduran diri atau yang dikualifikasikan mengundurkan diri maka Karyawan tidak berhak menuntut ganti rugi dan hanya akan menerima pendapatan sampai saat tanggal pemutusan Perjanjian Kerja Waktu Tertentu ini.</p>
+
+    {{-- <table class="paraf-table">
         <tr><td colspan="2" class="paraf-title">Paraf</td></tr>
         <tr><td class="paraf-title">Karyawan</td><td class="paraf-title">HRD</td></tr>
         <tr>
@@ -791,7 +711,7 @@
                 @endif
             </td>
         </tr>
-    </table>
+    </table> --}}
 
     @include('partials.document-footer')
 </div>
@@ -801,35 +721,7 @@
 {{-- =========================================================
     PAGE 14 — PASAL 13: KELONGGARAN UNTUK TIDAK BEKERJA
 ========================================================== --}}
-<div class="document-page">
-    @include('partials.document-header')
 
-    @include('admin.hrd.contracts.partials.sandmon.pasal13-kelonggaran', [
-        'contract' => $contract,
-        'type'     => $type,
-    ])
-
-    <table class="paraf-table">
-        <tr><td colspan="2" class="paraf-title">Paraf</td></tr>
-        <tr><td class="paraf-title">Karyawan</td><td class="paraf-title">HRD</td></tr>
-        <tr>
-            <td class="paraf-box">
-                @if ($contract->employee_signature)
-                    <img src="{{ asset('storage/' . $contract->employee_signature) }}" class="signature-image" alt="Employee Signature">
-                @endif
-            </td>
-            <td class="paraf-box-hrd">
-                @if ($contract->hrd_qr_path)
-                    <img src="{{ asset('storage/' . $contract->hrd_qr_path) }}" class="signature-image-3" alt="QR HRD Approval">
-                @else
-                    <div class="text-muted fs-8">Belum di-approve</div>
-                @endif
-            </td>
-        </tr>
-    </table>
-
-    @include('partials.document-footer')
-</div>
 {{-- PAGE 14 END --}}
 
 
@@ -839,10 +731,7 @@
 <div class="document-page">
     @include('partials.document-header')
 
-    <div class="pasal-title">PASAL 14</div>
-    <div class="pasal-subtitle">AKHIR PERJANJIAN KERJA</div>
-
-    <p>1. Karyawan mengajukan pengunduran diri. pengunduran diri atau yang dikualifikasikan mengundurkan diri maka Karyawan tidak berhak menuntut ganti rugi dan hanya akan menerima pendapatan sampai saat tanggal pemutusan Perjanjian Kerja Waktu Tertentu ini.</p>
+   
     <p>2. Pemberitahuan pengunduran diri dilakukan selambat – lambatnya 30 (Tiga Puluh) hari sebelumnya.</p>
     <p>3. Karyawan yang mengundurkan diri wajib menyelesaikan tanggungjawab pekerjaan / alih tugas kepada Karyawan yang ditunjuk atasan.</p>
     <p>4. Apabila karyawan mengundurkan diri kurang dari 30 (tiga puluh) hari, maka karyawan wajib membayar ganti rugi kepada perusahaan sebesar THP bulan terakhir bekerja.</p>
@@ -858,37 +747,6 @@
     <div class="pasal-subtitle">PERSELISIHAN</div>
 
     <p>Bila timbul suatu perselisihan mengenai pelaksanaan Perjanjian kerja ini, akan diselesaikan secara musyawarah dan kekeluargaan. Bila tidak tercapai kesepakatan maka akan diselesaikan menurut peraturan perundang – undangan yang berlaku di Wilayah Republik Indonesia.</p>
-
-    <table class="paraf-table">
-        <tr><td colspan="2" class="paraf-title">Paraf</td></tr>
-        <tr><td class="paraf-title">Karyawan</td><td class="paraf-title">HRD</td></tr>
-        <tr>
-            <td class="paraf-box">
-                @if ($contract->employee_signature)
-                    <img src="{{ asset('storage/' . $contract->employee_signature) }}" class="signature-image" alt="Employee Signature">
-                @endif
-            </td>
-            <td class="paraf-box-hrd">
-                @if ($contract->hrd_qr_path)
-                    <img src="{{ asset('storage/' . $contract->hrd_qr_path) }}" class="signature-image-3" alt="QR HRD Approval">
-                @else
-                    <div class="text-muted fs-8">Belum di-approve</div>
-                @endif
-            </td>
-        </tr>
-    </table>
-
-    @include('partials.document-footer')
-</div>
-{{-- PAGE 15 END --}}
-
-
-{{-- =========================================================
-    PAGE 16 — PASAL 16: KETENTUAN LAIN + SIGNATURE
-========================================================== --}}
-<div class="document-page">
-    @include('partials.document-header')
-
     <div class="pasal-title">PASAL 16</div>
     <div class="pasal-subtitle">KETENTUAN LAIN</div>
 
@@ -929,9 +787,11 @@
         </div>
     </div>
 
+
     @include('partials.document-footer')
 </div>
-{{-- PAGE 16 END --}}
+{{-- PAGE 15 END --}}
+
 
 @endsection
 

@@ -153,12 +153,13 @@
         'contract' => $contract,
         'type'     => $type,
     ])
+    @if ($type !== 'phss-driver')
     <div class="pasal-title">PASAL 5</div>
     <div class="pasal-subtitle">PENDAPATAN DAN KESEJAHTERAAN PEKERJA</div>
 
     <p>1. Selama berlakunya Perjanjian Kerja Waktu Tertentu ini, pihak Perusahaan memberikan imbalan sebagai berikut :</p>
 
-  
+  @endif
 </div>
 {{-- PAGE 1 END --}}
 
@@ -168,6 +169,13 @@
 ========================================================== --}}
 <div class="document-page">
     @include('partials.document-header')
+      @if ($type === 'phss-driver')
+    <div class="pasal-title">PASAL 5</div>
+    <div class="pasal-subtitle">PENDAPATAN DAN KESEJAHTERAAN PEKERJA</div>
+
+    <p>1. Selama berlakunya Perjanjian Kerja Waktu Tertentu ini, pihak Perusahaan memberikan imbalan sebagai berikut :</p>
+
+  @endif
 
   
 
@@ -190,7 +198,7 @@
             <li>Apabila karyawan sedang stanby maka tidak mengurangi upah di atas.</li>
             <li>Apabila keryawan bekerja ke lokasi project maka tidak terhitung Dinas Luar, namun makan dan akomodasi akan disediakan.</li>
         </ol>
-        @elseif (in_array($type, ['eni-smallcapital-all-in', 'lawe-lawe-all-in']))
+        @elseif (in_array($type, ['eni-smallcapital-all-in', 'lawe-lawe-all-in' ,'phss-major-ai-1',  'phss-major-ai-2', 'phss-major-ai-3','phss-humas']))
     <p><strong>Catatan:</strong></p>
     <ol type="a" class="mt-2">
         <li>Penggajian di atas sudah termasuk perhitungan apabila terjadi kelebihan jam kerja (lembur) di hari kerja dan bekerja dihari off/ libur/ offday/ libur nasional.</li>
@@ -246,24 +254,6 @@
         'contract' => $contract,
         'type'     => $type,
     ])
-    <table class="paraf-table">
-        <tr><td colspan="2" class="paraf-title">Paraf</td></tr>
-        <tr><td class="paraf-title">Karyawan</td><td class="paraf-title">HRD</td></tr>
-        <tr>
-            <td class="paraf-box">
-                @if ($contract->employee_signature)
-                    <img src="{{ asset('storage/' . $contract->employee_signature) }}" class="signature-image" alt="Employee Signature">
-                @endif
-            </td>
-            <td class="paraf-box-hrd">
-                @if ($contract->hrd_qr_path)
-                    <img src="{{ asset('storage/' . $contract->hrd_qr_path) }}" class="signature-image-3" alt="QR HRD Approval">
-                @else
-                    <div class="text-muted fs-8">Belum di-approve</div>
-                @endif
-            </td>
-        </tr>
-    </table>
 
 
 </div>
@@ -334,12 +324,7 @@
         <strong>tidak secara berturut-turut</strong> dan <strong>terakumulasi dalam jangka waktu 1 (satu)
         bulan periode berjalan</strong> dikualifikasikan sebagai pelanggaran disiplin kerja.
     </p>
-    <p class="indent">Sanksi:</p>
-    <p class="indent-2">- Pelanggaran pertama: Surat Peringatan Pertama (SP I)</p>
-    <p class="indent-2">- Pelanggaran kedua: Surat Peringatan Kedua (SP II)</p>
-    <p class="indent-2">- Pelanggaran ketiga: Surat Peringatan Ketiga (SP III)</p>
-    <p class="indent"><strong>b. Ketidakhadiran Berturut-turut (Mangkir)</strong></p>
-
+  
 
     <table class="paraf-table">
         <tr><td colspan="2" class="paraf-title">Paraf</td></tr>
@@ -372,7 +357,12 @@
     
     
 
-    
+      <p class="indent">Sanksi:</p>
+    <p class="indent-2">- Pelanggaran pertama: Surat Peringatan Pertama (SP I)</p>
+    <p class="indent-2">- Pelanggaran kedua: Surat Peringatan Kedua (SP II)</p>
+    <p class="indent-2">- Pelanggaran ketiga: Surat Peringatan Ketiga (SP III)</p>
+    <p class="indent"><strong>b. Ketidakhadiran Berturut-turut (Mangkir)</strong></p>
+
 
     <p class="indent">
         Dalam hal Pekerja tidak masuk kerja selama <strong>5 (lima) hari kerja atau lebih secara
@@ -411,6 +401,8 @@
     <p class="indent-2">- Pelanggaran pertama: Surat Peringatan Pertama (SP I)</p>
     <p class="indent-2">- Pelanggaran kedua: Surat Peringatan Kedua (SP II)</p>
     <p class="indent-2">- Pelanggaran ketiga: Surat Peringatan Ketiga (SP III)</p>
+
+    @if($type !== 'sched-5-2')
        <p>5. <strong>Larangan Tidur dan Kelalaian di Jam Kerja</strong></p>
 
     <p class="indent">
@@ -422,6 +414,7 @@
     <p class="indent-2">- Pelanggaran pertama: Surat Peringatan Pertama (SP I)</p>
     <p class="indent-2">- Pelanggaran kedua: Surat Peringatan Kedua (SP II)</p>
     <p class="indent-2">- Pelanggaran ketiga: Surat Peringatan Ketiga (SP III)</p>
+    @endif
     <table class="paraf-table">
         <tr><td colspan="2" class="paraf-title">Paraf</td></tr>
         <tr><td class="paraf-title">Karyawan</td><td class="paraf-title">HRD</td></tr>
@@ -449,7 +442,19 @@
 ========================================================== --}}
 <div class="document-page">
     @include('partials.document-header')
+@if($type === 'sched-5-2')
+       <p>5. <strong>Larangan Tidur dan Kelalaian di Jam Kerja</strong></p>
 
+    <p class="indent">
+        Pekerja dilarang tidur pada jam kerja di luar waktu istirahat atau melakukan aktivitas pribadi
+        yang melalaikan tugas dan tanggung jawab pekerjaan sehingga mengganggu produktivitas, keselamatan
+        kerja, dan/atau operasional Perusahaan.
+    </p>
+    <p class="indent">Sanksi:</p>
+    <p class="indent-2">- Pelanggaran pertama: Surat Peringatan Pertama (SP I)</p>
+    <p class="indent-2">- Pelanggaran kedua: Surat Peringatan Kedua (SP II)</p>
+    <p class="indent-2">- Pelanggaran ketiga: Surat Peringatan Ketiga (SP III)</p>
+    @endif
     
 
    

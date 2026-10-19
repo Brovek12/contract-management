@@ -13,7 +13,7 @@
 {{-- GROUP 1 — Gaji Pokok + Tunj. Fungsional (All-In)            --}}
 {{-- eni-civil-all-in, phss-major-ai-1, phss-humas               --}}
 {{-- ============================================================= --}}
-@if (in_array($type, ['eni-civil-all-in', 'phss-major-ai-1', 'phss-humas']))
+@if (in_array($type, ['eni-civil-all-in', 'phss-major-ai-1', 'phss-humas', 'phss-major-ai-3']))
 
     <table class="data-table" style="width: auto; margin: 6px auto 10px;">
         <tr>
@@ -48,7 +48,7 @@
 {{-- elis-phkt-5-2, phss-driver, phss-reguler,                    --}}
 {{-- lawe-lawe-reguler                                           --}}
 {{-- ============================================================= --}}
-@elseif (in_array($type, ['eni-smallcapital-reguler', 'eni-muara-bakau-lembur', 'phss-driver', 'phss-reguler', 'lawe-lawe-reguler']))
+@elseif (in_array($type, ['eni-smallcapital-reguler', 'eni-muara-bakau-lembur', 'phss-reguler']))
 
     <table class="data-table" style="width: auto; margin: 6px auto 10px;">
         <tr>
@@ -142,7 +142,7 @@
 {{-- GROUP 6 — Gaji + Tunj. Jabatan (ENI Small Capital All In)    --}}
 {{-- Hanya Gaji Pokok (PHSS Major Type 3, Schedule 5-2, dll)      --}}
 {{-- ============================================================= --}}
-@elseif (in_array($type, ['phss-major-ai-3', 'sched-5-2']))
+@elseif (in_array($type, ['phss-major-ai-3','phss-driver']))
 
     <table class="data-table" style="width: auto; margin: 6px auto 10px;">
         <tr>
@@ -294,7 +294,7 @@
 {{-- GROUP 9 — Gaji Pokok saja (PEP Lokal Bunyu)                  --}}
 {{-- pep-lokal-buny                                              --}}
 {{-- ============================================================= --}}
-@elseif ($type === 'pep-lokal-buny' || $type ==='elis-phkt-6-1')
+@elseif ($type === 'pep-lokal-buny' || $type ==='elis-phkt-6-1' || $type ==='lawe-lawe-reguler')
 
     <table class="data-table" style="width: auto; margin: 6px auto 10px;">
         <tr>
@@ -384,7 +384,7 @@
 {{-- GROUP 12 — IPFMS Dobu (sama seperti ELIS PHKT 5.2)           --}}
 {{-- ipfms-dobu                                                  --}}
 {{-- ============================================================= --}}
-@elseif ($type === 'ipfms-dobu')
+@elseif ($type === 'ipfms-dobu' || $type ==='sched-5-2')
 
     <table class="data-table" style="width: auto; margin: 6px auto 10px;">
         <tr>
@@ -404,12 +404,6 @@
             <td class="data-sep">:</td>
             <td class="data-value"><strong>Rp {{ $rp($c->transport_allowance ?? 0) }}</strong></td>
             <td style="padding-left: 20px;">Perhari Masuk Kerja</td>
-        </tr>
-        <tr>
-            <td class="data-label" style="width: auto;">Tunjangan Laut</td>
-            <td class="data-sep">:</td>
-            <td class="data-value"><strong>Rp {{ $rp($c->sea_allowance ?? 0) }}</strong></td>
-            <td style="padding-left: 20px;">Perhari Masuk Kerja (Jika Laut)</td>
         </tr>
     </table>
 

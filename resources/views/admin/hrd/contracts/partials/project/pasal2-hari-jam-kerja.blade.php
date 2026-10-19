@@ -21,7 +21,7 @@
 {{-- V1 — 5:2 Office (Senin-Kamis 08.00-17.00, Jumat 08.00-17.00) --}}
 {{-- Digunakan di: eni-civil-all-in, eni-civil-reguler, elis-phkt-6-1, phss-humas, phss-reguler --}}
 {{-- ============================================================= --}}
-@if (in_array($type, [ 'phss-humas', 'phss-reguler','pep-lokal-buny', 'eni-muara-bakau-lembur','elis-phkt-5-2']))
+@if (in_array($type, ['pep-lokal-buny', 'eni-muara-bakau-lembur','elis-phkt-5-2']))
 
     <p>1. Hari dan jam kerja dalam satu Minggu adalah 5 (Lima) hari dan jumlah jam kerja tidak melebihi 40 (empat puluh) jam seminggu, dengan ketentuan sebagai berikut :</p>
 
@@ -92,7 +92,7 @@
 {{--              eni-muara-bakau-all-in, elis-phkt-5-2, phss-driver, phss-major-ai-1, --}}
 {{--              phss-major-ai-2, lawe-lawe-all-in --}}
 {{-- ============================================================= --}}
-@elseif (in_array($type, ['elis-phkt-6-1','eni-smallcapital-all-in', 'eni-smallcapital-reguler', 'eni-muara-bakau-all-in', 'phss-driver', 'phss-major-ai-1', 'phss-major-ai-2', 'lawe-lawe-all-in']))
+@elseif (in_array($type, ['elis-phkt-6-1','eni-smallcapital-all-in', 'eni-smallcapital-reguler', 'eni-muara-bakau-all-in', 'phss-major-ai-1', 'phss-major-ai-2','phss-reguler']))
 
     <p>1. Hari dan jam kerja dalam satu Minggu adalah 6 (Enam) hari dan 1 (Satu) hari libur dengan skema seperti dibawah ini:</p>
 
@@ -112,7 +112,7 @@
 
     <p class="indent">o Minggu : Libur</p>
 
-    @if (in_array($type, [ 'elis-phkt-6-1','eni-smallcapital-reguler', 'elis-phkt-5-2', 'phss-driver', 'phss-major-ai-1', 'phss-major-ai-2']))
+    @if (in_array($type, [ 'elis-phkt-6-1','eni-smallcapital-reguler', 'elis-phkt-5-2','phss-reguler']))
         <p>2. Pekerja mengakui hak Perusahaan untuk mengatur hari kerja dan jam kerja serta kerja shift bagi semua pekerja dengan syarat jumlah jam kerja tidak melebihi 40 jam dalam satu Minggu.</p>
         <p>3. Apabila Pekerja diharuskan masuk pada hari libur/istirahat maka kehadirannya akan diperhitungkan sebagai lembur pada hari libur.</p>
         <p>4. Apabila Pekerja bekerja lebih dari jam kerja yang disebutkan di pasal sebelumnya, maka akan menambah jam overtime dengan syarat mendapatkan Approval / tanda tangan dari Project / User.</p>
@@ -124,7 +124,7 @@
 {{-- Digunakan di: pep-lokal-buny, sandmon-teknisi-1, sandmon-teknisi-2, sched-5-2 --}}
 {{-- ============================================================= --}}
 @elseif (in_array($type, ['sandmon-teknisi-1', 'sandmon-teknisi-2']))
-
+ @if ($type === 'pep-lokal-buny')
     <p>1. Hari kerja yang di gunakan adalah sesuai dengan ketentuan yang ditetapkan oleh User / Project / Perusahaan :</p>
 
     <p class="indent">a. 2 : 1 (14 hari kerja dan 7 hari Libur)</p>
@@ -132,6 +132,7 @@
     <p class="indent">c. 3 : 1 (21 hari kerja dan 7 hari libur)</p>
     <p class="indent">d. 6 : 1 (6 hari kerja dan 1 hari libur)</p>
     <p class="indent">e. 5 : 2 (5 hari kerja dan 2 hari libur)</p>
+    @endif
 
     @if ($type === 'pep-lokal-buny')
         <p>2. Jam kerja Office adalah dari jam 07.00 – 17.00 (10 jam) dengan jam istirahat 1 jam.</p>
@@ -221,7 +222,7 @@
 
     <p class="indent">a. 2 : 2 (14 hari kerja dan 14 hari libur)</p>
     <p class="indent">b. 6 : 1 (6 hari kerja dan 1 hari libur)</p>
-    <p class="indent">c. 5 : 2 (5 hari kerja dan 2 hari libur)</p>
+    <p class="indent"><strong> c. 5 : 2 (5 hari kerja dan 2 hari libur)</strong></p>
     <p class="indent">d. 3 : 3 (21 hari kerja dan 21 hari libur)</p>
     <p class="indent">e. 4 : 4 (28 hari kerja dan 28 hari libur)</p>
     <p class="indent">f. 5 : 3 (35 hari kerja dan 21 hari libur)</p>
@@ -237,4 +238,91 @@
 {{-- V3-Extended 2 — Roster Extended Full (8 varian roster) --}}
 {{-- Digunakan di: phss-major-ai-1, phss-major-ai-2 (kalau memang ada perubahan) --}}
 {{-- ============================================================= --}}
+
+@elseif ($type === 'phss-driver')
+
+    <p>1. Hari kerja yang digunakan adalah sesuai dengan ketentuan yang ditetapkan oleh User / Project / Perusahaan :</p>
+
+    <p class="indent">a. 2 : 1 (14 hari kerja dan 7 hari Libur)</p>
+    <p class="indent">b. 2 : 2 (14 hari kerja dan 14 hari libur)</p>
+    <p class="indent">c. 3 : 1 (21 hari kerja dan 7 hari libur)</p>
+    <p class="indent">d. 6 : 1 (6 hari kerja dan 1 hari libur)</p>
+    <p class="indent"><strong>e. 5 : 2 (5 hari kerja dan 2 hari libur)</strong></p>
+    <p class="indent">f. 3 : 3 (21 hari kerja dan 21 hari libur)</p>
+    <p class="indent">g. 4 : 4 (28 hari kerja dan 28 hari libur)</p>
+    <p class="indent">h. 5 : 3 (35 hari kerja dan 21 hari libur)</p>
+
+    <p>2. Jam kerja saat di Site adalah dari jam 07.00 – 17.00 dengan jam istirahat 1 jam.</p>
+
+    <p>3. Jam kerja saat di Office &amp; Workshop Bukaka Balikpapan adalah dari jam 08.00 – 17.00 dengan jam istirahat 1 jam.</p>
+
+    <p>4. Apabila Karyawan diharuskan masuk pada hari libur / istirahat maka kehadirannya diperhitungkan sebagai overtime pada hari libur.</p>
+
+    <p>5. Apabila Karyawan bekerja lebih dari jam kerja yang disebutkan di pasal sebelumnya, maka akan menambah jam overtime dengan syarat mendapatkan Approval / tanda tangan dari Project / User.</p>
+
+    @elseif ($type === 'phss-humas')
+
+    <p>1. Hari kerja yang digunakan adalah sesuai dengan ketentuan yang ditetapkan oleh User / Project / Perusahaan :</p>
+
+    <p class="indent">a. 2 : 1 (14 hari kerja dan 7 hari Libur)</p>
+    <p class="indent">b. 2 : 2 (14 hari kerja dan 14 hari libur)</p>
+    <p class="indent">c. 3 : 1 (21 hari kerja dan 7 hari libur)</p>
+    <p class="indent"><strong>d. 6 : 1 (6 hari kerja dan 1 hari libur)</strong></p>
+    <p class="indent">e. 5 : 2 (5 hari kerja dan 2 hari libur)</p>
+    <p class="indent">f. 3 : 3 (21 hari kerja dan 21 hari libur)</p>
+    <p class="indent">g. 4 : 4 (28 hari kerja dan 28 hari libur)</p>
+    <p class="indent">h. 5 : 3 (35 hari kerja dan 21 hari libur)</p>
+
+    <p>2.	Jam kerja Site adalah dari jam 07.00 – 17.30 (10 jam) dengan jam istirahat 1 jam 30 Menit.</p>
+
+    <p>3.	Jam kerja sesuai dengan kebutuhan project di Site.</p>
+    @elseif ($type === 'lawe-lawe-reguler')
+
+    <p>1. Hari kerja yang digunakan adalah sesuai dengan ketentuan yang ditetapkan oleh User / Project / Perusahaan :</p>
+
+    <p class="indent">a. 2 : 1 (14 hari kerja dan 7 hari Libur)</p>
+    <p class="indent">b. 2 : 2 (14 hari kerja dan 14 hari libur)</p>
+    <p class="indent">c. 3 : 1 (21 hari kerja dan 7 hari libur)</p>
+    <p class="indent"><strong>d. 6 : 1 (6 hari kerja dan 1 hari libur)</strong></p>
+    <p class="indent">e. 5 : 2 (5 hari kerja dan 2 hari libur)</p>
+    <p class="indent">f. 3 : 3 (21 hari kerja dan 21 hari libur)</p>
+    <p class="indent">g. 4 : 4 (28 hari kerja dan 28 hari libur)</p>
+    <p class="indent">h. 5 : 3 (35 hari kerja dan 21 hari libur)</p>
+
+    <p>2.	Jam kerja Site adalah dari jam 07.00 – 17.00 (10 jam) dengan jam istirahat 1 jam.</p>
+
+
+   @elseif ($type === 'lawe-lawe-all-in')
+   <p>1.	Hari kerja yang di gunakan adalah sesuai dengan ketentuan yang ditetapkan oleh User / Project / Perusahaan :
+        6 : 1 (6 hari kerja dan 1 hari libur). Hari kerja dapat berubah sesuai dengan kebutuhan pekerjaan.</p>
+
+    <p>2.	Jam kerja adalah dari jam 07.00 – 17.00 (10 jam) dengan jam istirahat 1 jam.</p>
+
+   
+    <p>
+
+        3.	Apabila Karyawan diharuskan masuk pada hari libur / istirahat maka kehadirannya diperhitungkan sebagai lembur. 
+    </p>
+    <p>
+
+        4.	Apabila Karyawan bekerja dilapangan lebih dari jam kerja 07.00 – 17.00 (10 jam kerja dengan 1 jam istirahat) maka akan menambah jam overtime dengan syarat mendapatkan Approval / tanda tangan dari Project / User.
+    </p>
+    @elseif ($type === 'ipfms-dobu')
+
+<p>1. Hari kerja atau jadwal kerja mengikuti ketentuan yang ditetapkan oleh User yang berlaku.</p>
+<p class="indent">a. 2 : 1 (14 hari kerja dan 7 hari Libur)</p>
+<p class="indent"><strong> 2 : 2 (14 hari kerja dan 14 hari libur)*</strong></p>
+<p class="indent">c. 3 : 1 (21 hari kerja dan 7 hari libur)</p>
+<p class="indent">d. 6 : 1 (6 hari kerja dan 1 hari libur)</p>
+<p class="indent">e. 5 : 2 (5 hari kerja dan 2 hari libur)</p>
+<p class="indent">*Awal project memakai schedule 2:2 (14 hari kerja dan 14 hari libur), actual mengikuti schedule yang ditentukan User.</p>
+
+<p>2. Jam kerja adalah dari jam 06:00 – 18:00 dengan jam istirahat 1 Jam atau mengikuti aturan yang berlaku di User.</p>
+
+<p>3. Apabila Karyawan diharuskan bekerja pada hari offduty maka kehadirannya diperhitungkan sebagai lembur pada hari libur, sesuai dengan timesheet atau absensi dari User.</p>
+
+<p>4. Apabila Karyawan bekerja dilapangan (lokasi) lebih dari jam kerja 06.00 – 18.00 (12 jam) maka akan menambah jam overtime dengan syarat mendapatkan Approval / tanda tangan dari Perwakilan User / Project.</p>
+
+
+
 @endif

@@ -39,7 +39,7 @@
 {{-- ============================================================= --}}
 {{-- 2. PHSS MAJOR — Klausul khusus "Tanggal Pembayaran Lembur"    --}}
 {{-- ============================================================= --}}
-@elseif (in_array($type, ['phss-driver', 'phss-reguler', 'phss-security', 'phss-humas']))
+@elseif (in_array($type, ['phss-driver', 'phss-reguler', 'phss-security','lawe-lawe-reguler','pep-lokal-buny']))
 
     <p>7. Jika terdapat Lembur pada periode perhitungan tanggal 01 – 30/31 pada bulan sebelumnya, maka akan dibayarkan setiap tanggal 25 bulan selanjutnya.</p>
 
@@ -71,7 +71,16 @@
         tercantum di dalam Peraturan Perusahaan.
     </p>
 
-    <p>9. Pajak pendapatan (Pph Pasal 21) ditanggung sepenuhnya oleh Pekerja untuk kemudian disetorkan ke Kas Negara.</p>
+       <p>9. Pajak pendapatan (Pph Pasal 21) ditanggung sepenuhnya oleh 
+        @if ($type === 'lawe-lawe-reguler' || $type ==='pep-lokal-buny')
+            <strong>Perusahaan</strong>
+        @else
+            Pekerja
+        @endif
+        untuk kemudian disetorkan ke Kas Negara.
+    </p>
+
+
 
 
    {{-- ============================================================= --}}
@@ -119,7 +128,20 @@
 {{-- 3B. ENI CIVIL REGULER — Tanggal Pembayaran 09                 --}}
 {{-- eni-civil-reguler                                            --}}
 {{-- ============================================================= --}}
-@elseif ($type === 'eni-civil-reguler'  || $type === 'eni-muara-bakau-all-in' ||$type === "warlok-all-in" || $type === 'eni-muara-bakau-lembur' || $type === 'warlok-lembur' || $type ==='warlok-security' || $type ==='elis-phkt-6-1')
+@elseif (in_array($type, [
+    'eni-civil-reguler',
+    'eni-muara-bakau-all-in',
+    'warlok-all-in',
+    'eni-muara-bakau-lembur',
+    'warlok-lembur',
+    'warlok-security',
+    'elis-phkt-6-1',
+    'phss-major-ai-1',
+    'phss-major-ai-2',
+    'phss-major-ai-3',
+     'phss-humas',
+    
+]))
 
     <p>6. Gaji, dan Lembur (bila ada) dibayarkan pada tanggal 09 setiap bulannya, dengan periode perhitungan tanggal 01 – 30/31 bulan sebelumnya, dengan ketentuan sebagai berikut:</p>
     <p class="indent">a. Apabila tanggal 09 jatuh pada hari Sabtu/Libur Nasional, maka Upah dibayarkan pada tanggal 08 (hari Jumat/hari sebelumnya)</p>
@@ -152,15 +174,30 @@
         e. Gaji yang tidak dibayarkan ini berlaku untuk seluruh Pekerja sesuai dengan ketentuan yang
         tercantum di dalam Peraturan Perusahaan.
     </p>
+@if (in_array($type, [
+    'phss-major-ai-1',
+    'phss-major-ai-2',
+    'phss-major-ai-3',
+     'phss-humas',
 
+    ]))
+     <p>8. Pajak pendapatan (Pph Pasal 21) ditanggung sepenuhnya oleh <strong>Pekerja</strong> untuk kemudian disetorkan ke Kas Negara.</p>
+    @else
     <p>8. Pajak pendapatan (Pph Pasal 21) ditanggung sepenuhnya oleh <strong>Perusahaan</strong> untuk kemudian disetorkan ke Kas Negara.</p>
+    
+    @endif
+
+    
+   
 
 
    {{-- ============================================================= --}}
 {{-- 5. ENI SMALL CAPITAL ALL-IN — Pajak Pekerja + Pesangon       --}}
 {{-- eni-smallcapital-all-in                                    --}}
 {{-- ============================================================= --}}
-@elseif ($type === 'eni-smallcapital-all-in')
+@elseif (in_array($type, [
+'eni-smallcapital-all-in', 'lawe-lawe-all-in'
+]))
 
     <p>6. Gaji pokok dan tunjangan (Upah) dibayarkan tanggal 09 setiap bulannya. dengan periode perhitungan tanggal 01 – 30/31 bulan sebelumnya.</p>
 
@@ -179,9 +216,7 @@
 @elseif (in_array($type, [
     'eni-smallcapital-reguler',
     'elis-phkt-5-2',
-    'phss-major-ai-1', 'phss-major-ai-2', 'phss-major-ai-3',
-    'lawe-lawe-reguler', 'lawe-lawe-all-in',
-    'pep-lokal-buny', 'sched-5-2',
+    'sched-5-2',
 ]))
 
 @if  (in_array($type, ['elis-phkt-5-2']))
