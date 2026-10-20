@@ -586,5 +586,69 @@ $(document).ready(function () {
     calculateAge();
 
 });
+$(document).ready(function () {
+    
+    // =========================================================
+    // AUTO-FILL DEPARTMENT BERDASARKAN TYPE
+    // =========================================================
+    const departmentMap = {
+        // ENI
+        'eni-civil-all-in'         : 'ENI - Civil and Structure Maintenance Services Project',
+        'eni-civil-reguler'        : 'ENI - Civil and Structure Maintenance Services Project',
+        'eni-smallcapital-all-in'  : 'ENI SMALL CAPITAL-Modification and Improvement for Facility Support Services',
+        'eni-smallcapital-reguler' : 'ENI SMALL CAPITAL-Modification and Improvement for Facility Support Services',
+        'eni-muara-bakau-lembur'   : 'ENI Muara Bakau Project',
+        'eni-muara-bakau-all-in'   : 'ENI Muara Bakau Project',
+
+        // Warlok / Medco
+        'warlok-all-in'            : 'Tarakan Blanket Construction Services - Medco EP',
+        'warlok-lembur'            : 'Tarakan Blanket Construction Services - Medco EP',
+        'warlok-security'          : 'Tarakan Blanket Construction Services - Medco EP',
+
+        // ELIS PHKT
+        'elis-phkt-5-2'            : 'Installation of Fire & Gas Detector System At STN Terminal (ELIS PHKT)',
+        'elis-phkt-6-1'            : 'ELIS PHKT Project (Maintenance)',
+
+        // PHSS Major
+        'phss-major-ai-1'          : 'PHSS - Major Construction OPLL Fase 2 Paket II',
+        'phss-major-ai-2'          : 'PHSS - Major Construction OPLL Fase 2 Paket II',
+        'phss-major-ai-3'          : 'PHSS - Major Construction OPLL Fase 2 Paket II',
+        'phss-driver'              : 'PHSS - Major Construction OPLL Fase 2 Paket II',
+        'phss-humas'               : 'PHSS - Major Construction OPLL Fase 2 Paket II',
+        'phss-reguler'             : 'PHSS - Major Construction OPLL Fase 2 Paket II',
+        'phss-security'            : 'PHSS - Major Construction OPLL Fase 2 Paket II',
+
+        // Sand Monitoring
+        'sandmon-teknisi-1'        : 'Sand Monitoring Services for PHM',
+        'sandmon-teknisi-2'        : 'Sand Monitoring Services for PHM',
+
+        // Lain-lain
+        'pep-lokal-buny'           : 'PEP Project - Lokal Buny',
+        'sched-5-2'                : 'Project Schedule 5-2',
+        'lawe-lawe-reguler'        : 'CIMS Project - Lawe Lawe',
+        'lawe-lawe-all-in'         : 'CIMS Project - Lawe Lawe',
+        'ipfms-dobu'               : 'IPFMS - Dobu',
+    };
+
+    function autoFillDepartment() {
+        // Ambil nilai type (bisa dari select dropdown atau hidden input)
+        let type = $('#type-select').val() || $('input[name="type"]').val();
+        
+        // Ambil value department dari mapping
+        let departmentValue = departmentMap[type] || '';
+
+        // Isi ke input field
+        $('#employee-department').val(departmentValue);
+    }
+
+    // Jalankan saat halaman pertama kali dimuat
+    autoFillDepartment();
+
+    // Jalankan setiap kali dropdown Type diubah (khusus create-new-from-existing)
+    $('#type-select').on('change', function () {
+        autoFillDepartment();
+    });
+
+});
 </script>
 @endsection
