@@ -649,16 +649,39 @@
         </div>
 
         <div class="signature-column">
-            <div><strong>PT BUKAKA TEKNIK UTAMA Tbk</strong></div>
+    <!-- Bungkus teks dan gambar dengan d-flex agar sejajar ke samping -->
+   
+    <div class="d-flex align-items-center mb-1">
+        <div>
+         <div class="d-flex align-items-center" style="padding-left: 50px;">
+    <!-- Teks dikunci di sini -->
+    <strong>PT BUKAKA TEKNIK UTAMA Tbk</strong> 
+    
+    <!-- Gambar dibungkus wadah dengan lebar statis agar tidak mendorong teks -->
+    <div style="width: 40px; margin-left: 10px;">
+        @if ($contract->hrd_qr_path)
+            <img src="{{ asset('images/bukakaDoc.png') }}" 
+                 alt="" 
+                 style="width: 30px; height: 20px; opacity: 0.9; display: block;">
+        @endif
+    </div>
+</div>
             <div><strong>Cabang Balikpapan</strong></div>
-            <div class="signature-image-wrapper">
-                @if ($contract->head_qr_path)
-                    <img src="{{ asset('storage/' . $contract->head_qr_path) }}" class="signature-image-10" alt="QR Head Approval">
-                @endif
-            </div>
-            <div class="signature-name">IR. Muslimin Sanafi</div>
-            <div class="signature-title">Head Of Balikpapan Branch</div>
         </div>
+       
+    </div>
+
+    <!-- QR Code Head Approval -->
+    <div class="signature-image-wrapper">
+        @if ($contract->head_qr_path)
+            <img src="{{ asset('storage/' . $contract->head_qr_path) }}" class="signature-image-10" alt="QR Head Approval">
+        @endif
+    </div>
+    
+    <!-- Nama dan Jabatan -->
+    <div class="signature-name">IR. Muslimin Sanafi</div>
+    <div class="signature-title">Head Of Balikpapan Branch</div>
+</div>
     </div>
 
     @include('partials.document-footer')

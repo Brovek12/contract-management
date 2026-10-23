@@ -330,6 +330,24 @@ class ContractController extends Controller
         foreach (array_keys($allowanceRules) as $field) {
             $allowances[$field] = $request->input($field, 0);
         }
+                /*
+        |--------------------------------------------------------------------------
+        | 4.5 OVERWRITE KALKULASI OTOMATIS (SANDMON)
+        |--------------------------------------------------------------------------
+        */
+        if (in_array($type, ['sandmon-teknisi-1', 'sandmon-teknisi-2'])) {
+            // Ambil nilai mentah
+            $basic     = (float) $request->basic_salary;
+            $housing   = (float) $allowances['housing_allowance'];
+            $transport = (float) $allowances['transport_allowance'];
+
+            // Hitung THP
+            $thp = $basic + $housing + $transport;
+
+            // Timpa nilai tunjangan dengan hasil hitungan backend
+            $allowances['ewhc_allowance']         = round($thp * 0.65);
+            $allowances['annual_leave_allowance'] = round($basic / 12);
+        }
 
 
         /*
@@ -609,6 +627,21 @@ class ContractController extends Controller
         foreach (array_keys($allowanceRules) as $field) {
             $allowances[$field] = $request->input($field, 0);
         }
+                /*
+        |--------------------------------------------------------------------------
+        | 4.5 OVERWRITE KALKULASI OTOMATIS (SANDMON)
+        |--------------------------------------------------------------------------
+        */
+        if (in_array($type, ['sandmon-teknisi-1', 'sandmon-teknisi-2'])) {
+            $basic     = (float) $request->basic_salary;
+            $housing   = (float) $allowances['housing_allowance'];
+            $transport = (float) $allowances['transport_allowance'];
+
+            $thp = $basic + $housing + $transport;
+
+            $allowances['ewhc_allowance']         = round($thp * 0.65);
+            $allowances['annual_leave_allowance'] = round($basic / 12);
+        }
 
 
         /*
@@ -702,11 +735,6 @@ class ContractController extends Controller
     {
         try {
 
-            if ($contract->status !== 'draft') {
-                return redirect()
-                    ->back()
-                    ->with('ERR', 'Contract tidak dapat dikirim karena status bukan Draft.');
-            }
 
             // Update status
             $contract->update([
@@ -726,6 +754,7 @@ class ContractController extends Controller
                 ->with('ERR', 'Gagal Mengirim Contract: ' . $e->getMessage());
         }
     }
+
 
     public function approveHRD(Contract $contract)
     {
@@ -763,6 +792,24 @@ class ContractController extends Controller
             return back()->with('ERR', 'Gagal Menyelesaikan Kontrak: ' . $e->getMessage());
         }
     }
+    public function stop(Contract $contract)
+{
+    try {
+        if ($contract->status !== 'signed') {
+            return back()->with('ERR', 'Hanya kontrak yang sudah ditandatangani yang bisa di-stop.');
+        }
+
+        $contract->update([
+            'status'     => 'stop',
+            'stopped_at' => now(),
+        ]);
+
+        return back()->with('OK', 'Kontrak Berhasil Di-stop / Diselesaikan.');
+
+    } catch (\Exception $e) {
+        return back()->with('ERR', 'Gagal Menyelesaikan Kontrak: ' . $e->getMessage());
+    }
+}
 
     public function bulkSend(Request $request)
     {
@@ -1143,13 +1190,14 @@ class ContractController extends Controller
     {
         Carbon::setLocale('id');
         $filters = [
-            'category'   => $request->input('category'),
-            'type'       => $request->input('type'),
-            'project'    => $request->input('project'),
-            'status'     => $request->input('status'),
-            'start_date' => $request->input('start_date'),
-            'end_date'   => $request->input('end_date'),
-        ];
+        'category'        => $request->query('category'),
+        'type'            => $request->query('type'),
+        'project'         => $request->query('project'),
+        'status'          => $request->query('status'),
+        'start_date_from' => $request->query('start_date_from'),
+        'start_date_to'   => $request->query('start_date_to'),
+        'end_date_only'   => $request->query('end_date_only'),
+    ];
 
         $tanggal  = now()->translatedFormat('d-M-Y'); // 19-Sep-2026
         $filename = "Laporan-Contract_{$tanggal}.xlsx";

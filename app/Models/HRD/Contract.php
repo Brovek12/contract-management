@@ -131,6 +131,7 @@ class Contract extends Model
         'head_signature',
         'head_signed_at',
         'head_qr_path',
+        'stopped_at',
 
         // =====================================================
         // CREATOR
@@ -151,6 +152,7 @@ class Contract extends Model
         'employee_signed_at' => 'datetime',
         'hrd_signed_at'      => 'datetime',
         'head_signed_at'     => 'datetime',
+        'stopped_at'     => 'datetime',
 
         'basic_salary' => 'decimal:2',
 

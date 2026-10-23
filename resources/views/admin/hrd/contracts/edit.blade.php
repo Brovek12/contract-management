@@ -323,22 +323,73 @@
             {{-- ================================================== --}}
             {{-- TUNJANGAN (dinamis per type)                        --}}
             {{-- ================================================== --}}
-            @php
+                      @php
+                // Semua tipe yang punya blok tunjangan (Sama persis dengan Create)
                 $allowanceTypes = [
+                    // =====================
+                    // Managerial
+                    // =====================
                     'all-in',
                     'gp-mahal-um-ut-fungsi',
                     'gp-um-ut-fungsi',
+
+                    // =====================
+                    // Non-Managerial
+                    // =====================
                     'security',
                     'ob',
                     'gp-um-ut-laut',
                     'gp-um-ut',
                     'gp-mahal-um-ut-fungsi-pls',
                     'gp-mahal-um-ut',
-                    'pep-lokal-buny',
-                    'elis-phkt-5-2',
-                    'elis-phkt-6-1',
+
+                    // =====================
+                    // Project — ENI
+                    // =====================
+                    'eni-civil-all-in',
+                    'eni-civil-reguler',
+                    'eni-smallcapital-all-in',
+                    'eni-smallcapital-reguler',
                     'eni-muara-bakau-lembur',
                     'eni-muara-bakau-all-in',
+
+                    // =====================
+                    // Project — Warlok / Medco
+                    // =====================
+                    'warlok-all-in',
+                    'warlok-lembur',
+                    'warlok-security',
+
+                    // =====================
+                    // Project — ELIS PHKT
+                    // =====================
+                    'elis-phkt-5-2',
+                    'elis-phkt-6-1',
+
+                    // =====================
+                    // Project — PHSS Major
+                    // =====================
+                    'phss-major-ai-1',
+                    'phss-major-ai-2',
+                    'phss-major-ai-3',
+                    'phss-driver',
+                    'phss-humas',
+                    'phss-reguler',
+                    'phss-security',
+
+                    // =====================
+                    // Project — Sand Monitoring
+                    // =====================
+                    'sandmon-teknisi-1',
+                    'sandmon-teknisi-2',
+
+                    // =====================
+                    // Project — Lain-lain
+                    // =====================
+                    'pep-lokal-buny',
+                    'sched-5-2',
+                    'lawe-lawe-reguler',
+                    'lawe-lawe-all-in',
                     'ipfms-dobu',
                 ];
             @endphp
@@ -387,107 +438,75 @@
 </div>
 
 @endsection
-
-
 @section('script')
 <script>
 $(document).ready(function () {
 
     // =========================================================
-    // EMPLOYEE
+    // 1. EMPLOYEE & AGE
     // =========================================================
-
     function fillEmployeeData() {
         let employeeId = $('#employee-select').val();
         if (!employeeId) {
             $('#employee-name').val('');
             return;
         }
-        let selectedOption = $('#employee-select').find('option:selected');
-        let employeeName   = selectedOption.attr('data-name');
+        let employeeName = $('#employee-select').find('option:selected').attr('data-name');
         $('#employee-name').val(employeeName || '');
     }
 
-    $('#employee-select').on('select2:select', function () {
+    $('#employee-select').on('select2:select change', function () {
         fillEmployeeData();
     });
 
-    $('#employee-select').on('change', function () {
-        fillEmployeeData();
-    });
-
-
-    // =========================================================
-    // BIRTH DATE / CONTRACT DATE -> AGE
-    // =========================================================
-
-    $('#birth-date').on('change', function () {
-        calculateAge();
-    });
-
-    $('#contract-date').on('change', function () {
+    $('#birth-date, #contract-date').on('change', function () {
         calculateAge();
     });
 
     function calculateAge() {
-        let birthDateValue    = $('#birth-date').val();
+        let birthDateValue = $('#birth-date').val();
         let contractDateValue = $('#contract-date').val();
-
         if (!birthDateValue) {
             $('#age-at-contract').val('');
             return;
         }
-
         let birthDate = new Date(birthDateValue + 'T00:00:00');
-
-        let contractDate;
-        if (contractDateValue) {
-            contractDate = new Date(contractDateValue + 'T00:00:00');
-        } else {
-            contractDate = new Date();
-        }
-
+        let contractDate = contractDateValue ? new Date(contractDateValue + 'T00:00:00') : new Date();
         let age = contractDate.getFullYear() - birthDate.getFullYear();
         let monthDifference = contractDate.getMonth() - birthDate.getMonth();
-
-        if (
-            monthDifference < 0 ||
-            (monthDifference === 0 && contractDate.getDate() < birthDate.getDate())
-        ) {
+        if (monthDifference < 0 || (monthDifference === 0 && contractDate.getDate() < birthDate.getDate())) {
             age--;
         }
-
-        if (age >= 0 && age <= 100) {
-            $('#age-at-contract').val(age);
-        } else {
-            $('#age-at-contract').val('');
-        }
+        if (age >= 0 && age <= 100) $('#age-at-contract').val(age);
+        else $('#age-at-contract').val('');
     }
 
 
     // =========================================================
-    // CURRENCY FORMATTER
+    // 2. CURRENCY FORMATTER (HANYA UNTUK INPUT MANUAL)
     // =========================================================
-
     function syncCurrencyInput($input) {
         let rawValue = $input.val().replace(/\D/g, '');
         let targetId = $input.data('target');
-
-        $('#' + targetId).val(rawValue);
+        
+        if(targetId) {
+            $('#' + targetId).val(rawValue); // Simpan angka mentah ke hidden input
+        }
 
         if (rawValue !== '') {
-            $input.val(new Intl.NumberFormat('id-ID').format(rawValue));
+            $input.val(new Intl.NumberFormat('id-ID').format(rawValue)); // Format ke tampilan
         } else {
             $input.val('');
         }
     }
 
-    // Inisialisasi awal: sinkronkan tampilan dari hidden input
+    // Format saat halaman pertama dimuat (Edit Mode)
     $('.currency-input').each(function () {
-        let $input   = $(this);
+        let $input = $(this);
         let targetId = $input.data('target');
-        let raw      = $('#' + targetId).val();
-
+        // Ambil dari hidden input, atau dari atribut value bawaan HTML
+        let raw = $('#' + targetId).val() || $input.val(); 
+        
         if (raw && raw !== '' && raw !== '0') {
             $input.val(new Intl.NumberFormat('id-ID').format(raw));
         } else {
@@ -495,19 +514,66 @@ $(document).ready(function () {
         }
     });
 
+    // Hanya gunakan event 'input' agar tidak bentrok
     $(document).on('input', '.currency-input', function () {
         syncCurrencyInput($(this));
     });
 
-    $(document).on('blur', '.currency-input', function () {
-        syncCurrencyInput($(this));
+
+    // =========================================================
+    // 3. KALKULASI OTOMATIS SANDMON (EWHC & ANNUAL LEAVE)
+    // =========================================================
+    function getCleanNumber(val) {
+        if (!val) return 0;
+        return parseFloat(val.toString().replace(/[^0-9,-]+/g,"").replace(",", ".")) || 0;
+    }
+
+    function calculateSandmon() {
+        const housingInput = document.querySelector('input[data-target="housing_allowance"]');
+        const transportInput = document.querySelector('input[data-target="transport_allowance"]');
+        
+        if (!housingInput || !transportInput) return; // Bukan form sandmon
+
+        // Baca dari input tampilan (type="text") Gaji Pokok
+        let basicText = $('input[data-target="basic_salary"]').val(); 
+        let basic = getCleanNumber(basicText);
+        
+        let housing = getCleanNumber(housingInput.value);
+        let transport = getCleanNumber(transportInput.value);
+
+        let thp = basic + housing + transport;
+        let ewhc = thp * 0.65;
+        let annualLeave = basic / 12;
+
+        let ewhcFormatted = new Intl.NumberFormat('id-ID').format(Math.round(ewhc));
+        let annualFormatted = new Intl.NumberFormat('id-ID').format(Math.round(annualLeave));
+
+        // Isi tampilan (Readonly)
+        $('#ewhc_allowance_display').val(ewhcFormatted);
+        $('#annual_leave_display').val(annualFormatted);
+
+        // Isi hidden input untuk DB
+        $('#ewhc_allowance').val(Math.round(ewhc));
+        $('#annual_leave_allowance').val(Math.round(annualLeave));
+    }
+
+    // 1. Jalankan saat pertama kali load
+    calculateSandmon();
+
+    // 2. Jalankan ulang setelah 0.5 detik (mengalahkan plugin formatter template)
+    setTimeout(function() {
+        calculateSandmon();
+    }, 500);
+
+    // 3. Dengarkan perubahan input secara realtime
+    $(document).on('input', 'input[data-target="basic_salary"], input[data-target="housing_allowance"], input[data-target="transport_allowance"]', function() {
+        calculateSandmon();
     });
 
 
     // =========================================================
-    // INITIAL LOAD
+    // 4. INITIAL LOAD
     // =========================================================
-
     fillEmployeeData();
     calculateAge();
 

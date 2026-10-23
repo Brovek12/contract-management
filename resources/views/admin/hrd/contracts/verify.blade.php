@@ -431,7 +431,7 @@
                 <div class="approval-item">
                     <div class="icon"><i class="ki-outline ki-check"></i></div>
                     <div class="content">
-                        <div class="name">Approved by Head of Branch</div>
+                        <div class="name">Approved by General Manager</div>
                         <div class="meta">
                             @php
                                 $headUser = $contract->head_signature

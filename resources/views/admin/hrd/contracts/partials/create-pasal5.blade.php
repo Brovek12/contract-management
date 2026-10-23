@@ -1041,7 +1041,6 @@
 
     {{-- ========================================================= --}}
     {{-- GROUP F: Sand Monitoring (2 type)                       --}}
-    {{-- sandmon-teknisi-1, sandmon-teknisi-2                   --}}
     {{-- ========================================================= --}}
 
     {{-- Housing --}}
@@ -1049,17 +1048,10 @@
         <label class="form-label fw-semibold">Housing</label>
         <div class="input-group">
             <span class="input-group-text">Rp</span>
-            <input type="text"
-                   class="form-control currency-input"
-                   data-target="housing_allowance"
-                   placeholder="0"
-                   value="{{ old('housing_allowance', $c->housing_allowance ?? null) ? number_format((float) old('housing_allowance', $c->housing_allowance ?? null), 0, ',', '.') : '' }}"
-                   inputmode="numeric"
-                   autocomplete="off">
+            <input type="text" class="form-control currency-input" data-target="housing_allowance" placeholder="0" value="{{ old('housing_allowance', $c->housing_allowance ?? null) ? number_format((float) old('housing_allowance', $c->housing_allowance ?? null), 0, ',', '.') : '' }}" inputmode="numeric" autocomplete="off">
             <span class="input-group-text">/ Bulan</span>
         </div>
-        <input type="hidden" name="housing_allowance" id="housing_allowance"
-               value="{{ old('housing_allowance', $c->housing_allowance ?? 0) }}">
+        <input type="hidden" name="housing_allowance" id="housing_allowance" value="{{ old('housing_allowance', $c->housing_allowance ?? 0) }}">
     </div>
 
     {{-- Transport --}}
@@ -1067,71 +1059,51 @@
         <label class="form-label fw-semibold">Transport</label>
         <div class="input-group">
             <span class="input-group-text">Rp</span>
-            <input type="text"
-                   class="form-control currency-input"
-                   data-target="transport_allowance"
-                   placeholder="0"
-                   value="{{ old('transport_allowance', $c->transport_allowance ?? null) ? number_format((float) old('transport_allowance', $c->transport_allowance ?? null), 0, ',', '.') : '' }}"
-                   inputmode="numeric"
-                   autocomplete="off">
+            <input type="text" class="form-control currency-input" data-target="transport_allowance" placeholder="0" value="{{ old('transport_allowance', $c->transport_allowance ?? null) ? number_format((float) old('transport_allowance', $c->transport_allowance ?? null), 0, ',', '.') : '' }}" inputmode="numeric" autocomplete="off">
             <span class="input-group-text">/ Bulan</span>
         </div>
-        <input type="hidden" name="transport_allowance" id="transport_allowance"
-               value="{{ old('transport_allowance', $c->transport_allowance ?? 0) }}">
+        <input type="hidden" name="transport_allowance" id="transport_allowance" value="{{ old('transport_allowance', $c->transport_allowance ?? 0) }}">
     </div>
 
-    {{-- EWHC --}}
-    <div class="col-md-6">
-        <label class="form-label fw-semibold">EWHC (65% dari THP)</label>
-        <div class="input-group">
-            <span class="input-group-text">Rp</span>
-            <input type="text"
-                   class="form-control currency-input"
-                   data-target="ewhc_allowance"
-                   placeholder="0"
-                   value="{{ old('ewhc_allowance', $c->ewhc_allowance ?? null) ? number_format((float) old('ewhc_allowance', $c->ewhc_allowance ?? null), 0, ',', '.') : '' }}"
-                   inputmode="numeric"
-                   autocomplete="off">
-            <span class="input-group-text">/ Bulan</span>
-        </div>
-        <input type="hidden" name="ewhc_allowance" id="ewhc_allowance"
-               value="{{ old('ewhc_allowance', $c->ewhc_allowance ?? 0) }}">
-    </div>
+    
 
     {{-- Daily Allowance --}}
     <div class="col-md-6">
         <label class="form-label fw-semibold">Daily Allowance</label>
         <div class="input-group">
             <span class="input-group-text">Rp</span>
-            <input type="text"
-                   class="form-control currency-input"
-                   data-target="daily_allowance"
-                   placeholder="0"
-                   value="{{ old('daily_allowance', $c->daily_allowance ?? null) ? number_format((float) old('daily_allowance', $c->daily_allowance ?? null), 0, ',', '.') : '' }}"
-                   inputmode="numeric"
-                   autocomplete="off">
+            <input type="text" class="form-control currency-input" data-target="daily_allowance" placeholder="0" value="{{ old('daily_allowance', $c->daily_allowance ?? null) ? number_format((float) old('daily_allowance', $c->daily_allowance ?? null), 0, ',', '.') : '' }}" inputmode="numeric" autocomplete="off">
             <span class="input-group-text">/ Hari Masuk Kerja</span>
         </div>
-        <input type="hidden" name="daily_allowance" id="daily_allowance"
-               value="{{ old('daily_allowance', $c->daily_allowance ?? 0) }}">
+        <input type="hidden" name="daily_allowance" id="daily_allowance" value="{{ old('daily_allowance', $c->daily_allowance ?? 0) }}">
     </div>
 
-    {{-- Annual Leave Allowance --}}
+       {{-- EWHC (Readonly / Otomatis) --}}
     <div class="col-md-6">
-        <label class="form-label fw-semibold">Annual Leave Allowance</label>
+        <label class="form-label fw-semibold">EWHC (65% dari THP)</label>
         <div class="input-group">
             <span class="input-group-text">Rp</span>
-            <input type="text"
-                   class="form-control currency-input"
-                   data-target="annual_leave_allowance"
-                   placeholder="0"
-                   value="{{ old('annual_leave_allowance', $c->annual_leave_allowance ?? null) ? number_format((float) old('annual_leave_allowance', $c->annual_leave_allowance ?? null), 0, ',', '.') : '' }}"
-                   inputmode="numeric"
-                   autocomplete="off">
+            <input type="text" class="form-control bg-secondary-light" {{-- HAPUS class currency-input --}}
+                   data-target="ewhc_allowance" id="ewhc_allowance_display" placeholder="Otomatis" 
+                   value="{{ old('ewhc_allowance', $c->ewhc_allowance ?? null) ? number_format((float) old('ewhc_allowance', $c->ewhc_allowance ?? null), 0, ',', '.') : '' }}" 
+                   inputmode="numeric" autocomplete="off" readonly>
             <span class="input-group-text">/ Bulan</span>
         </div>
-        <input type="hidden" name="annual_leave_allowance" id="annual_leave_allowance"
-               value="{{ old('annual_leave_allowance', $c->annual_leave_allowance ?? 0) }}">
+        <input type="hidden" name="ewhc_allowance" id="ewhc_allowance" value="{{ old('ewhc_allowance', $c->ewhc_allowance ?? 0) }}">
+    </div>
+
+    {{-- Annual Leave Allowance (Readonly / Otomatis) --}}
+    <div class="col-md-6">
+        <label class="form-label fw-semibold">Annual Leave Allowance (1:12 Bulan)</label>
+        <div class="input-group">
+            <span class="input-group-text">Rp</span>
+            <input type="text" class="form-control bg-secondary-light" {{-- HAPUS class currency-input --}}
+                   data-target="annual_leave_allowance" id="annual_leave_display" placeholder="Otomatis" 
+                   value="{{ old('annual_leave_allowance', $c->annual_leave_allowance ?? null) ? number_format((float) old('annual_leave_allowance', $c->annual_leave_allowance ?? null), 0, ',', '.') : '' }}" 
+                   inputmode="numeric" autocomplete="off" readonly>
+            <span class="input-group-text">/ Bulan</span>
+        </div>
+        <input type="hidden" name="annual_leave_allowance" id="annual_leave_allowance" value="{{ old('annual_leave_allowance', $c->annual_leave_allowance ?? 0) }}">
     </div>
 
     {{-- Severance / Complement --}}
@@ -1139,18 +1111,12 @@
         <label class="form-label fw-semibold">Complement / Pesangon</label>
         <div class="input-group">
             <span class="input-group-text">Rp</span>
-            <input type="text"
-                   class="form-control currency-input"
-                   data-target="severance_allowance"
-                   placeholder="0"
-                   value="{{ old('severance_allowance', $c->severance_allowance ?? null) ? number_format((float) old('severance_allowance', $c->severance_allowance ?? null), 0, ',', '.') : '' }}"
-                   inputmode="numeric"
-                   autocomplete="off">
+            <input type="text" class="form-control currency-input" data-target="severance_allowance" placeholder="0" value="{{ old('severance_allowance', $c->severance_allowance ?? null) ? number_format((float) old('severance_allowance', $c->severance_allowance ?? null), 0, ',', '.') : '' }}" inputmode="numeric" autocomplete="off">
             <span class="input-group-text">/ Bulan</span>
         </div>
-        <input type="hidden" name="severance_allowance" id="severance_allowance"
-               value="{{ old('severance_allowance', $c->severance_allowance ?? 0) }}">
+        <input type="hidden" name="severance_allowance" id="severance_allowance" value="{{ old('severance_allowance', $c->severance_allowance ?? 0) }}">
     </div>
+
 
 @elseif (in_array($type, ['warlok-all-in','warlok-lembur', 'warlok-security', 'phss-driver','lawe-lawe-reguler']))
 

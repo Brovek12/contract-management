@@ -546,88 +546,63 @@
 </div>
 
 @endsection
-
-
 @section('script')
 <script>
 $(document).ready(function () {
 
     // =========================================================
-    // EMPLOYEE
+    // 1. EMPLOYEE & AGE
     // =========================================================
-
     function fillEmployeeData() {
         let employeeId = $('#employee-select').val();
         if (!employeeId) {
             $('#employee-name').val('');
             return;
         }
-        let selectedOption = $('#employee-select').find('option:selected');
-        let employeeName   = selectedOption.attr('data-name');
+        let employeeName = $('#employee-select').find('option:selected').attr('data-name');
         $('#employee-name').val(employeeName || '');
     }
 
-    $('#employee-select').on('select2:select', function () {
+    $('#employee-select').on('select2:select change', function () {
         fillEmployeeData();
     });
 
-    $('#employee-select').on('change', function () {
-        fillEmployeeData();
+    $('#birth-date, #contract-date').on('change', function () {
+        calculateAge();
     });
-
-
-    // =========================================================
-    // BIRTH DATE / CONTRACT DATE → AGE
-    // =========================================================
-
-    $('#birth-date').on('change', calculateAge);
-    $('#contract-date').on('change', calculateAge);
 
     function calculateAge() {
-        let birthDateValue    = $('#birth-date').val();
+        let birthDateValue = $('#birth-date').val();
         let contractDateValue = $('#contract-date').val();
-
         if (!birthDateValue) {
             $('#age-at-contract').val('');
             return;
         }
-
         let birthDate = new Date(birthDateValue + 'T00:00:00');
-
-        let contractDate;
-        if (contractDateValue) {
-            contractDate = new Date(contractDateValue + 'T00:00:00');
-        } else {
-            contractDate = new Date();
-        }
-
+        let contractDate = contractDateValue ? new Date(contractDateValue + 'T00:00:00') : new Date();
         let age = contractDate.getFullYear() - birthDate.getFullYear();
-        let monthDiff = contractDate.getMonth() - birthDate.getMonth();
-
-        if (monthDiff < 0 || (monthDiff === 0 && contractDate.getDate() < birthDate.getDate())) {
+        let monthDifference = contractDate.getMonth() - birthDate.getMonth();
+        if (monthDifference < 0 || (monthDifference === 0 && contractDate.getDate() < birthDate.getDate())) {
             age--;
         }
-
-        if (age >= 0 && age <= 100) {
-            $('#age-at-contract').val(age);
-        } else {
-            $('#age-at-contract').val('');
-        }
+        if (age >= 0 && age <= 100) $('#age-at-contract').val(age);
+        else $('#age-at-contract').val('');
     }
 
 
     // =========================================================
-    // CURRENCY FORMATTER
+    // 2. CURRENCY FORMATTER (HANYA UNTUK INPUT MANUAL)
     // =========================================================
-
     function syncCurrencyInput($input) {
         let rawValue = $input.val().replace(/\D/g, '');
         let targetId = $input.data('target');
-
-        $('#' + targetId).val(rawValue);
+        
+        if(targetId) {
+            $('#' + targetId).val(rawValue); // Simpan angka mentah ke hidden input
+        }
 
         if (rawValue !== '') {
-            $input.val(new Intl.NumberFormat('id-ID').format(rawValue));
+            $input.val(new Intl.NumberFormat('id-ID').format(rawValue)); // Format ke tampilan
         } else {
             $input.val('');
         }
@@ -635,10 +610,10 @@ $(document).ready(function () {
 
     function initCurrencyInputs() {
         $('.currency-input').each(function () {
-            let $input   = $(this);
+            let $input = $(this);
             let targetId = $input.data('target');
-            let raw      = $('#' + targetId).val();
-
+            let raw = $('#' + targetId).val() || $input.val(); 
+            
             if (raw && raw !== '' && raw !== '0') {
                 $input.val(new Intl.NumberFormat('id-ID').format(raw));
             } else {
@@ -647,11 +622,8 @@ $(document).ready(function () {
         });
     }
 
+    // Hanya gunakan event 'input' agar tidak bentrok
     $(document).on('input', '.currency-input', function () {
-        syncCurrencyInput($(this));
-    });
-
-    $(document).on('blur', '.currency-input', function () {
         syncCurrencyInput($(this));
     });
 
@@ -659,9 +631,59 @@ $(document).ready(function () {
 
 
     // =========================================================
-    // GRADE — Dynamic per Category
+    // 3. KALKULASI SANDMON (EWHC & ANNUAL LEAVE)
     // =========================================================
+    function getCleanNumber(val) {
+        if (!val) return 0;
+        return parseFloat(val.toString().replace(/[^0-9,-]+/g,"").replace(",", ".")) || 0;
+    }
 
+    function calculateSandmon() {
+        const housingInput = document.querySelector('input[data-target="housing_allowance"]');
+        const transportInput = document.querySelector('input[data-target="transport_allowance"]');
+        
+        if (!housingInput || !transportInput) return; // Bukan form sandmon
+
+        // PERBAIKAN: Ambil dari input teks (data-target="basic_salary"), BUKAN id="basic_salary"
+        let basicText = $('input[data-target="basic_salary"]').val(); 
+        let basic = getCleanNumber(basicText);
+        
+        let housing = getCleanNumber(housingInput.value);
+        let transport = getCleanNumber(transportInput.value);
+
+        let thp = basic + housing + transport;
+        let ewhc = thp * 0.65;
+        let annualLeave = basic / 12;
+
+        let ewhcFormatted = new Intl.NumberFormat('id-ID').format(Math.round(ewhc));
+        let annualFormatted = new Intl.NumberFormat('id-ID').format(Math.round(annualLeave));
+
+        // Isi tampilan
+        $('#ewhc_allowance_display').val(ewhcFormatted);
+        $('#annual_leave_display').val(annualFormatted);
+
+        // Isi hidden input untuk DB
+        $('#ewhc_allowance').val(Math.round(ewhc));
+        $('#annual_leave_allowance').val(Math.round(annualLeave));
+    }
+
+    // Jalankan saat pertama kali load
+    calculateSandmon();
+
+    // Jalankan ulang setelah 0.5 detik (mengalahkan plugin formatter template)
+    setTimeout(function() {
+        calculateSandmon();
+    }, 500);
+
+    // Dengarkan perubahan secara realtime
+    $(document).on('input', 'input[data-target="basic_salary"], input[data-target="housing_allowance"], input[data-target="transport_allowance"]', function() {
+        calculateSandmon();
+    });
+
+
+    // =========================================================
+    // 4. GRADE & TYPE DYNAMIC (Bawaan Anda)
+    // =========================================================
     const GRADE_OPTIONS = {
         'managerial': [
             { value: 'M-8', label: 'M-8' },
@@ -683,10 +705,8 @@ $(document).ready(function () {
         const $wrapper = $('#grade-wrapper');
         const $select  = $('#grade-select');
 
-        // Reset options
         $select.html('<option value=""></option>');
 
-        // Kalau bukan managerial/non-managerial → sembunyikan
         if (!category || !GRADE_OPTIONS[category]) {
             $wrapper.hide();
             $select.removeAttr('required');
@@ -694,23 +714,17 @@ $(document).ready(function () {
             return;
         }
 
-        // Tampilkan wrapper
         $wrapper.show();
         $select.attr('required', 'required');
 
-        // Tambahkan optgroup sesuai kategori
         let groupLabel = category === 'managerial' ? 'Managerial' : 'Non-Managerial';
         let $optgroup  = $('<optgroup>').attr('label', groupLabel);
 
         GRADE_OPTIONS[category].forEach(function (g) {
-            let $opt = $('<option>')
-                .attr('value', g.value)
-                .text(g.label);
-
+            let $opt = $('<option>').attr('value', g.value).text(g.label);
             if (SAVED_GRADE === g.value) {
                 $opt.attr('selected', 'selected');
             }
-
             $optgroup.append($opt);
         });
 
@@ -718,12 +732,6 @@ $(document).ready(function () {
         $select.trigger('change.select2');
     }
 
-
-    // =========================================================
-    // TYPE & CATEGORY — Dynamic
-    // =========================================================
-
-    // Aktif/nonaktifkan optgroup sesuai category
     function filterTypesByCategory() {
         let category = $('#category-select').val();
         let $typeSelect = $('#type-select');
@@ -733,32 +741,26 @@ $(document).ready(function () {
             $(this).prop('disabled', category && groupCategory !== category);
         });
 
-        // Kalau type saat ini tidak sesuai category → reset
         let selectedType = $typeSelect.val();
         if (selectedType) {
             let selectedGroup = $typeSelect.find('option:selected').closest('optgroup');
             let groupCategory = selectedGroup.data('category');
 
             if (category && groupCategory !== category) {
-                // Reset type & trigger change (biasa) supaya reloadAllowanceFields jalan
                 $typeSelect.val('').trigger('change');
                 $('#allowance-section').html('');
             }
         }
-
         $typeSelect.trigger('change.select2');
     }
 
-    // Update toolbar text
     function updateToolbar() {
         let type = $('#type-select').val() || '';
         let category = $('#category-select').val() || '';
-
         $('#toolbar-type').text(type.toUpperCase() || '-');
         $('#toolbar-category').text(category ? category.charAt(0).toUpperCase() + category.slice(1) : '-');
     }
 
-    // AJAX re-render allowance fields
     function reloadAllowanceFields() {
         let type = $('#type-select').val();
 
@@ -773,7 +775,6 @@ $(document).ready(function () {
             type: 'GET',
             data: { type: type },
             success: function (response) {
-
                 if (response.html && response.html.trim() !== '') {
                     let cardHtml = `
                         <div class="card mb-5">
@@ -798,8 +799,8 @@ $(document).ready(function () {
 
                 // Re-init currency input untuk field tunjangan baru
                 initCurrencyInputs();
+                calculateSandmon(); // Hitung ulang jika tipe baru sandmon
 
-                // Update toolbar
                 updateToolbar();
             },
             error: function () {
@@ -812,19 +813,13 @@ $(document).ready(function () {
         });
     }
 
-
-    // =========================================================
-    // BIND EVENT — Consolidated
-    // =========================================================
-
-    // Category change → trigger semua handler
+    // Bind Event
     $('#category-select').on('change', function () {
         renderGradeOptions();
         filterTypesByCategory();
         updateToolbar();
     });
 
-    // Type change → reload allowance fields + update toolbar
     $('#type-select').on('change', function () {
         reloadAllowanceFields();
         updateToolbar();
@@ -832,41 +827,20 @@ $(document).ready(function () {
 
 
     // =========================================================
-    // INITIAL LOAD
-    // =========================================================
-
-    fillEmployeeData();
-    calculateAge();
-    renderGradeOptions();
-    filterTypesByCategory();
-    updateToolbar();
-
-});
-
-$(document).ready(function () {
-    
-    // =========================================================
-    // AUTO-FILL DEPARTMENT BERDASARKAN TYPE (CLONE PAGE)
+    // 5. AUTO-FILL DEPARTMENT
     // =========================================================
     const departmentMap = {
-        // ENI
         'eni-civil-all-in'         : 'ENI - Civil and Structure Maintenance Services Project',
         'eni-civil-reguler'        : 'ENI - Civil and Structure Maintenance Services Project',
         'eni-smallcapital-all-in'  : 'ENI SMALL CAPITAL-Modification and Improvement for Facility Support Services',
         'eni-smallcapital-reguler' : 'ENI SMALL CAPITAL-Modification and Improvement for Facility Support Services',
         'eni-muara-bakau-lembur'   : 'ENI Muara Bakau Project',
         'eni-muara-bakau-all-in'   : 'ENI Muara Bakau Project',
-
-        // Warlok / Medco
         'warlok-all-in'            : 'Tarakan Blanket Construction Services - Medco EP',
         'warlok-lembur'            : 'Tarakan Blanket Construction Services - Medco EP',
         'warlok-security'          : 'Tarakan Blanket Construction Services - Medco EP',
-
-        // ELIS PHKT
         'elis-phkt-5-2'            : 'Installation of Fire & Gas Detector System At STN Terminal (ELIS PHKT)',
         'elis-phkt-6-1'            : 'ELIS PHKT Project (Maintenance)',
-
-        // PHSS Major
         'phss-major-ai-1'          : 'PHSS - Major Construction OPLL Fase 2 Paket II',
         'phss-major-ai-2'          : 'PHSS - Major Construction OPLL Fase 2 Paket II',
         'phss-major-ai-3'          : 'PHSS - Major Construction OPLL Fase 2 Paket II',
@@ -874,35 +848,34 @@ $(document).ready(function () {
         'phss-humas'               : 'PHSS - Major Construction OPLL Fase 2 Paket II',
         'phss-reguler'             : 'PHSS - Major Construction OPLL Fase 2 Paket II',
         'phss-security'            : 'PHSS - Major Construction OPLL Fase 2 Paket II',
-
-        // Sand Monitoring
         'sandmon-teknisi-1'        : 'Sand Monitoring Services for PHM',
         'sandmon-teknisi-2'        : 'Sand Monitoring Services for PHM',
-
-        // Lain-lain
         'pep-lokal-buny'           : 'PEP Project - Lokal Buny',
         'sched-5-2'                : 'Project Schedule 5-2',
         'lawe-lawe-reguler'        : 'CIMS Project - Lawe Lawe',
-        'lawe-we-all-in'           : 'CIMS Project - Lawe Lawe',
         'lawe-lawe-all-in'         : 'CIMS Project - Lawe Lawe',
         'ipfms-dobu'               : 'IPFMS - Dobu',
     };
 
-    // Fungsi untuk mengisi Department
     function autoFillDepartment() {
         let type = $('#type-select').val();
-        
-        // Cari department berdasarkan type yang dipilih
         let departmentValue = departmentMap[type] || '';
-
-        // Isi ke input
         $('#employee-department').val(departmentValue);
     }
 
-    // 1. Jalankan fungsi ini HANYA saat user mengganti Type (via dropdown)
     $('#type-select').on('change', function () {
         autoFillDepartment();
     });
+
+
+    // =========================================================
+    // 6. INITIAL LOAD
+    // =========================================================
+    fillEmployeeData();
+    calculateAge();
+    renderGradeOptions();
+    filterTypesByCategory();
+    updateToolbar();
 
 });
 </script>

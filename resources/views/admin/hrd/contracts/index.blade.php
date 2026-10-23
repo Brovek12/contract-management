@@ -155,11 +155,10 @@
                                     data-allow-clear="true" class="form-select form-select-solid">
                                     <option value=""></option>
                                     <option value="draft">Draft</option>
-                                    <option value="sent">Sent</option>
-                                    <option value="viewed">Viewed</option>
-                                    <option value="signed">Need Head HRD Approval</option>
-                                    <option value="signed-hrd">Need Head Approval</option>
+                                    <option value="signed-hrd">Ready to Send</option>
+                                    <option value="signed">Need GM Approval</option>
                                     <option value="signed-head">Complete</option>
+                                    <option value="stop">Stop</option>
                                     <option value="expired">Expired</option>
                                 </select>
                             </div>
@@ -174,6 +173,10 @@
                             <div class="col-md-2">
                                 <label class="form-label fw-semibold fs-7 mb-2">Start Date To</label>
                                 <input type="date" id="filterEndDate" class="form-control form-control-solid">
+                            </div>
+                                 <div class="col-md-2">
+                                <label class="form-label fw-semibold fs-7 mb-2">End Date</label>
+                                <input type="date" id="filterEndDateOnly" class="form-control form-control-solid">
                             </div>
 
                             {{-- Reset --}}
@@ -337,12 +340,12 @@
                                                 @php
                                                     $statusMap = [
                                                         'draft' => ['badge-light-secondary', 'Draft'],
+                                                        'signed-hrd' => ['badge-light-info', 'Ready to Send'],
                                                         'sent' => ['badge-light-warning', 'Sent'],
                                                         'viewed' => ['badge-light-info', 'Viewed'],
-                                                        'signed' => ['badge-light-info', 'Need Head HRD Approval'],
-                                                        'signed-hrd' => ['badge-light-info', 'Need Head Approval'],
+                                                        'signed' => ['badge-light-primary', 'Need GM Approval'],
                                                         'signed-head' => ['badge-light-success', 'Complete'],
-                                                        'expired' => ['badge-light-danger', 'Expired'],
+                                                        'stop' => ['badge-light-danger', 'Stop'],
                                                     ];
                                                     [$badgeClass, $badgeLabel] = $statusMap[$item->status] ?? ['badge-light-secondary', ucfirst($item->status)];
                                                 @endphp
@@ -354,31 +357,36 @@
                                                 @php
                                                     $statusAction = null;
 
+                                                    // 1. DRAFT -> HRD biasa kirim ke Head HRD (Approve HRD)
                                                     if ($item->status === 'draft' && auth()->user()->can('edit-contracts')) {
-                                                        $statusAction = [
-                                                            'route' => route('contracts.send', $item->id),
-                                                            'formId' => "send-form-{$item->id}",
-                                                            'onclick' => "confirmSend({$item->id})",
-                                                            'icon' => 'ki-send',
-                                                            'label' => 'Send Contract',
-                                                            'color' => 'text-primary',
-                                                        ];
-                                                    } elseif ($item->status === 'signed' && auth()->user()->can('approve-contracts-hrd')) {
                                                         $statusAction = [
                                                             'route' => route('contracts.approve.hrd', $item->id),
                                                             'formId' => "approve-hrd-form-{$item->id}",
                                                             'onclick' => "confirmApproveHRD({$item->id})",
-                                                            'icon' => 'ki-check-circle',
-                                                            'label' => 'Approve HRD',
-                                                            'color' => 'text-success',
+                                                            'icon' => 'ki-send',
+                                                            'label' => 'Send to Head HRD',
+                                                            'color' => 'text-primary',
                                                         ];
-                                                    } elseif ($item->status === 'signed-hrd' && auth()->user()->can('approve-contracts-head')) {
+                                                    } 
+                                                    // 2. SIGNED-HRD -> HRD biasa kirim ke Employee
+                                                    elseif ($item->status === 'signed-hrd' && auth()->user()->can('edit-contracts')) {
                                                         $statusAction = [
-                                                            'route' => route('contracts.approve.head', $item->id),
-                                                            'formId' => "approve-head-form-{$item->id}",
+                                                            'route' => route('contracts.send', $item->id),
+                                                            'formId' => "send-form-{$item->id}",
+                                                            'onclick' => "confirmSend({$item->id})",
+                                                            'icon' => 'ki-user-tick',
+                                                            'label' => 'Send to Employee',
+                                                            'color' => 'text-info',
+                                                        ];
+                                                    }
+                                                    // 3. SIGNED (Employee sudah TTD) -> GM Approve
+                                                    elseif ($item->status === 'signed' && auth()->user()->can('approve-contracts-head')) { 
+                                                        $statusAction = [
+                                                            'route' => route('contracts.stop', $item->id),
+                                                            'formId' => "approve-gm-form-{$item->id}",
                                                             'onclick' => "confirmApproveHead({$item->id})",
                                                             'icon' => 'ki-check-circle',
-                                                            'label' => 'Approve Head',
+                                                            'label' => 'Approve General Manager',
                                                             'color' => 'text-success',
                                                         ];
                                                     }
@@ -428,15 +436,24 @@
                                                                         Add New Contract
                                                                     </a>
                                                                 </li>
+                                                                
+                                                                {{-- Stop Contract hanya muncul jika belum complete/stop --}}
+                                                                @if(!in_array($item->status, ['signed-head', 'stop']))
+                                                                <li>
+                                                                    <a class="dropdown-item text-danger" href="javascript:void(0)" onclick="confirmStop({{ $item->id }})">
+                                                                        <i class="ki-outline ki-cross-circle fs-4 me-2"></i>
+                                                                        Stop Contract
+                                                                    </a>
+                                                                </li>
+                                                                @endif
                                                             @endcan
 
-                                                            {{-- Aksi status (Send / Approve HRD / Approve Head) --}}
+                                                            {{-- Aksi status (Send / Approve HRD / Approve GM) --}}
                                                             @if ($statusAction)
                                                                 <li>
                                                                     <a class="dropdown-item" href="javascript:void(0)"
                                                                         onclick="{{ $statusAction['onclick'] }}">
-                                                                        <i
-                                                                            class="ki-outline {{ $statusAction['icon'] }} fs-4 me-2 {{ $statusAction['color'] }}"></i>
+                                                                        <i class="ki-outline {{ $statusAction['icon'] }} fs-4 me-2 {{ $statusAction['color'] }}"></i>
                                                                         {{ $statusAction['label'] }}
                                                                     </a>
                                                                 </li>
@@ -455,7 +472,6 @@
                                                                     </a>
                                                                 </li>
                                                             @endcan
-
                                                         </ul>
                                                     </div>
                                                 @endif
@@ -467,6 +483,13 @@
                                                         @csrf
                                                     </form>
                                                 @endif
+
+                                                {{-- Form tersembunyi Stop --}}
+                                               {{-- Form tersembunyi Stop --}}
+                                            <form id="stop-form-{{ $item->id }}" action="{{ route('contracts.stop', $item->id) }}" method="POST" style="display:none;">
+                                                @csrf
+                                                @method('PUT') <!-- TAMBAHKAN INI -->
+                                            </form>
 
                                                 {{-- Form tersembunyi delete --}}
                                                 @can('delete-contracts')
@@ -485,20 +508,15 @@
                         </div>
                     </div>
                     <!--end::Body-->
-
                 </div>
                 <!--end::Card-->
-
             </div>
             <!--end::Container-->
-
         </div>
         <!--end::Post-->
-
     </div>
     <!--end::Content-->
 @endsection
-
 
 @section('script')
     <script>
@@ -530,30 +548,30 @@
         // ============================================
         const BULK_ACTIONS = {
             'draft': {
-                label: 'Send Semua',
+                label: 'Send Semua ke Head HRD',
                 icon: 'ki-send',
                 btnClass: 'btn-primary',
+                route: '{{ route("contracts.bulk-approve-hrd") }}', // Ganti sesuai route bulk Anda
+                confirmTitle: 'Kirim Semua ke Head HRD?',
+                confirmText: 'Semua contract draft yang dipilih akan dikirim ke Head HRD.',
+                confirmBtn: 'Ya, kirim!',
+            },
+            'signed-hrd': {
+                label: 'Send Semua ke Employee',
+                icon: 'ki-user-tick',
+                btnClass: 'btn-info',
                 route: '{{ route("contracts.bulk-send") }}',
-                confirmTitle: 'Kirim Semua Contract?',
-                confirmText: 'Semua contract draft yang dipilih akan dikirim ke employee.',
+                confirmTitle: 'Kirim Semua ke Employee?',
+                confirmText: 'Semua contract yang dipilih akan dikirim ke Employee.',
                 confirmBtn: 'Ya, kirim!',
             },
             'signed': {
-                label: 'Approve HRD Semua',
+                label: 'Approve GM Semua',
                 icon: 'ki-check-circle',
-                btnClass: 'btn-primary',
-                route: '{{ route("contracts.bulk-approve-hrd") }}',
-                confirmTitle: 'Approve HRD Semua?',
-                confirmText: 'Semua contract yang dipilih akan disetujui oleh Head HRD.',
-                confirmBtn: 'Ya, approve!',
-            },
-            'signed-hrd': {
-                label: 'Approve Head Semua',
-                icon: 'ki-check-circle',
-                btnClass: 'btn-primary',
-                route: '{{ route("contracts.bulk-approve-head") }}',
-                confirmTitle: 'Approve Head Semua?',
-                confirmText: 'Semua contract yang dipilih akan diselesaikan setelah approval Head.',
+                btnClass: 'btn-success',
+                route: '{{ route("contracts.bulk-stop") }}', // Sesuaikan dengan route bulk stop
+                confirmTitle: 'Approve GM Semua?',
+                confirmText: 'Semua contract yang dipilih akan disetujui oleh General Manager.',
                 confirmBtn: 'Ya, approve!',
             },
         };
@@ -588,17 +606,43 @@
                 ]
             });
 
+                    // ============================================
+            // CUSTOM FILTER: START DATE & END DATE ONLY
             // ============================================
-            // DATE RANGE FILTER
-            // ============================================
-            DataTableHelper.registerDateRangeFilter({
-                table: table,
-                startInput: '#filterStartDate',
-                endInput: '#filterEndDate',
-                columnIndex: COL.START,
-                useDataOrder: true
-            });
+            $.fn.dataTable.ext.search.push(
+                function (settings, data, dataIndex) {
+                    if (settings.nTable.id !== 'contractTable') return true;
 
+                    var startFrom = $('#filterStartDate').val();
+                    var startTo = $('#filterEndDate').val();
+                    var endDateOnly = $('#filterEndDateOnly').val();
+
+                    var row = table.row(dataIndex).node();
+                    var rowStartDateStr = $(row).find('td').eq(COL.START).attr('data-order');
+                    var rowEndDateStr = $(row).find('td').eq(COL.END).attr('data-order');
+
+                    // 1. Filter Start Date (From & To)
+                    if (startFrom || startTo) {
+                        if (!rowStartDateStr) return false;
+                        var rowStartDate = new Date(rowStartDateStr);
+                        if (startFrom && rowStartDate < new Date(startFrom)) return false;
+                        if (startTo && rowStartDate > new Date(startTo)) return false;
+                    }
+
+                    // 2. Filter End Date Only
+                    if (endDateOnly) {
+                        if (!rowEndDateStr) return false;
+                        if (rowEndDateStr !== endDateOnly) return false;
+                    }
+
+                    return true;
+                }
+            );
+
+            // Trigger filter saat tanggal diubah
+            $('#filterStartDate, #filterEndDate, #filterEndDateOnly').on('change', function () {
+                table.draw();
+            });
             // ============================================
             // Search (global)
             // ============================================
@@ -650,11 +694,10 @@
                 var val = this.value;
                 var labelMap = {
                     'draft': 'Draft',
-                    'sent': 'Sent',
-                    'viewed': 'Viewed',
-                    'signed': 'Need Head HRD Approval',
-                    'signed-hrd': 'Need Head Approval',
+                    'signed-hrd': 'Ready to Send',
+                    'signed': 'Need GM Approval',
                     'signed-head': 'Complete',
+                    'stop': 'Stop',
                     'expired': 'Expired'
                 };
                 table.column(COL.STATUS).search(val ? labelMap[val] : '', true, false).draw();
@@ -663,7 +706,7 @@
             // ============================================
             // Reset Filter
             // ============================================
-            $('#resetFilter').on('click', function () {
+                       $('#resetFilter').on('click', function () {
                 $('#filterSearch').val('');
 
                 $('#filterCategory').val(null).trigger('change.select2');
@@ -671,7 +714,10 @@
                 $('#filterProject').val(null).trigger('change.select2');
                 $('#filterStatus').val(null).trigger('change.select2');
 
-                DataTableHelper.resetDateRangeFilter(table, '#filterStartDate', '#filterEndDate');
+                // Reset semua input tanggal
+                $('#filterStartDate').val('');
+                $('#filterEndDate').val('');
+                $('#filterEndDateOnly').val('');
 
                 table.search('').columns().search('').draw();
             });
@@ -919,7 +965,6 @@
 
             // ============================================
             // FIX: Reposisi dropdown saat scroll
-            // (kalau data-bs-strategy="fixed" belum cukup)
             // ============================================
             document.addEventListener('show.bs.dropdown', function (e) {
                 var menu = e.target.querySelector('.dropdown-menu');
@@ -953,8 +998,8 @@
 
         function confirmSend(contractId) {
             Swal.fire({
-                title: 'Kirim Contract?',
-                text: 'Contract akan dikirim ke employee yang dipilih.',
+                title: 'Kirim Contract ke Employee?',
+                text: 'Contract akan dikirim ke employee untuk ditandatangani.',
                 icon: 'question',
                 showCancelButton: true,
                 confirmButtonColor: 'var(--bs-primary)',
@@ -971,12 +1016,12 @@
 
         function confirmApproveHRD(id) {
             Swal.fire({
-                title: 'Approve Contract?',
-                text: 'Contract akan disetujui oleh Head HRD.',
+                title: 'Kirim ke Head HRD?',
+                text: 'Contract akan dikirim ke Head HRD untuk di-approve.',
                 icon: 'question',
                 showCancelButton: true,
-                confirmButtonText: 'Yes, Approve',
-                cancelButtonText: 'Cancel',
+                confirmButtonText: 'Ya, Kirim',
+                cancelButtonText: 'Batal',
                 customClass: {
                     confirmButton: 'btn btn-primary',
                     cancelButton: 'btn btn-light'
@@ -992,22 +1037,43 @@
         function confirmApproveHead(id) {
             Swal.fire({
                 title: 'Approve Contract?',
-                text: 'Contract akan diselesaikan setelah approval Head.',
+                text: 'Contract akan diselesaikan setelah di-approve oleh General Manager.',
                 icon: 'question',
                 showCancelButton: true,
-                confirmButtonText: 'Yes, Approve',
-                cancelButtonText: 'Cancel',
+                confirmButtonText: 'Ya, Approve',
+                cancelButtonText: 'Batal',
                 customClass: {
-                    confirmButton: 'btn btn-primary',
+                    confirmButton: 'btn btn-success',
                     cancelButton: 'btn btn-light'
                 },
                 buttonsStyling: false
             }).then((result) => {
                 if (result.isConfirmed) {
-                    document.getElementById('approve-head-form-' + id).submit();
+                    document.getElementById('approve-gm-form-' + id).submit();
                 }
             });
         }
+
+        function confirmStop(id) {
+            Swal.fire({
+                title: 'Hentikan Kontrak?',
+                text: 'Kontrak ini akan dihentikan (Stop) dan tidak bisa dilanjutkan kembali.',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonText: 'Ya, Hentikan',
+                cancelButtonText: 'Batal',
+                customClass: {
+                    confirmButton: 'btn btn-danger',
+                    cancelButton: 'btn btn-light'
+                },
+                buttonsStyling: false
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    document.getElementById('stop-form-' + id).submit();
+                }
+            });
+        }
+
         $('#btnExportExcel').on('click', function () {
             var params = new URLSearchParams({
                 category: $('#filterCategory').val() || '',
@@ -1018,7 +1084,7 @@
                 end_date: $('#filterEndDate').val() || '',
             });
 
-            window.location.href = '{{ route("contracts.export") }}?' + params.toString();
+                       window.location.href = '{{ route("contracts.export") }}?' + params.toString();
         });
     </script>
 @endsection

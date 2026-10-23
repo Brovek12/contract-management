@@ -78,10 +78,12 @@ Route::middleware('auth')->group(function () {
         Route::post('{contract}/send',         [ContractController::class, 'send'])->name('send');
         Route::post('{contract}/approve-hrd',  [ContractController::class, 'approveHRD'])->name('approve.hrd');
         Route::post('{contract}/approve-head', [ContractController::class, 'approveHead'])->name('approve.head');
+        Route::put('{contract}/stop', [ContractController::class, 'stop'])->name('stop');
         Route::get('create-new-from-existing/{id}', [ContractController::class, 'createNewFromExisting'])->name('create-new-from-existing');
 
         // -- Bulk actions --
         Route::delete('bulk-delete',      [ContractController::class, 'bulkDelete'])->name('bulk-delete');
+        Route::delete('bulk-stop',      [ContractController::class, 'bulkDelete'])->name('bulk-stop');
         Route::post('bulk-send',          [ContractController::class, 'bulkSend'])->name('bulk-send');
         Route::post('bulk-approve-hrd',   [ContractController::class, 'bulkApproveHRD'])->name('bulk-approve-hrd');
         Route::post('bulk-approve-head',  [ContractController::class, 'bulkApproveHead'])->name('bulk-approve-head');
@@ -100,6 +102,7 @@ Route::middleware('auth')->group(function () {
     |----------------------------------------------------------------------
     */
     Route::resource('user', UserController::class);
+    Route::get('/users/{id}/contracts', [UserController::class, 'getUserContracts'])->name('user.contracts');
     Route::resource('sop',  SopController::class);
     Route::resource('role', RoleController::class);
 

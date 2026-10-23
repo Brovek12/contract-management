@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Kelurahan;
 use App\Models\User;
+use App\Models\HRD\Contract;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -258,4 +259,12 @@ class UserController extends Controller
 
         return redirect()->back()->withInput();
     }
+    public function getUserContracts($id)
+{
+    $contracts = Contract::where('user_id', $id)
+        ->orderBy('start_date', 'desc')
+        ->get();
+
+    return response()->json($contracts);
+}
 }

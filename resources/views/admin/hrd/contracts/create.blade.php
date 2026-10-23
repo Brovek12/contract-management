@@ -650,5 +650,77 @@ $(document).ready(function () {
     });
 
 });
+document.addEventListener('DOMContentLoaded', function() {
+    
+    // Fungsi helper untuk mengambil angka bersih (menghapus titik/koma)
+    function getCleanNumber(val) {
+        if (!val) return 0;
+        return parseFloat(val.toString().replace(/[^0-9,-]+/g,"").replace(",", ".")) || 0;
+    }
+
+    // Fungsi helper untuk format rupiah (titik pemisah ribuan)
+    function formatRupiah(angka) {
+        return new Intl.NumberFormat('id-ID').format(Math.round(angka));
+    }
+
+    // Fungsi Utama untuk Kalkulasi
+    function calculateSandmon() {
+        // Ambil element
+        const basicInput = document.getElementById('basic_salary'); // Pastikan ID Gaji Pokok di form utama adalah 'basic_salary'
+        const housingInput = document.querySelector('input[data-target="housing_allowance"]');
+        const transportInput = document.querySelector('input[data-target="transport_allowance"]');
+        
+        const ewhcDisplay = document.getElementById('ewhc_allowance_display');
+        const ewhcHidden = document.getElementById('ewhc_allowance');
+        
+        const annualLeaveDisplay = document.getElementById('annual_leave_display');
+        const annualLeaveHidden = document.getElementById('annual_leave_allowance');
+
+        // Validasi jika elemen tidak ditemukan (misal form sedang tidak di halaman ini)
+        if (!housingInput || !transportInput) return;
+
+        // Ambil nilai
+        let basic = basicInput ? getCleanNumber(basicInput.value) : 0;
+        let housing = getCleanNumber(housingInput.value);
+        let transport = getCleanNumber(transportInput.value);
+
+        // 1. Hitung THP (3A)
+        let thp = basic + housing + transport;
+
+        // 2. Hitung EWHC (4) = THP x 65%
+        let ewhc = thp * 0.65;
+
+        // 3. Hitung Annual Leave (7) = Basic / 12
+        let annualLeave = basic / 12;
+
+        // Tampilkan ke input display (Readonly) dengan format Rupiah
+        if (ewhcDisplay) ewhcDisplay.value = formatRupiah(ewhc);
+        if (annualLeaveDisplay) annualLeaveDisplay.value = formatRupiah(annualLeave);
+
+        // Simpan nilai asli (angka) ke hidden input agar bisa disubmit ke database
+        if (ewhcHidden) ewhcHidden.value = Math.round(ewhc);
+        if (annualLeaveHidden) annualLeaveHidden.value = Math.round(annualLeave);
+    }
+
+    // --- Event Listener ---
+    
+    // 1. Jalankan saat halaman pertama kali dimuat (untuk mode Edit)
+    calculateSandmon();
+
+    // 2. Dengarkan perubahan pada Gaji Pokok, Housing, dan Transport
+    const inputsToWatch = [
+        document.getElementById('basic_salary'), 
+        document.querySelector('input[data-target="housing_allowance"]'),
+        document.querySelector('input[data-target="transport_allowance"]')
+    ];
+
+    inputsToWatch.forEach(input => {
+        if (input) {
+            // Gunakan 'input' agar langsung berubah saat mengetik
+            input.addEventListener('input', calculateSandmon);
+        }
+    });
+
+});
 </script>
 @endsection
