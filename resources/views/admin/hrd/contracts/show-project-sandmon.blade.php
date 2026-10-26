@@ -775,8 +775,24 @@
         </div>
 
         <div class="signature-column">
-            <div><strong>PT. BUKAKA TEKNIK UTAMA Tbk</strong></div>
-            <div><strong>CABANG BALIKPAPAN</strong></div>
+            <div class="d-flex align-items-center mb-1">
+                    <div>
+                        <div class="d-flex align-items-center" style="padding-left: 50px;">
+                            <!-- Teks dikunci di sini -->
+                            <strong>PT BUKAKA TEKNIK UTAMA Tbk</strong>
+
+                            <!-- Gambar dibungkus wadah dengan lebar statis agar tidak mendorong teks -->
+                            <div style="width: 40px; margin-left: 10px;">
+                                @if ($contract->hrd_qr_path)
+                                    <img src="{{ asset('images/head_hrd_asya.jpeg') }}" alt=""
+                                        style="width: 30px; height: 20px; opacity: 0.9; display: block;">
+                                @endif
+                            </div>
+                        </div>
+                        <div><strong>Cabang Balikpapan</strong></div>
+                    </div>
+
+                </div>
             <div class="signature-image-wrapper">
                 @if ($contract->head_qr_path)
                     <img src="{{ asset('storage/' . $contract->head_qr_path) }}" class="signature-image-10" alt="QR Head Approval">
