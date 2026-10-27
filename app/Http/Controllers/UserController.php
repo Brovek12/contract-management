@@ -19,6 +19,7 @@ class UserController extends Controller
     {
         $this->manajemenUser = $manajemenUser;
     }
+
     /**
      * Display a listing of the resource.
      */
@@ -26,9 +27,10 @@ class UserController extends Controller
     {
         $user = Auth::user();
 
-       if (!$user->hasPermissionTo('read-users')) {
-          abort(403);
+        if (!$user->hasPermissionTo('read-users')) {
+            abort(403);
         }
+
         $roleId = $request->query('role');
 
         $usersQuery = User::query();
@@ -142,89 +144,89 @@ class UserController extends Controller
      * Update the specified resource in storage.
      */
     public function update(Request $request, User $user)
-{
-    DB::beginTransaction();
+    {
+        DB::beginTransaction();
 
-    try {
+        try {
 
-        $request->validate([
-            'username' => 'required|string|unique:users,username,' . $user->id,
-            'email' => 'required|email|unique:users,email,' . $user->id,
-            'phone' => 'required|string',
-            'name' => 'required|string',
-            'role' => 'required|string',
-            'foto' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg',
-            'password' => 'nullable|string|min:6',
-        ]);
+            $request->validate([
+                'username' => 'required|string|unique:users,username,' . $user->id,
+                'email' => 'required|email|unique:users,email,' . $user->id,
+                'phone' => 'required|string',
+                'name' => 'required|string',
+                'role' => 'required|string',
+                'foto' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg',
+                'password' => 'nullable|string|min:6',
+            ]);
 
-        // ==========================================
-        // UPDATE DATA USER
-        // ==========================================
+            // ==========================================
+            // UPDATE DATA USER
+            // ==========================================
 
-        $user->username = $request->username;
-        $user->email = $request->email;
-        $user->phone = $request->phone;
-        $user->name = $request->name;
+            $user->username = $request->username;
+            $user->email = $request->email;
+            $user->phone = $request->phone;
+            $user->name = $request->name;
 
-        // ==========================================
-        // UPDATE FOTO
-        // ==========================================
+            // ==========================================
+            // UPDATE FOTO
+            // ==========================================
 
-        if ($request->hasFile('foto')) {
+            if ($request->hasFile('foto')) {
 
-            if ($user->foto && file_exists(public_path($user->foto))) {
-                unlink(public_path($user->foto));
+                if ($user->foto && file_exists(public_path($user->foto))) {
+                    unlink(public_path($user->foto));
+                }
+
+                $image = $request->file('foto');
+
+                $imageName = time() . '_' . $user->id . '.' .
+                    $image->getClientOriginalExtension();
+
+                $image->move(
+                    public_path('photos'),
+                    $imageName
+                );
+
+                $user->foto = 'photos/' . $imageName;
             }
 
-            $image = $request->file('foto');
+            // ==========================================
+            // UPDATE PASSWORD
+            // ==========================================
 
-            $imageName = time() . '_' . $user->id . '.' .
-                $image->getClientOriginalExtension();
+            if ($request->filled('password')) {
+                $user->password = bcrypt($request->password);
+            }
 
-            $image->move(
-                public_path('photos'),
-                $imageName
-            );
+            // ==========================================
+            // SAVE USER
+            // ==========================================
 
-            $user->foto = 'photos/' . $imageName;
+            $user->save();
+
+            // ==========================================
+            // UPDATE ROLE
+            // ==========================================
+
+            $user->syncRoles([$request->role]);
+
+            DB::commit();
+
+            return redirect()
+                ->route('user.index')
+                ->with('OK', 'Data berhasil diupdate!');
+
+        } catch (\Exception $e) {
+
+            DB::rollBack();
+
+            return redirect()
+                ->back()
+                ->withInput()
+                ->with('ERR', 'Data gagal diupdate: ' . $e->getMessage());
         }
-
-        // ==========================================
-        // UPDATE PASSWORD
-        // ==========================================
-
-        if ($request->filled('password')) {
-            $user->password = bcrypt($request->password);
-        }
-
-        // ==========================================
-        // SAVE USER
-        // ==========================================
-
-        $user->save();
-
-        // ==========================================
-        // UPDATE ROLE
-        // ==========================================
-
-        $user->syncRoles([$request->role]);
-
-        DB::commit();
-
-        return redirect()
-            ->route('user.index')
-            ->with('OK', 'Data berhasil diupdate!');
-
-    } catch (\Exception $e) {
-
-        DB::rollBack();
-
-        return redirect()
-            ->back()
-            ->withInput()
-            ->with('ERR', 'Data gagal diupdate: ' . $e->getMessage());
     }
-}
 
     /**
      * Remove the specified resource from storage.
@@ -248,9 +250,17 @@ class UserController extends Controller
             return redirect()->route('user.index');
         } catch (\Illuminate\Database\QueryException $e) {
             DB::rollBack();
-            $message = $e->getCode() === "23000" ?
-                'User terkait data lain dan tidak bisa dihapus!' :
-                'Terjadi kesalahan: ' . $e->getMessage();
+
+            // PostgreSQL: 23503 = foreign_key_violation
+            // MySQL:      23000 = integrity constraint violation
+            $sqlState = $e->errorInfo[0] ?? $e->getCode();
+
+            if ($sqlState === '23503' || $sqlState === '23000') {
+                $message = 'User terkait data lain dan tidak bisa dihapus!';
+            } else {
+                $message = 'Terjadi kesalahan: ' . $e->getMessage();
+            }
+
             session()->flash('ERR', $message);
         } catch (Exception $e) {
             DB::rollBack();
@@ -259,12 +269,13 @@ class UserController extends Controller
 
         return redirect()->back()->withInput();
     }
-    public function getUserContracts($id)
-{
-    $contracts = Contract::where('user_id', $id)
-        ->orderBy('start_date', 'desc')
-        ->get();
 
-    return response()->json($contracts);
-}
+    public function getUserContracts($id)
+    {
+        $contracts = Contract::where('user_id', $id)
+            ->orderBy('start_date', 'desc')
+            ->get();
+
+        return response()->json($contracts);
+    }
 }

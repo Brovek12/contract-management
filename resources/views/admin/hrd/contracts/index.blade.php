@@ -382,7 +382,7 @@
                                                     // 3. SIGNED (Employee sudah TTD) -> GM Approve
                                                     elseif ($item->status === 'signed' && auth()->user()->can('approve-contracts-head')) { 
                                                         $statusAction = [
-                                                            'route' => route('contracts.stop', $item->id),
+                                                            'route' => route('contracts.approve.head', $item->id),
                                                             'formId' => "approve-gm-form-{$item->id}",
                                                             'onclick' => "confirmApproveHead({$item->id})",
                                                             'icon' => 'ki-check-circle',

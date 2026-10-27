@@ -15,11 +15,13 @@ class RoleController extends Controller
 {
     protected $role;
     protected $user;
+
     public function __construct(Role $role, User $user)
     {
         $this->role = $role;
         $this->user = $user;
     }
+
     /**
      * Display a listing of the resource.
      */
@@ -27,8 +29,8 @@ class RoleController extends Controller
     {
         $user = Auth::user();
 
-         if (!$user->hasPermissionTo('read-roles')) {
-          abort(403);
+        if (!$user->hasPermissionTo('read-roles')) {
+            abort(403);
         }
 
         $roles = $this->role
@@ -94,10 +96,9 @@ class RoleController extends Controller
     {
         $user = Auth::user();
 
-         if (!$user->hasPermissionTo('read-roles')) {
-          abort(403);
+        if (!$user->hasPermissionTo('read-roles')) {
+            abort(403);
         }
-
 
         $db = $this->role
             ->with('permissions')
@@ -105,8 +106,16 @@ class RoleController extends Controller
             ->where('id', $role->id)
             ->first();
 
+        // PostgreSQL: STRING_AGG pengganti GROUP_CONCAT (MySQL)
+        // id harus di-cast ke text karena STRING_AGG butuh text
         $dataPermission = DB::table('permissions')
-            ->select('group', DB::raw('GROUP_CONCAT(name) as names'), DB::raw('GROUP_CONCAT(display_name) as displays'), DB::raw('GROUP_CONCAT(id) as id'), DB::raw('COUNT(*) as permission_count'))
+            ->select(
+                'group',
+                DB::raw("STRING_AGG(name, ',') as names"),
+                DB::raw("STRING_AGG(display_name, ',') as displays"),
+                DB::raw("STRING_AGG(id::text, ',') as id"),
+                DB::raw('COUNT(*) as permission_count')
+            )
             ->groupBy('group')
             ->orderByDesc('permission_count')
             ->get();
