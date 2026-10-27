@@ -307,8 +307,16 @@
                            class="list-group-item list-group-item-action d-flex align-items-center">
                             <i class="ki-duotone ki-document fs-2 me-3 text-warning"></i>
                             <div>
-                                <div class="fw-bold">PKWT IPFMS-DOBU 2026</div>
+                                <div class="fw-bold">PKWT IPFMS-DOBU 2026 Tetap</div>
                                 <small class="text-muted">(ipfms-dobu)</small>
+                            </div>
+                        </a>
+                        <a href="{{ route('contracts.create', ['type' => 'ipfms-dobu-2', 'category' => 'project']) }}"
+                           class="list-group-item list-group-item-action d-flex align-items-center">
+                            <i class="ki-duotone ki-document fs-2 me-3 text-warning"></i>
+                            <div>
+                                <div class="fw-bold">PKWT IPFMS-DOBU 2026 Tidak Tetap</div>
+                                <small class="text-muted">(ipfms-dobu-2)</small>
                             </div>
                         </a>
 
