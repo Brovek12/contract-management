@@ -157,57 +157,73 @@
         @include('admin.hrd.contracts.partials.project.pasal5-pendapatan', ['contract' => $contract, 'type' => $type])
 
 
-        <p>
-            2. Semua Karyawan yang telah bekerja selama 12 (dua belas) bulan berturut-turut mendapat
-            cuti tahunan sebanyak 12 (dua belas) hari kerja. Hak cuti tahunan Karyawan berlaku setelah
-            masa satu tahun masa kerja terhitung dari waktu Karyawan mulai masuk kerja.
-        </p>
-        <p>3. Karyawan diikutsertakan dalam Program BPJS Ketenagakerjaan yang meliputi :</p>
-        <p class="indent">a. Jaminan Kematian (0,3% oleh perusahaan)</p>
-        <p class="indent">b. Jaminan Kecelakaan Kerja (1,27% oleh perusahaan)</p>
-        <p class="indent">c. Jaminan Hari Tua (3,7% oleh perusahaan dan 2% oleh Karyawan)</p>
-        <p class="indent">d. Jaminan Pensiun (2% oleh perusahaan dan 1% oleh Karyawan)</p>
-        <p>Perhitungan untuk jaminan BPJS Ketenagakerjaan berdasarkan dari gaji pokok (Sesuai dengan Undang – Undang /
-            Peraturan Pemerintah).</p>
+    @php
+    // Mengecek apakah tipe kontraknya adalah DOBU 2
+    $isDobu2 = $contract->type === 'ipfms-dobu-2'; 
+@endphp
 
-        <p>4. Karyawan diikutsertakan dalam Program BPJS Kesehatan untuk Jaminan Pemeliharaan Kesehatan dimana Perusahaan
-            menanggung 4% dan Karyawan menanggung 1% dari gaji pokok (Sesuai dengan Undang – Undang / Peraturan Pemerintah)
-            dan dipotong saat pembayaran gaji.</p>
+<p>
+    2. Semua Karyawan yang telah bekerja selama 12 (dua belas) bulan berturut-turut mendapat
+    cuti tahunan sebanyak 12 (dua belas) hari kerja. Hak cuti tahunan Karyawan berlaku setelah
+    masa satu tahun masa kerja terhitung dari waktu Karyawan mulai masuk kerja.
+</p>
 
-        <p>5. Pekerja mendapatkan Tunjangan Hari Raya dibayarkan dan dilaksanakan minimum sesuai dengan ketentuan
-            perundang-undangan yang berlaku saat ini berdasarkan gaji pokok. Pekerja yang mempunyai masa kerja kurang dari 1
-            (satu) tahun, Tunjangan Hari Raya dihitung secara proporsional. Tunjangan Hari Raya dibayarkan dan dilaksanakan
-            pada saat Hari Raya Idul Fitri berlaku untuk semua Pekerja yang Muslim / Non Muslim.</p>
+<p>3. Karyawan diikutsertakan dalam Program BPJS Ketenagakerjaan yang meliputi :</p>
+<p class="indent">a. Jaminan Kematian (0,3% oleh perusahaan)</p>
+<p class="indent">b. Jaminan Kecelakaan Kerja (1,27% oleh perusahaan)</p>
+<p class="indent">c. Jaminan Hari Tua (3,7% oleh perusahaan dan 2% oleh Karyawan)</p>
+<p class="indent">d. Jaminan Pensiun (2% oleh perusahaan dan 1% oleh Karyawan)</p>
+<p>Perhitungan untuk jaminan BPJS Ketenagakerjaan berdasarkan dari gaji pokok (Sesuai dengan Undang – Undang /
+    Peraturan Pemerintah).</p>
 
-        <p>6. Gaji, dan Lembur (bila ada) dibayarkan pada tanggal <strong>09</strong> setiap bulannya, dengan periode
-            perhitungan tanggal 01 – 30/31 bulan sebelumnya, dengan ketentuan sebagai berikut:</p>
-        <p class="indent">a. Apabila tanggal 09 jatuh pada hari Sabtu, maka Upah dibayarkan pada tanggal 08 (hari Jumat)</p>
-        <p class="indent">b. Apabila tanggal 09 jatuh pada hari Minggu, maka Upah akan dibayarkan pada tanggal 10 (hari
-            Senin)</p>
+<p>4. Karyawan diikutsertakan dalam Program BPJS Kesehatan untuk Jaminan Pemeliharaan Kesehatan dimana Perusahaan
+    menanggung 4% dan Karyawan menanggung 1% dari gaji pokok (Sesuai dengan Undang – Undang / Peraturan Pemerintah)
+    dan dipotong saat pembayaran gaji.</p>
 
-        <p>7. Potongan Ketidakhadiran dan Keterlambatan</p>
-        <p class="indent">a. Pekerja yang tidak masuk bekerja tanpa pemberitahuan dihari pertama serta tidak menunjukkan
-            surat keterangan sakit dari dokter atau surat izin pada hari berikutnya maka dikategorikan Alpa dan upah akan
-            dipotong dengan formula sebagai berikut:</p>
-        <p class="formula">ALPA = Alpa X Gaji Pokok / 21</p>
+{{-- ========================================================= --}}
+{{-- BAGIAN YANG BERBEDA ANTARA DOBU 1 DAN DOBU 2 --}}
+{{-- ========================================================= --}}
 
-        <p class="indent">b. Pekerja yang tidak masuk bekerja karena izin, maka wajib memberikan informasi kepada atasan
-            serta membuat surat izin pada hari berikutnya. Perhitungan Potongan izin adalah sebagai berikut :</p>
-        <p class="formula">IZIN = Gaji Pokok X Jumlah Izin X 50% / 21</p>
+@if ($isDobu2)
+    {{-- ================= KONTEN DOBU 2 (ipfms-dobu-2) ================= --}}
+    <p>5. Karyawan yang masih terikat perjanjian kerja pada saat Hari Raya Idul Fitri, Karyawan mendapatkan Tunjangan Hari Raya. Tunjangan Hari Raya dibayarkan dan dilaksanakan minimum sesuai dengan ketentuan perundang-undangan yang berlaku saat ini. Karyawan yang mempunyai masa kerja kurang dari 1 (satu) tahun, Tunjangan Hari Raya dihitung secara proporsional sesuai dengan aturan ketenagakerjaan yang berlaku dan perhitungannya berdasarkan gaji pokok.</p>
 
-        <p class="indent">c. Pekerja yang tidak masuk bekerja karena sakit, maka wajib memberikan Informasi kepada atasan
-            serta menunjukkan surat keterangan sakit dari dokter. Bagi yang tidak dapat menunjukkan surat Keterangan sakit
-            dari dokter namun sudah menginformasikan kepada atasan maka karyawan dianggap izin.</p>
+    <p>6. Tunjangan Hari Raya dibayarkan dan dilaksanakan pada saat Hari Raya Idul Fitri berlaku untuk semua Karyawan yang Muslim / Non Muslim.</p>
 
-        <p class="indent">d. Setiap Pekerja yang terlambat datang untuk bekerja kecuali seizin atasannya, maka berlaku
-            pemotongan Gaji dengan formula sebagai berikut :</p>
-        <p class="formula">Potongan Keterlambatan = Keterlambatan X Gaji Pokok / 8 / 21</p>
+    <p>7. Apabila Karyawan diperintahkan untuk lembur/ wajib lembur, pembayarannya akan diperhitungkan sesuai dengan ketentuan ketenagakerjaan yang berlaku saat ini.</p>
 
-        <p class="indent">e. Gaji yang tidak dibayarkan ini berlaku untuk seluruh Pekerja sesuai dengan ketentuan yang
-            tercantum di dalam Peraturan Perusahaan.</p>
+    <p>8. Pembayaran gaji pokok, tunjangan, dan lembur dibayarkan pada tanggal 09 setiap bulannya.</p>
 
-        <p>8. Pajak pendapatan (Pph Pasal 21) ditanggung sepenuhnya oleh <strong>Karyawan</strong> untuk kemudian disetorkan
-            ke Kas Negara.</p>
+    <p>9. Periode perhitungan gaji pokok, tunjangan, dan lembur adalah dari tanggal 1 – 30/31 (Bulan Berjalan).</p>
+
+    <p>10. Potongan Ketidakhadiran</p>
+    <p class="indent">a. Karyawan yang tidak masuk bekerja tanpa pemberitahuan dan persetujuan kepada atasannya (Alpa), dipotong gajinya dengan formula sebagai berikut:</p>
+    <p class="formula">ALPA = Alpa X Gaji Pokok X 50% / 14</p>
+    <p class="indent">b. Gaji yang tidak dibayarkan ini berlaku untuk seluruh Karyawan sesuai dengan ketentuan yang tercantum di dalam Perjanjian Kerja Waktu tidak tertentu ini.</p>
+    <p class="indent">c. Apabila Karyawan tidak dapat hadir bekerja karena sakit, maka Karyawan wajib menyerahkan bukti surat keterangan sakit dari Dokter dan waktu istirahat sesuai dengan surat keterangan tersebut.</p>
+    
+    <p>11. Pajak pendapatan (Pph Pasal 21) ditanggung sepenuhnya oleh <strong>Karyawan</strong> untuk kemudian disetorkan ke Kas Negara.</p>
+
+@else
+    {{-- ================= KONTEN DOBU 1 (ipfms-dobu) ================= --}}
+    <p>5. Pekerja mendapatkan Tunjangan Hari Raya dibayarkan dan dilaksanakan minimum sesuai dengan ketentuan perundang-undangan yang berlaku saat ini berdasarkan gaji pokok. Pekerja yang mempunyai masa kerja kurang dari 1 (satu) tahun, Tunjangan Hari Raya dihitung secara proporsional. Tunjangan Hari Raya dibayarkan dan dilaksanakan pada saat Hari Raya Idul Fitri berlaku untuk semua Pekerja yang Muslim / Non Muslim.</p>
+
+    <p>6. Gaji, dan Lembur (bila ada) dibayarkan pada tanggal <strong>09</strong> setiap bulannya, dengan periode perhitungan tanggal 01 – 30/31 bulan sebelumnya, dengan ketentuan sebagai berikut:</p>
+    <p class="indent">a. Apabila tanggal 09 jatuh pada hari Sabtu, maka Upah dibayarkan pada tanggal 08 (hari Jumat)</p>
+    <p class="indent">b. Apabila tanggal 09 jatuh pada hari Minggu, maka Upah akan dibayarkan pada tanggal 10 (hari Senin)</p>
+
+    <p>7. Potongan Ketidakhadiran dan Keterlambatan</p>
+    <p class="indent">a. Pekerja yang tidak masuk bekerja tanpa pemberitahuan dihari pertama serta tidak menunjukkan surat keterangan sakit dari dokter atau surat izin pada hari berikutnya maka dikategorikan Alpa dan upah akan dipotong dengan formula sebagai berikut:</p>
+    <p class="formula">ALPA = Alpa X Gaji Pokok / 21</p>
+    <p class="indent">b. Pekerja yang tidak masuk bekerja karena izin, maka wajib memberikan informasi kepada atasan serta membuat surat izin pada hari berikutnya. Perhitungan Potongan izin adalah sebagai berikut :</p>
+    <p class="formula">IZIN = Gaji Pokok X Jumlah Izin X 50% / 21</p>
+    <p class="indent">c. Pekerja yang tidak masuk bekerja karena sakit, maka wajib memberikan Informasi kepada atasan serta menunjukkan surat keterangan sakit dari dokter. Bagi yang tidak dapat menunjukkan surat Keterangan sakit dari dokter namun sudah menginformasikan kepada atasan maka karyawan dianggap izin.</p>
+    <p class="indent">d. Setiap Pekerja yang terlambat datang untuk bekerja kecuali seizin atasannya, maka berlaku pemotongan Gaji dengan formula sebagai berikut :</p>
+    <p class="formula">Potongan Keterlambatan = Keterlambatan X Gaji Pokok / 8 / 21</p>
+    <p class="indent">e. Gaji yang tidak dibayarkan ini berlaku untuk seluruh Pekerja sesuai dengan ketentuan yang tercantum di dalam Peraturan Perusahaan.</p>
+
+    <p>8. Pajak pendapatan (Pph Pasal 21) ditanggung sepenuhnya oleh <strong>Karyawan</strong> untuk kemudian disetorkan ke Kas Negara.</p>
+@endif
 
         @include('admin.hrd.contracts.partials.paraf-signature', ['contract' => $contract])
     </div>
@@ -257,10 +273,13 @@
         <p>3. Untuk sakit serius, menjalani rawat inap, sakit berkepanjangan, atau kondisi kesehatan tertentu, Pekerja
             menyerahkan surat keterangan dari dokter yang merawat yang menyatakan bahwa Pekerja telah dapat kembali bekerja.
         </p>
+          @if ($contract->type === "ipfms-dobu")
+        
         <p>4. Dalam hal Pekerja mengalami sakit berkepanjangan, menjalani perawatan atau pengobatan dalam jangka waktu yang
             menyebabkan Pekerja tidak dapat melaksanakan pekerjaannya sampai dengan berakhirnya jangka waktu PKWT, maka
             hubungan kerja berakhir sesuai dengan tanggal berakhirnya PKWT sebagaimana tercantum dalam Perjanjian Kerja.
             Dalam hal tersebut, Perusahaan tidak berkewajiban untuk memperpanjang atau memperbarui PKWT.</p>
+            @endif
 
         @include('admin.hrd.contracts.partials.show-dobu-pasal8', ['contract' => $contract])
         <div class="pasal-title">PASAL 9</div>

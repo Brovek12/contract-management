@@ -64,6 +64,7 @@
         // IPFMS Dobu
         // =====================
         'ipfms-dobu'              => 'Balikpapan',
+        'ipfms-dobu-2'              => 'Balikpapan',
     ];
 
     $domisili = $domisiliMap[$type] ?? ($c->domicile ?? 'Balikpapan');

@@ -406,6 +406,7 @@
         'lawe-lawe-reguler',
         'lawe-lawe-all-in',
         'ipfms-dobu',
+        'ipfms-dobu-2',
     ];
 @endphp
 @if (in_array($type, $allowanceTypes))
@@ -628,6 +629,7 @@ $(document).ready(function () {
         'lawe-lawe-reguler'        : 'CIMS Project - Lawe Lawe',
         'lawe-lawe-all-in'         : 'CIMS Project - Lawe Lawe',
         'ipfms-dobu'               : 'IPFMS - Dobu',
+        'ipfms-dobu-2'               : 'IPFMS - Dobu',
     };
 
     function autoFillDepartment() {

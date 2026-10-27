@@ -85,6 +85,7 @@
         'lawe-lawe-all-in' => 'Perusahaan dengan ini menugaskan Pekerja untuk menjalankan tugasnya sebagai ' . ($c->position ?? '................') . ' di PT Bukaka Teknik Utama Tbk cabang Balikpapan dan bersedia ditempatkan di lokasi Onshore / Offshore – User / Perusahaan.',
 
         'ipfms-dobu' => 'Perusahaan dengan ini menugaskan Pekerja untuk menjalankan tugasnya sebagai ' . ($c->position ?? '................') . ' di PT Bukaka Teknik Utama Tbk cabang Balikpapan dan bersedia ditempatkan diseluruh lokasi Onshore / Offshore yang ditentukan oleh User / Perusahaan.',
+        'ipfms-dobu-2' => 'Perusahaan dengan ini menugaskan Pekerja untuk menjalankan tugasnya sebagai ' . ($c->position ?? '................') . ' di PT Bukaka Teknik Utama Tbk cabang Balikpapan dan bersedia ditempatkan diseluruh lokasi Onshore / Offshore yang ditentukan oleh User / Perusahaan.',
     ];
 
     $text = $statusTexts[$type] ?? 'Perusahaan dengan ini menugaskan Pekerja untuk menjalankan tugasnya sebagai ' . ($c->position ?? '................') . ' di PT Bukaka Teknik Utama Tbk cabang Balikpapan.';

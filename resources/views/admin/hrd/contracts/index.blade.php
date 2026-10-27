@@ -61,6 +61,11 @@
                                                 Project
                                             </a>
                                         </li>
+                                          <li>
+                            <a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#modalHarian">
+                                <i class="ki-duotone ki-calendar fs-3 me-2"></i> Harian
+                            </a>
+                        </li>
                                     </ul>
                                 </div>
 
@@ -68,6 +73,7 @@
                                 @include('admin.hrd.contracts.modal.modal_manajerial')
                                 @include('admin.hrd.contracts.modal.modal_non_manajerial')
                                 @include('admin.hrd.contracts.modal.modal_project')
+                                @include('admin.hrd.contracts.modal.modal_harian') 
                             @endcan
                         </div>
                     </div>
@@ -97,6 +103,7 @@
                                     <option value="managerial">Managerial</option>
                                     <option value="non-managerial">Non-Managerial</option>
                                     <option value="project">Project</option>
+                                    <option value="harian">Harian</option>
                                 </select>
                             </div>
 
@@ -131,8 +138,12 @@
                                         <option value="elis-phkt-6-1">elis-phkt-6-1</option>
                                         <option value="eni-muara-bakau-lembur">eni-muara-bakau-lembur</option>
                                         <option value="eni-muara-bakau-all-in">eni-muara-bakau-all-in</option>
-                                        <option value="ipfms-dobu">ipfms-dobu</option>
+                                        <option value="ipfms-dobu">ipfms-dobu Tidak Tetap</option>
+                                        <option value="ipfms-dobu-2">ipfms-dobu Tetap</option>
                                     </optgroup>
+                                    <optgroup label="Harian">
+    <option value="harian-biasa">harian-biasa</option>
+</optgroup>
                                 </select>
                             </div>
 
@@ -260,12 +271,14 @@
                                             'eni-muara-bakau-lembur' => 'project',
                                             'eni-muara-bakau-all-in' => 'project',
                                             'ipfms-dobu' => 'project',
+                                             'harian-biasa' => 'harian', 
                                         ];
 
                                         $categoryBadgeMap = [
                                             'managerial' => ['badge-light-primary', 'Managerial'],
                                             'non-managerial' => ['badge-light-success', 'Non-Managerial'],
                                             'project' => ['badge-light-warning', 'Project'],
+                                            'harian' => ['badge-light-warning', 'Harian'],
                                         ];
                                     @endphp
 
@@ -354,43 +367,76 @@
 
                                             {{-- AKSI --}}
                                             <td class="text-center">
-                                                @php
-                                                    $statusAction = null;
+                                             @php
+    $statusAction = null;
+    $isHarian = ($item->category === 'harian' || $item->type === 'harian-biasa');
 
-                                                    // 1. DRAFT -> HRD biasa kirim ke Head HRD (Approve HRD)
-                                                    if ($item->status === 'draft' && auth()->user()->can('edit-contracts')) {
-                                                        $statusAction = [
-                                                            'route' => route('contracts.approve.hrd', $item->id),
-                                                            'formId' => "approve-hrd-form-{$item->id}",
-                                                            'onclick' => "confirmApproveHRD({$item->id})",
-                                                            'icon' => 'ki-send',
-                                                            'label' => 'Send to Head HRD',
-                                                            'color' => 'text-primary',
-                                                        ];
-                                                    } 
-                                                    // 2. SIGNED-HRD -> HRD biasa kirim ke Employee
-                                                    elseif ($item->status === 'signed-hrd' && auth()->user()->can('edit-contracts')) {
-                                                        $statusAction = [
-                                                            'route' => route('contracts.send', $item->id),
-                                                            'formId' => "send-form-{$item->id}",
-                                                            'onclick' => "confirmSend({$item->id})",
-                                                            'icon' => 'ki-user-tick',
-                                                            'label' => 'Send to Employee',
-                                                            'color' => 'text-info',
-                                                        ];
-                                                    }
-                                                    // 3. SIGNED (Employee sudah TTD) -> GM Approve
-                                                    elseif ($item->status === 'signed' && auth()->user()->can('approve-contracts-head')) { 
-                                                        $statusAction = [
-                                                            'route' => route('contracts.approve.head', $item->id),
-                                                            'formId' => "approve-gm-form-{$item->id}",
-                                                            'onclick' => "confirmApproveHead({$item->id})",
-                                                            'icon' => 'ki-check-circle',
-                                                            'label' => 'Approve General Manager',
-                                                            'color' => 'text-success',
-                                                        ];
-                                                    }
-                                                @endphp
+    // ==========================================
+    // FLOW KHUSUS HARIAN
+    // ==========================================
+    if ($isHarian) {
+        // 1. DRAFT (Harian) -> Langsung Kirim ke Karyawan
+        if ($item->status === 'draft' && auth()->user()->can('edit-contracts')) {
+            $statusAction = [
+                'route' => route('contracts.send', $item->id),
+                'formId' => "send-form-{$item->id}",
+                'onclick' => "confirmSend({$item->id})",
+                'icon' => 'ki-user-tick',
+                'label' => 'Send to Employee',
+                'color' => 'text-info',
+            ];
+        }
+        // 2. SIGNED (Karyawan TTD) -> Head HRD TTD (Selesai)
+        elseif ($item->status === 'signed' && auth()->user()->can('edit-contracts')) {
+            $statusAction = [
+                'route' => route('contracts.approve.hrd', $item->id),
+                'formId' => "finish-hrd-form-{$item->id}",
+                'onclick' => "confirmFinishHRD({$item->id})",
+                'icon' => 'ki-check-circle',
+                'label' => 'Head HRD TTD (Selesai)',
+                'color' => 'text-success',
+            ];
+        }
+    } 
+    // ==========================================
+    // FLOW BIASA (PROJECT / MANAGERIAL / DLL)
+    // ==========================================
+    else {
+        // 1. DRAFT -> Paraf HRD
+        if ($item->status === 'draft' && auth()->user()->can('edit-contracts')) {
+            $statusAction = [
+                'route' => route('contracts.approve.hrd', $item->id),
+                'formId' => "approve-hrd-form-{$item->id}",
+                'onclick' => "confirmApproveHRD({$item->id})",
+                'icon' => 'ki-send',
+                'label' => 'Send to Head HRD',
+                'color' => 'text-primary',
+            ];
+        } 
+        // 2. SIGNED-HRD -> Kirim ke Karyawan
+        elseif ($item->status === 'signed-hrd' && auth()->user()->can('edit-contracts')) {
+            $statusAction = [
+                'route' => route('contracts.send', $item->id),
+                'formId' => "send-form-{$item->id}",
+                'onclick' => "confirmSend({$item->id})",
+                'icon' => 'ki-user-tick',
+                'label' => 'Send to Employee',
+                'color' => 'text-info',
+            ];
+        }
+        // 3. SIGNED (Karyawan TTD) -> Approve GM
+        elseif ($item->status === 'signed' && auth()->user()->can('approve-contracts-head')) { 
+            $statusAction = [
+                'route' => route('contracts.approve.head', $item->id),
+                'formId' => "approve-gm-form-{$item->id}",
+                'onclick' => "confirmApproveHead({$item->id})",
+                'icon' => 'ki-check-circle',
+                'label' => 'Approve General Manager',
+                'color' => 'text-success',
+            ];
+        }
+    }
+@endphp
 
                                                 @if (
                                                         auth()->user()->can('read-contracts') ||
@@ -429,6 +475,7 @@
                                                                         Edit Contract
                                                                     </a>
                                                                 </li>
+                                                                 @if(!in_array($item->type, ['harian-biasa']))
                                                                 <li>
                                                                     <a class="dropdown-item"
                                                                         href="{{ route('contracts.create-new-from-existing', $item->id) }}">
@@ -436,6 +483,7 @@
                                                                         Add New Contract
                                                                     </a>
                                                                 </li>
+                                                                @endif
                                                                 
                                                                 {{-- Stop Contract hanya muncul jika belum complete/stop --}}
                                                                 @if(!in_array($item->status, ['signed-head', 'stop']))
@@ -486,10 +534,10 @@
 
                                                 {{-- Form tersembunyi Stop --}}
                                                {{-- Form tersembunyi Stop --}}
-                                            <form id="stop-form-{{ $item->id }}" action="{{ route('contracts.stop', $item->id) }}" method="POST" style="display:none;">
-                                                @csrf
-                                                @method('PUT') <!-- TAMBAHKAN INI -->
-                                            </form>
+                                                    <form id="stop-form-{{ $item->id }}" action="{{ route('contracts.stop', $item->id) }}" method="POST" style="display:none;">
+                                                        @csrf
+                                                        @method('PUT') <!-- TAMBAHKAN INI -->
+                                                    </form>
 
                                                 {{-- Form tersembunyi delete --}}
                                                 @can('delete-contracts')

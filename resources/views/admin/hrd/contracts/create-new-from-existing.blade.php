@@ -130,7 +130,8 @@
                                     <option value="sched-5-2"                 {{ $type === 'sched-5-2' ? 'selected' : '' }}>Schedule 5-2 Rev. 2026</option>
                                     <option value="lawe-lawe-reguler"         {{ $type === 'lawe-lawe-reguler' ? 'selected' : '' }}>LAWE LAWE (Reguler)</option>
                                     <option value="lawe-lawe-all-in"          {{ $type === 'lawe-lawe-all-in' ? 'selected' : '' }}>LAWE LAWE (All In)</option>
-                                    <option value="ipfms-dobu"                {{ $type === 'ipfms-dobu' ? 'selected' : '' }}>IPFMS Dobu</option>
+                                    <option value="ipfms-dobu"                {{ $type === 'ipfms-dobu' ? 'selected' : '' }}>IPFMS Dobu Tetap</option>
+                                    <option value="ipfms-dobu-2"                {{ $type === 'ipfms-dobu-2' ? 'selected' : '' }}>IPFMS Dobu Tidak Tetap</option>
                                 </optgroup>
                             </select>
                         </div>
@@ -497,6 +498,7 @@
                     'lawe-lawe-reguler',
                     'lawe-lawe-all-in',
                     'ipfms-dobu',
+                    'ipfms-dobu-2',
                 ];
             @endphp
 
@@ -855,6 +857,7 @@ $(document).ready(function () {
         'lawe-lawe-reguler'        : 'CIMS Project - Lawe Lawe',
         'lawe-lawe-all-in'         : 'CIMS Project - Lawe Lawe',
         'ipfms-dobu'               : 'IPFMS - Dobu',
+        'ipfms-dobu-2'               : 'IPFMS - Dobu',
     };
 
     function autoFillDepartment() {

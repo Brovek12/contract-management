@@ -384,7 +384,7 @@
 {{-- GROUP 12 — IPFMS Dobu (sama seperti ELIS PHKT 5.2)           --}}
 {{-- ipfms-dobu                                                  --}}
 {{-- ============================================================= --}}
-@elseif ($type === 'ipfms-dobu' || $type ==='sched-5-2')
+@elseif ($type === 'ipfms-dobu' || $type ==='sched-5-2'  || $type ==='ipfms-dobu-2')
 
     <table class="data-table" style="width: auto; margin: 6px auto 10px;">
         <tr>

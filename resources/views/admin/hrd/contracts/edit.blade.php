@@ -391,6 +391,7 @@
                     'lawe-lawe-reguler',
                     'lawe-lawe-all-in',
                     'ipfms-dobu',
+                    'ipfms-dobu-2',
                 ];
             @endphp
 

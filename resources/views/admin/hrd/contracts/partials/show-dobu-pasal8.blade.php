@@ -2,7 +2,7 @@
     $type = $type ?? ($contract->type ?? null);
 @endphp
 
-@if ($type === 'ipfms-dobu')
+@if ($type === 'ipfms-dobu' || $type === 'ipfms-dobu-2')
 
     {{-- ========================================================= --}}
     {{-- IPFMS-DOBU: PAKAIAN DAN SEPATU KERJA                     --}}

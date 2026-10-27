@@ -791,7 +791,7 @@
                value="{{ old('functional_allowance', $c->functional_allowance ?? 0) }}">
     </div>
 
-@elseif ($type === 'ipfms-dobu' || $type === 'sched-5-2')
+@elseif ($type === 'ipfms-dobu' || $type === 'sched-5-2' || $type === 'ipfms-dobu-2' )
 
     {{-- ========================================================= --}}
     {{-- PROJECT: ipfms-dobu --}}

@@ -307,7 +307,7 @@
 
         4.	Apabila Karyawan bekerja dilapangan lebih dari jam kerja 07.00 – 17.00 (10 jam kerja dengan 1 jam istirahat) maka akan menambah jam overtime dengan syarat mendapatkan Approval / tanda tangan dari Project / User.
     </p>
-    @elseif ($type === 'ipfms-dobu')
+    @elseif ($type === 'ipfms-dobu' || $type === 'ipfms-dobu-2')
 
 <p>1. Hari kerja atau jadwal kerja mengikuti ketentuan yang ditetapkan oleh User yang berlaku.</p>
 <p class="indent">a. 2 : 1 (14 hari kerja dan 7 hari Libur)</p>
