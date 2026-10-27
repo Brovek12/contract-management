@@ -4,17 +4,92 @@
 
 @section('document-style')
     @include('admin.hrd.contracts.partials.show-styles-project')
+<style>
+    /* =========================================
+       PENGATURAN KETAT UNTUK 1 HALAMAN A4
+       ========================================= */
+   /* =========================================
+   PENGATURAN KETAT UNTUK 1 HALAMAN A4
+   ========================================= */
+body {
+    background-color: #f0f0f0;
+}
 
-    <style>
-        /* Tambahan CSS khusus untuk merapikan dokumen Harian */
-        .doc-harian { font-size: 14px; line-height: 1.5; color: #000; }
-        .doc-harian h2 { font-size: 24px; font-weight: 900; letter-spacing: 2px; margin-bottom: 0; }
-        .doc-harian h4 { font-size: 16px; font-weight: bold; text-decoration: underline; margin-top: 5px; margin-bottom: 5px; }
-        .doc-harian p { margin-bottom: 10px; }
-        .doc-harian .table-borderless > tbody > tr > td { padding: 2px 5px; border: none; font-size: 14px; }
-        .doc-harian .table-ketentuan > tbody > tr > td { padding: 5px; border: none; vertical-align: top; }
-        .doc-harian .ttd-box { margin-top: 50px; text-align: center; }
-    </style>
+.document-page {
+    width: 210mm;
+    height: 297mm;
+    padding: 10mm 15mm !important;
+    margin: 0 auto;
+    background: white;
+    box-sizing: border-box;
+    font-size: 12.6pt !important; /* Standar font dokumen */
+    line-height: 1.15 !important;
+    overflow: hidden;
+    position: relative;
+}
+
+/* Hilangkan style bawaan tabel yang bikin renggang */
+.document-page table {
+    font-size: 12.6pt !important;
+    margin-bottom: 0 !important;
+}
+.document-page p {
+    font-size: 12.6pt !important;
+    margin-bottom: 6px !important;
+    text-align: justify;
+    line-height: 1.15 !important;
+}
+
+/* Rapatkan Judul (H4) */
+.doc-harian h4 {
+    font-size: 12.6pt !important;
+    font-weight: bold;
+    margin-bottom: 2px !important;
+    line-height: 1.2;
+}
+
+.text-center.mb-4 {
+    margin-bottom: 12px !important; /* Jarak judul ke isi */
+}
+
+/* Tabel Data Karyawan & Perusahaan */
+.doc-harian .table-borderless {
+    margin-bottom: 8px !important;
+}
+.doc-harian .table-borderless td {
+    padding: 1px 2px !important;
+    vertical-align: top;
+}
+
+/* Tabel Ketentuan (Poin 1-9) */
+.doc-harian .table-ketentuan {
+    margin-bottom: 8px !important;
+}
+.doc-harian .table-ketentuan td {
+    padding: 2px 4px !important;
+    vertical-align: top;
+}
+
+/* Paragraf Penutup (Samakan fontnya) */
+p.mt-4.text-justify {
+    margin-top: 10px !important;
+    margin-bottom: 10px !important;
+    font-size: 12.6pt !important; /* Dibuat sama rata */
+}
+
+/* Area Tanda Tangan */
+.signature-wrapper {
+    margin-top: 10px !important;
+    display: flex;
+    justify-content: space-between;
+    page-break-inside: avoid;
+}
+
+.signature-column {
+    width: 48%;
+    text-align: center;
+}
+</style>
 @endsection
 
 @section('document-content')
@@ -34,20 +109,24 @@
     <div class="document-page">
         @include('partials.document-header')
 
-        <div class="doc-harian mt-4">
+        {{-- Hapus mt-4 agar tidak turun terlalu jauh --}}
+        <div class="doc-harian">
             <!-- Header Dokumen -->
             <div class="text-center mb-4">
                 <h4>PERJANJIAN KERJA KARYAWAN HARIAN</h4>
                 <h4>No. {{ $contract->contract_number }}</h4>
             </div>
+<p class="mb-3">
+    Pada hari ini, 
+    <strong>{{ $contract->created_at ? $contract->created_at->locale('id')->translatedFormat('l') : '................' }}</strong>, 
+    tanggal 
+    <strong>{{ $contract->created_at ? $contract->created_at->locale('id')->translatedFormat('d F Y') : '................' }}</strong> 
+    diadakan perjanjian kerja harian antara:
+</p>
 
-            <p class="mb-4">
-                Pada hari ini ................, tanggal ................ diadakan perjanjian kerja harian antara :<br>
-                Pihak Pertama (disebut pihak Perusahaan)
-            </p>
 
             <!-- Data Perusahaan -->
-            <table class="table table-borderless w-75 mb-4">
+            <table class="table table-borderless w-75 mb-3">
                 <tr>
                     <td width="25%">Nama</td>
                     <td width="2%">:</td>
@@ -67,7 +146,7 @@
 
             <p class="mb-2">Pihak Kedua (disebut pihak Karyawan)</p>
             <!-- Data Karyawan -->
-            <table class="table table-borderless w-75 mb-4">
+            <table class="table table-borderless w-75 mb-3">
                 <tr>
                     <td width="25%">Nama</td>
                     <td width="2%">:</td>
@@ -103,10 +182,10 @@
                 </tr>
             </table>
 
-            <p class="mb-3">Kedua belah pihak sepakat untuk mengadakan perjanjian kerja, dengan ketentuan sebagai berikut :</p>
+            <p class="mb-2">Kedua belah pihak sepakat untuk mengadakan perjanjian kerja, dengan ketentuan sebagai berikut :</p>
 
             <!-- Ketentuan-Ketentuan -->
-            <table class="table table-ketentuan w-100">
+            <table class="table table-ketentuan w-100 mb-2">
                 <tr>
                     <td width="4%">1.</td>
                     <td width="20%">Waktu</td>
@@ -167,69 +246,58 @@
                 </tr>
             </table>
 
-            <p class="mt-4 text-justify" style="line-height: 1.6;">
+            {{-- Hapus inline style line-height 1.6 agar ikut CSS ketat di atas --}}
+            <p class="mt-4 text-justify">
                 Perusahaan sewaktu-waktu dapat memutuskan perjanjian kerja secara sepihak apabila kinerja karyawan tidak sesuai dengan standar penilaian, melanggar disiplin dan tata tertib perusahaan.<br>
                 Kontrak Harian ini dapat berakhir sebelum tanggal akhir perjanjian jika pekerjaan telah selesai/proyek berakhir.<br>
                 Demikian perjanjian ini dibuat secara sadar dan tidak ada paksaan dari siapapun serta ditandatangani oleh kedua belah pihak.
             </p>
 
             <!-- Tanda Tangan Bawah -->
-            <div class="signature-wrapper">
-            <div class="signature-column">
-                <div><strong>Pekerja</strong></div>
-                <div>&nbsp;</div>
-                <div class="signature-space-2"></div>
-                <div class="signature-image-wrapper-2">
-                    @if ($contract->employee_signature)
-                        <img src="{{ asset('storage/' . $contract->employee_signature) }}" class="signature-image-2"
-                            alt="Employee Signature">
-                    @endif
+                       <!-- Tanda Tangan Bawah -->
+            <div class="signature-wrapper" style="margin-top: 10px; display: table; width: 100%; table-layout: fixed;">
+                
+                <!-- KOLOM KIRI (Pekerja) -->
+                <div class="signature-column" style="display: table-cell; width: 50%; text-align: center; vertical-align: top;">
+                    <div style="font-weight: bold; margin-bottom: 5px;">Pekerja</div>
+                    
+                    <!-- Area Tanda Tangan -->
+                    <div style="height: 50px; margin-bottom: 5px;">
+                        @if ($contract->employee_signature)
+                            <img src="{{ asset('storage/' . $contract->employee_signature) }}" style="max-height: 50px;" alt="Employee Signature">
+                        @endif
+                    </div>
+                    
+                    <div style="font-weight: bold; text-decoration: underline;">{{ $contract->employee_name ?? '........................' }}</div>
+                    <div style="font-size: 9.5pt;">&nbsp;</div>
                 </div>
-                <div class="signature-name-2">
-                    {{ $contract->employee_name ?? '........................' }}
-                </div>
-                <div class="signature-title">&nbsp;</div>
-            </div>
 
-            <div class="signature-column">
-                <!-- Bungkus teks dan gambar dengan d-flex agar sejajar ke samping -->
-
-                <div class="d-flex align-items-center mb-1">
-                    <div>
-                        <div class="d-flex align-items-center" style="padding-left: 50px;">
-                            <!-- Teks dikunci di sini -->
-                            <strong>Pihak Perusahaan</strong>
-
-                            <!-- Gambar dibungkus wadah dengan lebar statis agar tidak mendorong teks -->
-                            <div style="width: 40px; margin-left: 10px;">
-                                    <img src="{{ asset('images/algy.jpg') }}" alt=""
-                                        style="width: 30px; height: 20px; opacity: 0.9; display: block;">
-                            </div>
-                        </div>
+                <!-- KOLOM KANAN (Perusahaan) -->
+                <div class="signature-column" style="display: table-cell; width: 50%; text-align: center; vertical-align: top;">
+                    <!-- Teks dan Logo Kecil -->
+                    <div style="display: flex; justify-content: center; align-items: center; font-weight: bold; margin-bottom: 5px;">
+                        <span>Pihak Perusahaan</span>
+                        <img src="{{ asset('images/algy.jpg') }}" alt="" style="width: 25px; height: 15px; margin-left: 5px; opacity: 0.9;">
                     </div>
 
+                    <!-- Area Tanda Tangan / QR Code -->
+                    <div style="height: 50px; margin-bottom: 5px;">
+                        @if ($contract->hrd_qr_path)
+                            <img src="{{ asset('storage/' . $contract->hrd_qr_path) }}" style="max-height: 50px;" alt="QR Head Approval">
+                        @endif
+                    </div>
+
+                    <!-- Nama dan Jabatan -->
+                    <div style="font-weight: bold; text-decoration: underline;">I.T Anasya</div>
+                    <div style="font-size: 9.5pt;">PJS. HRD Coordinator</div>
                 </div>
 
-                <!-- QR Code Head Approval -->
-                <div class="signature-image-wrapper">
-                    @if ($contract->hrd_qr_path)
-                        <img src="{{ asset('storage/' . $contract->hrd_qr_path) }}" class="signature-image-10"
-                            alt="QR Head Approval">
-                    @endif
-                </div>
-
-                <!-- Nama dan Jabatan -->
-                <div class="signature-name">I.T Anasya</div>
-                <div class="signature-title">PJS. HRD Coordinator</div>
             </div>
-        </div>
 
-        @include('partials.document-footer')
-    </div>
-        </div>
-
-        @include('partials.document-footer')
-    </div>
+            @include('partials.document-footer')
+            
+        </div> {{-- Tutup doc-harian --}}
+    </div> {{-- Tutup document-page --}}
 
 @endsection
 
