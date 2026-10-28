@@ -38,12 +38,12 @@
         <tr>
             <td class="data-label">Nama</td>
             <td class="data-sep">:</td>
-            <td class="data-value"><strong>Muslimin Sanafi</strong></td>
+            <td class="data-value"><strong>Muslimin</strong></td>
         </tr>
         <tr>
             <td class="data-label">Jabatan</td>
             <td class="data-sep">:</td>
-            <td class="data-value">Head Of Balikpapan Branch</td>
+            <td class="data-value">General Manager</td>
         </tr>
         <tr>
             <td class="data-label">Perusahaan</td>

@@ -38,12 +38,12 @@
         <tr>
             <td class="data-label">Nama</td>
             <td class="data-sep">:</td>
-            <td class="data-value"><strong>Muslimin Sanafi</strong></td>
+            <td class="data-value"><strong>Muslimin</strong></td>
         </tr>
         <tr>
             <td class="data-label">Jabatan</td>
             <td class="data-sep">:</td>
-            <td class="data-value">Head Of Balikpapan Branch</td>
+            <td class="data-value">General Manager</td>
         </tr>
         <tr>
             <td class="data-label">Perusahaan</td>
@@ -1195,8 +1195,8 @@
                     <img src="{{ asset('storage/' . $contract->head_qr_path) }}" class="signature-image-10" alt="QR Head Approval">
                 @endif
             </div>
-            <div class="signature-name">IR. Muslimin Sanafi</div>
-            <div class="signature-title">Head Of Balikpapan Branch</div>
+            <div class="signature-name">Muslimin</div>
+            <div class="signature-title">General Manager</div>
         </div>
     </div>
 
