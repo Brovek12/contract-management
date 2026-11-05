@@ -189,6 +189,17 @@ class PermissionSeeder extends Seeder
                 'group' => 'Contract Saya',
                 'display_name' => 'Lihat Contract',
             ],
+               /*
+            |--------------------------------------------------------------------------
+            | Lihat Gaji
+            |--------------------------------------------------------------------------
+            */
+            [
+                'name' => 'read-my-salary',
+                'guard_name' => 'web',
+                'group' => 'Gaji Saya',
+                'display_name' => 'Lihat Gaji',
+            ],
 
         ];
 

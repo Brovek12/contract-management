@@ -3,6 +3,7 @@
 {{-- Tabel Gaji & Tunjangan — 25 Varian                          --}}
 {{-- ============================================================= --}}
 
+@can('read-my-salary')
 @php
     $c = $contract ?? null;
     $rp = fn ($v) => number_format((float) $v, 0, ',', '.');
@@ -408,3 +409,12 @@
     </table>
 
 @endif
+@endcan
+
+@cannot('read-my-salary')
+    <p style="text-align: center; margin: 12px 0;">
+        <strong style="background-color: #ffff00; color: #000; font-size: 16px; font-weight: 900; padding: 6px 14px; border: 2px solid #000; text-transform: uppercase; letter-spacing: 1px;">
+            Rincian gaji tidak ditampilkan
+        </strong>
+    </p>
+@endcannot
